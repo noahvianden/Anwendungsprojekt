@@ -12,16 +12,16 @@
 <script>
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
-import DuesseldorfDistricts from '@/assets/DuesseldorfDistricts.geojson'; // Importieren der GeoJSON-Datei
+import DuesseldorfDistricts from '@/assets/DuesseldorfDistricts.geojson'; 
 
 export default {
   name: 'MapComponent',
   data() {
     return {
       map: null,
-      cityName: 'Düsseldorf', // Standard-Stadtname
-      cityBoundsLayer: null, // Layer für die Stadtgrenzen
-      neighborhoodLayer: null, // Layer für Stadtteile
+      cityName: 'Düsseldorf',
+      cityBoundsLayer: null,
+      neighborhoodLayer: null,
     };
   },
   async mounted() {
@@ -29,92 +29,63 @@ export default {
   },
   methods: {
     async initMap() {
-      const coordinates = await this.geocodeCity(this.cityName);
-      if (coordinates) {
-        this.map = L.map('map', {
-          zoomControl: false,
-          attributionControl: false,
-          dragging: false, // Deaktivieren von Drag-and-Drop
-          touchZoom: false, // Deaktivieren von Zoom durch Berührung
-          scrollWheelZoom: false, // Deaktivieren von Zoom durch Scrollen
-          doubleClickZoom: false, // Deaktivieren von Zoom durch Doppelklick
-          boxZoom: false,
-        }).setView(coordinates, 11);
-
-        //const cardType = 'https://maps.wikimedia.org/osm-intl/{z}/{x}/{y}.png';
-        //L.tileLayer(cardType).addTo(this.map);
-
-        const cityBoundsGeoJSON = await this.getCityBoundsGeoJSON(this.cityName);
-        this.cityBoundsLayer = L.geoJSON(cityBoundsGeoJSON).addTo(this.map);
-        
-        this.neighborhoodLayer = L.geoJSON(DuesseldorfDistricts, {
-          onEachFeature: (feature, layer) => {
-            layer.bindTooltip(feature.properties.Name, {
-              permanent: false,
-              className: 'my-label',
-              direction: 'auto'
-            });
-          }
-        }).addTo(this.map);
-
-        this.cityBoundsLayer.setStyle({
-          fillColor: 'transparent',
-          color: 'black',
-          weight: 4
-        });
-
-        this.neighborhoodLayer.setStyle({
-          fillColor: 'transparent',
-          color: 'gray',
-          weight: 2
-        });
-
-        this.map.fitBounds(this.cityBoundsLayer.getBounds());
-
-      } else {
-        console.error('Koordinaten für die angegebene Stadt konnten nicht gefunden werden.');
-      }
+      await this.updateMap();
     },
 
     async updateCoordinates() {
+      await this.updateMap();
+    },
+
+    async updateMap() {
       const coordinates = await this.geocodeCity(this.cityName);
-      if (coordinates && this.map) {
-        if (this.cityBoundsLayer) {
-          this.map.removeLayer(this.cityBoundsLayer);
-        }
-        if (this.neighborhoodLayer) {
-          this.map.removeLayer(this.neighborhoodLayer);
-        }
+      if (!coordinates) {
+        console.error('Koordinaten für die angegebene Stadt konnten nicht gefunden werden.');
+        return;
+      }
+      
+      if (this.map) {
+        this.map.remove();
+      }
 
-        const cityBoundsGeoJSON = await this.getCityBoundsGeoJSON(this.cityName);
+      this.map = L.map('map', {
+        zoomControl: false,
+        attributionControl: false,
+        dragging: false,
+        touchZoom: false,
+        scrollWheelZoom: false,
+        doubleClickZoom: false,
+        boxZoom: false,
+      }).setView(coordinates, 11);
+
+      const cityBoundsGeoJSON = await this.getCityBoundsGeoJSON(this.cityName);
+      if (cityBoundsGeoJSON) {
         this.cityBoundsLayer = L.geoJSON(cityBoundsGeoJSON).addTo(this.map);
-
-        this.neighborhoodLayer = L.geoJSON(DuesseldorfDistricts, {
-          onEachFeature: (feature, layer) => {
-            layer.bindTooltip(feature.properties.Name, {
-              permanent: false,
-              className: 'my-label',
-              direction: 'auto'
-            });
-          }
-        }).addTo(this.map);
-
         this.cityBoundsLayer.setStyle({
           fillColor: 'transparent',
           color: 'black',
           weight: 4
         });
-
-        this.neighborhoodLayer.setStyle({
-          fillColor: 'transparent',
-          color: 'gray',
-          weight: 2
-        });
-
-        this.map.fitBounds(this.cityBoundsLayer.getBounds());
       } else {
-        console.error('Koordinaten für die angegebene Stadt konnten nicht gefunden werden.');
+        console.error('Fehler beim Abrufen der Stadtgrenzen.');
       }
+
+      this.neighborhoodLayer = L.geoJSON(DuesseldorfDistricts, {
+        onEachFeature: (feature, layer) => {
+          layer.bindTooltip(feature.properties.Name, {
+            permanent: false,
+            className: 'my-label',
+            direction: 'auto'
+          });
+        }
+      }).addTo(this.map);
+
+      this.neighborhoodLayer.setStyle({
+        fillColor: 'transparent',
+        color: 'gray',
+        weight: 2
+      });
+
+      this.map.fitBounds(this.cityBoundsLayer.getBounds());
     },
 
     async geocodeCity(cityName) {
@@ -147,7 +118,6 @@ export default {
       }
     },
 
-    // Zeigen Sie den Namen des Stadtteils in einem benutzerdefinierten Popup oder einem anderen UI-Element an
     showDistrictNamePopup(event, districtName) {
       alert(`District Name: ${districtName}`);
     }
@@ -170,7 +140,6 @@ export default {
   height: 100%;
 }
 
-/* Benutzerdefinierte CSS für Labels */
 .my-label {
   background-color: rgba(255, 255, 255, 0.7);
   border: none;
@@ -178,9 +147,9 @@ export default {
   padding: 5px;
   font-size: 12px;
   color: black;
-  max-width: 100px; /* Maximale Breite des Labels */
-  white-space: nowrap; /* Textüberlauf verhindern */
-  overflow: hidden; /* Überlauf verstecken */
-  text-overflow: ellipsis; /* Textabkürzung anzeigen */
+  max-width: 100px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 </style>

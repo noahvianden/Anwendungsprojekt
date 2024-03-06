@@ -25,6 +25,12 @@ export default {
     };
   },
   async mounted() {
+    // Vor der Initialisierung sicherstellen, dass das map-Div im DOM vorhanden ist
+    if (!document.getElementById('map')) {
+      console.error('Das "map"-Div wurde im DOM nicht gefunden.');
+      return;
+    }
+
     await this.initMap();
   },
   methods: {
@@ -37,55 +43,80 @@ export default {
     },
 
     async updateMap() {
-      const coordinates = await this.geocodeCity(this.cityName);
-      if (!coordinates) {
-        console.error('Koordinaten für die angegebene Stadt konnten nicht gefunden werden.');
-        return;
-      }
-      
-      if (this.map) {
-        this.map.remove();
-      }
+      try {
+        const coordinates = await this.geocodeCity(this.cityName);
+        if (!coordinates) {
+          console.error('Koordinaten für die angegebene Stadt konnten nicht gefunden werden.');
+          return;
+        }
 
-      this.map = L.map('map', {
-        zoomControl: false,
-        attributionControl: false,
-        dragging: false,
-        touchZoom: false,
-        scrollWheelZoom: false,
-        doubleClickZoom: false,
-        boxZoom: false,
-      }).setView(coordinates, 11);
-
-      const cityBoundsGeoJSON = await this.getCityBoundsGeoJSON(this.cityName);
-      if (cityBoundsGeoJSON) {
-        this.cityBoundsLayer = L.geoJSON(cityBoundsGeoJSON).addTo(this.map);
-        this.cityBoundsLayer.setStyle({
-          fillColor: 'transparent',
-          color: 'black',
-          weight: 4
-        });
-      } else {
-        console.error('Fehler beim Abrufen der Stadtgrenzen.');
-      }
-
-      this.neighborhoodLayer = L.geoJSON(DuesseldorfDistricts, {
-        onEachFeature: (feature, layer) => {
-          layer.bindTooltip(feature.properties.Name, {
-            permanent: false,
-            className: 'my-label',
-            direction: 'auto'
+        if (!this.map) {
+          this.map = L.map('map', {
+            zoomControl: false,
+            attributionControl: false,
+            dragging: false,
+            touchZoom: false,
+            scrollWheelZoom: false,
+            doubleClickZoom: false,
+            boxZoom: false,
           });
         }
-      }).addTo(this.map);
 
-      this.neighborhoodLayer.setStyle({
-        fillColor: 'transparent',
-        color: 'gray',
-        weight: 2
-      });
+        L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager_labels_under/{z}/{x}/{y}{r}.png'
+, {
+          attribution: '&copy; <a href="https://carto.com/attributions">CARTO</a>'
+        }).addTo(this.map);
 
-      this.map.fitBounds(this.cityBoundsLayer.getBounds());
+        if (this.cityBoundsLayer) {
+          this.map.removeLayer(this.cityBoundsLayer);
+        }
+
+        const cityBoundsGeoJSON = await this.getCityBoundsGeoJSON(this.cityName);
+        if (!cityBoundsGeoJSON) {
+          console.warn('Stadtgrenzen konnten nicht abgerufen werden. Die Karte wird dennoch aktualisiert.');
+        } else {
+          this.cityBoundsLayer = L.geoJSON(cityBoundsGeoJSON).addTo(this.map);
+          this.cityBoundsLayer.setStyle({
+            fillColor: 'transparent',
+            color: 'black',
+            weight: 4
+          });
+        }
+
+        if (this.neighborhoodLayer) {
+          this.map.removeLayer(this.neighborhoodLayer);
+        }
+
+        this.neighborhoodLayer = L.geoJSON(DuesseldorfDistricts, {
+          onEachFeature: (feature, layer) => {
+            layer.bindTooltip(feature.properties.Name, {
+                permanent: false,
+                className: 'my-label',
+                direction: 'auto'
+            });
+            let isZoomed = false;
+            layer.on('click', () => {
+                if (!isZoomed) {
+                    this.map.fitBounds(layer.getBounds());
+                    isZoomed = true;
+                } else {
+                    this.map.fitBounds(this.cityBoundsLayer.getBounds());
+                    isZoomed = false;
+                }
+            });
+        }
+        }).addTo(this.map);
+
+        this.neighborhoodLayer.setStyle({
+          fillColor: 'transparent',
+          color: 'gray',
+          weight: 2
+        });
+
+        this.map.fitBounds(this.cityBoundsLayer.getBounds());
+      } catch (error) {
+        console.error('Fehler beim Aktualisieren der Karte:', error);
+      }
     },
 
     async geocodeCity(cityName) {
@@ -117,10 +148,6 @@ export default {
         return null;
       }
     },
-
-    showDistrictNamePopup(event, districtName) {
-      alert(`District Name: ${districtName}`);
-    }
   }
 };
 </script>

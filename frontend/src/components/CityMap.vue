@@ -12,78 +12,111 @@
 <script>
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
+import DuesseldorfDistricts from '@/assets/DuesseldorfDistricts.geojson'; // Importieren der GeoJSON-Datei
 
 export default {
   name: 'MapComponent',
   data() {
     return {
       map: null,
-      cityName: 'Berlin', // Default city name
-      cityBoundsLayer: null, // Layer for city bounds
+      cityName: 'Düsseldorf', // Standard-Stadtname
+      cityBoundsLayer: null, // Layer für die Stadtgrenzen
+      neighborhoodLayer: null, // Layer für Stadtteile
     };
   },
   async mounted() {
-    if (!this.mapInitialized) {
-      await this.initMap();
-      this.mapInitialized = true;
-    }
+    await this.initMap();
   },
   methods: {
     async initMap() {
       const coordinates = await this.geocodeCity(this.cityName);
       if (coordinates) {
-        // Get the city bounds as GeoJSON
-        const cityBoundsGeoJSON = await this.getCityBoundsGeoJSON(this.cityName);
-
         this.map = L.map('map', {
+          zoomControl: false,
+          attributionControl: false,
+          dragging: false, // Deaktivieren von Drag-and-Drop
+          touchZoom: false, // Deaktivieren von Zoom durch Berührung
+          scrollWheelZoom: false, // Deaktivieren von Zoom durch Scrollen
+          doubleClickZoom: false, // Deaktivieren von Zoom durch Doppelklick
+          boxZoom: false,
         }).setView(coordinates, 11);
 
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-          attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        }).addTo(this.map);
+        //const cardType = 'https://maps.wikimedia.org/osm-intl/{z}/{x}/{y}.png';
+        //L.tileLayer(cardType).addTo(this.map);
 
-        // Add the city bounds as an overlay to the map
+        const cityBoundsGeoJSON = await this.getCityBoundsGeoJSON(this.cityName);
         this.cityBoundsLayer = L.geoJSON(cityBoundsGeoJSON).addTo(this.map);
         
-        // Set the maximum bounds of the map to the city bounds
-        this.map.setMaxBounds(this.cityBoundsLayer.getBounds());
-        
-        L.marker(coordinates).addTo(this.map)
-          .bindPopup('A pretty CSS3 popup.<br> Easily customizable.')
-          .openPopup();
+        this.neighborhoodLayer = L.geoJSON(DuesseldorfDistricts, {
+          onEachFeature: (feature, layer) => {
+            layer.bindTooltip(feature.properties.Name, {
+              permanent: false,
+              className: 'my-label',
+              direction: 'auto'
+            });
+          }
+        }).addTo(this.map);
+
+        this.cityBoundsLayer.setStyle({
+          fillColor: 'transparent',
+          color: 'black',
+          weight: 4
+        });
+
+        this.neighborhoodLayer.setStyle({
+          fillColor: 'transparent',
+          color: 'gray',
+          weight: 2
+        });
+
+        this.map.fitBounds(this.cityBoundsLayer.getBounds());
+
       } else {
-        console.error('Coordinates for the specified city could not be found.');
+        console.error('Koordinaten für die angegebene Stadt konnten nicht gefunden werden.');
       }
     },
+
     async updateCoordinates() {
       const coordinates = await this.geocodeCity(this.cityName);
       if (coordinates && this.map) {
-        // Remove previous city bounds layer
         if (this.cityBoundsLayer) {
           this.map.removeLayer(this.cityBoundsLayer);
         }
-        
-        // Get the city bounds as GeoJSON for the new city
+        if (this.neighborhoodLayer) {
+          this.map.removeLayer(this.neighborhoodLayer);
+        }
+
         const cityBoundsGeoJSON = await this.getCityBoundsGeoJSON(this.cityName);
-        
-        // Add the new city bounds layer to the map
         this.cityBoundsLayer = L.geoJSON(cityBoundsGeoJSON).addTo(this.map);
+
+        this.neighborhoodLayer = L.geoJSON(DuesseldorfDistricts, {
+          onEachFeature: (feature, layer) => {
+            layer.bindTooltip(feature.properties.Name, {
+              permanent: false,
+              className: 'my-label',
+              direction: 'auto'
+            });
+          }
+        }).addTo(this.map);
+
+        this.cityBoundsLayer.setStyle({
+          fillColor: 'transparent',
+          color: 'black',
+          weight: 4
+        });
+
+        this.neighborhoodLayer.setStyle({
+          fillColor: 'transparent',
+          color: 'gray',
+          weight: 2
+        });
+
         this.map.fitBounds(this.cityBoundsLayer.getBounds());
-        
-        // Set the maximum bounds of the map to the city bounds
-        this.map.setMaxBounds(this.cityBoundsLayer.getBounds());
-        
-        // Set the new center of the map
-        this.map.setView(coordinates);
-        
-        // Add marker at the new coordinates
-        L.marker(coordinates).addTo(this.map)
-          .bindPopup('A pretty CSS3 popup.<br> Easily customizable.')
-          .openPopup();
       } else {
-        console.error('Coordinates for the specified city could not be found.');
+        console.error('Koordinaten für die angegebene Stadt konnten nicht gefunden werden.');
       }
     },
+
     async geocodeCity(cityName) {
       try {
         const response = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${cityName}`);
@@ -94,10 +127,11 @@ export default {
           return null;
         }
       } catch (error) {
-        console.error('Error geocoding city:', error);
+        console.error('Fehler beim Geocoding der Stadt:', error);
         return null;
       }
     },
+
     async getCityBoundsGeoJSON(cityName) {
       try {
         const response = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${cityName}&limit=1&polygon_geojson=1`);
@@ -108,11 +142,16 @@ export default {
           return null;
         }
       } catch (error) {
-        console.error('Error getting city bounds:', error);
+        console.error('Fehler beim Abrufen der Stadtgrenzen:', error);
         return null;
       }
     },
-  },
+
+    // Zeigen Sie den Namen des Stadtteils in einem benutzerdefinierten Popup oder einem anderen UI-Element an
+    showDistrictNamePopup(event, districtName) {
+      alert(`District Name: ${districtName}`);
+    }
+  }
 };
 </script>
 
@@ -120,7 +159,7 @@ export default {
 .map-container {
   display: flex;
   flex-direction: row;
-  height: 90vh; /* 80% der Bildschirmhöhe */
+  height: 90vh;
   width: 95%;
   margin-left: 1%;
 }
@@ -129,5 +168,19 @@ export default {
   margin-left: 2%;
   width: 100%;
   height: 100%;
+}
+
+/* Benutzerdefinierte CSS für Labels */
+.my-label {
+  background-color: rgba(255, 255, 255, 0.7);
+  border: none;
+  border-radius: 5px;
+  padding: 5px;
+  font-size: 12px;
+  color: black;
+  max-width: 100px; /* Maximale Breite des Labels */
+  white-space: nowrap; /* Textüberlauf verhindern */
+  overflow: hidden; /* Überlauf verstecken */
+  text-overflow: ellipsis; /* Textabkürzung anzeigen */
 }
 </style>

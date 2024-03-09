@@ -12,9 +12,10 @@
 <script>
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
-import DuesseldorfDistricts from '@/assets/DuesseldorfDistricts.geojson'; 
+import DuesseldorfDistricts from '@/assets/DuesseldorfDistricts.geojson';
+import axios from 'axios';
 
-export default {
+export default {  
   name: 'MapComponent',
   data() {
     return {
@@ -22,6 +23,7 @@ export default {
       cityName: 'Düsseldorf',
       cityBoundsLayer: null,
       neighborhoodLayer: null,
+      restaurants: [],
     };
   },
   async mounted() {
@@ -32,6 +34,8 @@ export default {
     }
 
     await this.initMap();
+    await this.fetchRestaurantData(); // Neue Zeile: Restaurants abrufen
+    this.addRestaurantMarkers(); // Neue Zeile: Restaurantmarker hinzufügen
   },
   methods: {
     async initMap() {
@@ -147,6 +151,33 @@ export default {
         console.error('Fehler beim Abrufen der Stadtgrenzen:', error);
         return null;
       }
+    },
+    
+    async fetchRestaurantData() {
+      try {
+        const response = await axios.get(`http://localhost:3000/restaurants`, { // Ändern Sie die URL auf Ihren Proxy-Endpunkt
+          params: {
+            location: '51.2277,6.7735', // Koordinaten von Düsseldorf
+            radius: 1000, // Radius in Metern
+          }
+        });
+        this.restaurants = response.data.results.map(result => ({
+          name: result.name,
+          lat: result.geometry.location.lat,
+          lon: result.geometry.location.lng
+        }));
+      } catch (error) {
+        console.error('Fehler beim Abrufen der Restaurantdaten:', error);
+      }
+    },
+
+
+    addRestaurantMarkers() {
+      this.restaurants.forEach(restaurant => {
+        L.marker([restaurant.lat, restaurant.lon])
+          .bindPopup(restaurant.name)
+          .addTo(this.map);
+      });
     },
   }
 };

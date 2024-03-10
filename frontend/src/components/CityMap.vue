@@ -66,8 +66,7 @@ export default {
           });
         }
 
-        L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager_labels_under/{z}/{x}/{y}{r}.png'
-, {
+        L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager_labels_under/{z}/{x}/{y}{r}.png', {
           attribution: '&copy; <a href="https://carto.com/attributions">CARTO</a>'
         }).addTo(this.map);
 
@@ -108,7 +107,7 @@ export default {
                     isZoomed = false;
                 }
             });
-        }
+          }
         }).addTo(this.map);
 
         this.neighborhoodLayer.setStyle({
@@ -155,13 +154,15 @@ export default {
     
     async fetchRestaurantData() {
       try {
-        const response = await axios.get(`http://localhost:3000/restaurants`, { // Ändern Sie die URL auf Ihren Proxy-Endpunkt
+        const responsePlaces = await axios.get('https://maps.googleapis.com/maps/api/place/nearbysearch/json', {
           params: {
-            location: '51.2277,6.7735', // Koordinaten von Düsseldorf
-            radius: 1000, // Radius in Metern
+            location: '51.2277,6.7735',
+            radius: 4000,
+            type: 'restaurant',
+            key: 'AIzaSyA8L6nbvtOasMavozQMIdjxvvIbc4j2kjU'
           }
         });
-        this.restaurants = response.data.results.map(result => ({
+        this.restaurants = responsePlaces.data.results.map(result => ({
           name: result.name,
           lat: result.geometry.location.lat,
           lon: result.geometry.location.lng

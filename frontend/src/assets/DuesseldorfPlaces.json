@@ -1,0 +1,1265 @@
+{
+   "html_attributions" : [],
+   "next_page_token" : "ATplDJZv86QODTcmi8Xg3PEButUV8YJrYwUTgaK_RHHjxukpz0Vk-HfA_eJVb7-4a3JdHm-BeItyWu3s7F8BsJvRUPuV0D6dW_twRP-u6aYcM_WGOzhj6JpYgSPvOR8ACwNLvebDvOxn8OGBfVz0JOrn6gTR7I5HV2siV0NWzZ8GKbWk7QqWMQbdtpgLeei0J2CgiAIGN649Pfv2ggwMbCm20X5LUzWjvVMBSOsDxvoZwtzCtUYeqqZ07ZJ4b1nVdpEMLnf80sWuOPs8RgcUkPAOc5tZcSAtIGlzeaYSgbmqz_pE6Rzpq3Sw469ZlrEDKopWO3yns119T9Ab8AaoDkrStkgBCGJ1-l4GXPAVIfx5FMA60sQ16LrXsIRALT4Z6TKtGMXImU0q1R43qCs3BGHHunKLTqCm6tIsyz3nfmfoQtH7ojrCcXLPRmLQOy0Q",
+   "results" : 
+   [
+      {
+         "business_status" : "OPERATIONAL",
+         "geometry" : 
+         {
+            "location" : 
+            {
+               "lat" : 51.2254421,
+               "lng" : 6.777816100000001
+            },
+            "viewport" : 
+            {
+               "northeast" : 
+               {
+                  "lat" : 51.22683513029151,
+                  "lng" : 6.779160330291502
+               },
+               "southwest" : 
+               {
+                  "lat" : 51.22413716970851,
+                  "lng" : 6.776462369708498
+               }
+            }
+         },
+         "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/lodging-71.png",
+         "icon_background_color" : "#909CE1",
+         "icon_mask_base_uri" : "https://maps.gstatic.com/mapfiles/place_api/icons/v2/hotel_pinlet",
+         "name" : "Breidenbacher Hof Düsseldorf",
+         "opening_hours" : 
+         {
+            "open_now" : true
+         },
+         "photos" : 
+         [
+            {
+               "height" : 903,
+               "html_attributions" : 
+               [
+                  "\u003ca href=\"https://maps.google.com/maps/contrib/109937384184089272837\"\u003eBreidenbacher Hof Düsseldorf\u003c/a\u003e"
+               ],
+               "photo_reference" : "ATplDJapmjEkane6N6hBFJ9VfNdmguvztEtxyhKmKn30mk1q8XdW74EDSbWQehXDs5ldFrdmkosG_nXO_YCy6U8J2FhopyEby2s4nTmz6RzuM-TFaxTjNL6DHpfPbnCvETYqtnYUEZIYUjNeT9AAeKVMfKGl4ceh5o8NgiF5Q5sMU5tfjM2s",
+               "width" : 1500
+            }
+         ],
+         "place_id" : "ChIJL198miLKuEcR8-vP1kts4bM",
+         "plus_code" : 
+         {
+            "compound_code" : "6QGH+54 Düsseldorf, Germany",
+            "global_code" : "9F386QGH+54"
+         },
+         "rating" : 4.7,
+         "reference" : "ChIJL198miLKuEcR8-vP1kts4bM",
+         "scope" : "GOOGLE",
+         "types" : 
+         [
+            "restaurant",
+            "food",
+            "lodging",
+            "point_of_interest",
+            "establishment"
+         ],
+         "user_ratings_total" : 1328,
+         "vicinity" : "Königsallee 11, Düsseldorf"
+      },
+      {
+         "business_status" : "OPERATIONAL",
+         "geometry" : 
+         {
+            "location" : 
+            {
+               "lat" : 51.2472045,
+               "lng" : 6.769423499999999
+            },
+            "viewport" : 
+            {
+               "northeast" : 
+               {
+                  "lat" : 51.24856793029149,
+                  "lng" : 6.770667230291502
+               },
+               "southwest" : 
+               {
+                  "lat" : 51.24586996970849,
+                  "lng" : 6.767969269708497
+               }
+            }
+         },
+         "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/lodging-71.png",
+         "icon_background_color" : "#909CE1",
+         "icon_mask_base_uri" : "https://maps.gstatic.com/mapfiles/place_api/icons/v2/hotel_pinlet",
+         "name" : "Radisson Blu Conference Hotel, Düsseldorf",
+         "photos" : 
+         [
+            {
+               "height" : 2299,
+               "html_attributions" : 
+               [
+                  "\u003ca href=\"https://maps.google.com/maps/contrib/107491569002840797895\"\u003eRadisson Blu Conference Hotel, Düsseldorf\u003c/a\u003e"
+               ],
+               "photo_reference" : "ATplDJb9HikT1D91QWcQyvvFJAgo_PGOPIJSn2WBNyx9dLPLGFwTed3gnc8GdtltHvmmPsEX8CjG4mHZkZFsMOXEIRSLWFbWMAT8SKt0JpEPaUC-NpByvODBmcffA9EB7Js3INCE7fCgcq293DxG3lkA3nUn21iRi4pyUsXW-9dWOe6YxD9l",
+               "width" : 3602
+            }
+         ],
+         "place_id" : "ChIJE-lE8-_JuEcRfG6n49wihpo",
+         "plus_code" : 
+         {
+            "compound_code" : "6QW9+VQ Düsseldorf, Germany",
+            "global_code" : "9F386QW9+VQ"
+         },
+         "rating" : 4.2,
+         "reference" : "ChIJE-lE8-_JuEcRfG6n49wihpo",
+         "scope" : "GOOGLE",
+         "types" : 
+         [
+            "bar",
+            "gym",
+            "restaurant",
+            "food",
+            "health",
+            "lodging",
+            "point_of_interest",
+            "establishment"
+         ],
+         "user_ratings_total" : 1751,
+         "vicinity" : "Karl-Arnold-Platz 5, Düsseldorf"
+      },
+      {
+         "business_status" : "OPERATIONAL",
+         "geometry" : 
+         {
+            "location" : 
+            {
+               "lat" : 51.2405389,
+               "lng" : 6.737391399999999
+            },
+            "viewport" : 
+            {
+               "northeast" : 
+               {
+                  "lat" : 51.24194818029149,
+                  "lng" : 6.738846980291502
+               },
+               "southwest" : 
+               {
+                  "lat" : 51.2392502197085,
+                  "lng" : 6.736149019708498
+               }
+            }
+         },
+         "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/lodging-71.png",
+         "icon_background_color" : "#909CE1",
+         "icon_mask_base_uri" : "https://maps.gstatic.com/mapfiles/place_api/icons/v2/hotel_pinlet",
+         "name" : "voco Düsseldorf Seestern, an IHG Hotel",
+         "opening_hours" : 
+         {
+            "open_now" : true
+         },
+         "photos" : 
+         [
+            {
+               "height" : 1600,
+               "html_attributions" : 
+               [
+                  "\u003ca href=\"https://maps.google.com/maps/contrib/115822032827059881213\"\u003evoco Düsseldorf Seestern, an IHG Hotel\u003c/a\u003e"
+               ],
+               "photo_reference" : "ATplDJZZvFlCoskzqVPDBWJ-yfMELccFXaBBAJ9CMV7LjBBz8MMYq71U-cgk_SqBNM2mkQHTu1yefhZmnkmibEWfC32FzYe2k132li7QGJBvVlcK4wt0ggVs5hhZKBpj2pf9OgFcecx5y5SmSJOopEwkBe8hMzDDG4NObp6JOd1g5Cl1hVa8",
+               "width" : 2400
+            }
+         ],
+         "place_id" : "ChIJcYmnHwm2uEcRB6tdxp7I4cE",
+         "plus_code" : 
+         {
+            "compound_code" : "6PRP+6X Düsseldorf, Germany",
+            "global_code" : "9F386PRP+6X"
+         },
+         "rating" : 4.1,
+         "reference" : "ChIJcYmnHwm2uEcRB6tdxp7I4cE",
+         "scope" : "GOOGLE",
+         "types" : 
+         [
+            "bar",
+            "restaurant",
+            "food",
+            "lodging",
+            "point_of_interest",
+            "establishment"
+         ],
+         "user_ratings_total" : 660,
+         "vicinity" : "Fritz-Vomfelde-Straße 38, Düsseldorf"
+      },
+      {
+         "business_status" : "OPERATIONAL",
+         "geometry" : 
+         {
+            "location" : 
+            {
+               "lat" : 51.2354618,
+               "lng" : 6.7785686
+            },
+            "viewport" : 
+            {
+               "northeast" : 
+               {
+                  "lat" : 51.2368246802915,
+                  "lng" : 6.779842680291502
+               },
+               "southwest" : 
+               {
+                  "lat" : 51.2341267197085,
+                  "lng" : 6.777144719708498
+               }
+            }
+         },
+         "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/lodging-71.png",
+         "icon_background_color" : "#909CE1",
+         "icon_mask_base_uri" : "https://maps.gstatic.com/mapfiles/place_api/icons/v2/hotel_pinlet",
+         "name" : "Hansa Hotel",
+         "photos" : 
+         [
+            {
+               "height" : 3021,
+               "html_attributions" : 
+               [
+                  "\u003ca href=\"https://maps.google.com/maps/contrib/108615546678493634975\"\u003eThe Local Guyde\u003c/a\u003e"
+               ],
+               "photo_reference" : "ATplDJZdpkw7eAssOP4S0ZJhFFdTVUUm37Dmj9kpi3oAZ5G0UmITgP0orp33kQMliyXQbuO7wr-NB-41qjkOOrPsPdeIQvR2kxUN-YbvUcc-TcJxuNGthgIDS05C-bPgkj8q3J5WzT9GnDq2PraObHeLW6dePWVol1J0QSU7suA6naRJPITp",
+               "width" : 2993
+            }
+         ],
+         "place_id" : "ChIJ0y14WvXJuEcRq_Vif8N_TOs",
+         "plus_code" : 
+         {
+            "compound_code" : "6QPH+5C Düsseldorf, Germany",
+            "global_code" : "9F386QPH+5C"
+         },
+         "rating" : 3.2,
+         "reference" : "ChIJ0y14WvXJuEcRq_Vif8N_TOs",
+         "scope" : "GOOGLE",
+         "types" : 
+         [
+            "restaurant",
+            "food",
+            "lodging",
+            "point_of_interest",
+            "establishment"
+         ],
+         "user_ratings_total" : 115,
+         "vicinity" : "Nordstraße 7, Düsseldorf"
+      },
+      {
+         "business_status" : "OPERATIONAL",
+         "geometry" : 
+         {
+            "location" : 
+            {
+               "lat" : 51.2139474,
+               "lng" : 6.7536253
+            },
+            "viewport" : 
+            {
+               "northeast" : 
+               {
+                  "lat" : 51.2151680302915,
+                  "lng" : 6.755111230291503
+               },
+               "southwest" : 
+               {
+                  "lat" : 51.2124700697085,
+                  "lng" : 6.752413269708498
+               }
+            }
+         },
+         "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/lodging-71.png",
+         "icon_background_color" : "#909CE1",
+         "icon_mask_base_uri" : "https://maps.gstatic.com/mapfiles/place_api/icons/v2/hotel_pinlet",
+         "name" : "Radisson Blu Media Harbour Hotel, Düsseldorf",
+         "photos" : 
+         [
+            {
+               "height" : 3840,
+               "html_attributions" : 
+               [
+                  "\u003ca href=\"https://maps.google.com/maps/contrib/104503715611438931913\"\u003eRadisson Blu Media Harbour Hotel, Düsseldorf\u003c/a\u003e"
+               ],
+               "photo_reference" : "ATplDJYb2CfR8zlmqtLfyu2WN14v4gFIqoiB49YtYAflgmLa7pkcx35HS-YTHy-SV9HrkA6aiNGZk2LtZMFJk9-35NW_LYAJDKYoQm1Xj_mMSJG4R6ly7zxGITzOUaus3KfvtbAUPo-4-Pw3sNOyEMsndqHM3tEM6_RxewG-L-Cbu2UYf3BD",
+               "width" : 2560
+            }
+         ],
+         "place_id" : "ChIJ2WLOnnTKuEcREfjoUInBl68",
+         "plus_code" : 
+         {
+            "compound_code" : "6Q73+HF Düsseldorf, Germany",
+            "global_code" : "9F386Q73+HF"
+         },
+         "rating" : 4.3,
+         "reference" : "ChIJ2WLOnnTKuEcREfjoUInBl68",
+         "scope" : "GOOGLE",
+         "types" : 
+         [
+            "bar",
+            "gym",
+            "restaurant",
+            "food",
+            "health",
+            "lodging",
+            "point_of_interest",
+            "establishment"
+         ],
+         "user_ratings_total" : 946,
+         "vicinity" : "Medienhafen, Hammer Straße 23, Düsseldorf"
+      },
+      {
+         "business_status" : "OPERATIONAL",
+         "geometry" : 
+         {
+            "location" : 
+            {
+               "lat" : 51.2308333,
+               "lng" : 6.8052283
+            },
+            "viewport" : 
+            {
+               "northeast" : 
+               {
+                  "lat" : 51.2323095302915,
+                  "lng" : 6.806447430291502
+               },
+               "southwest" : 
+               {
+                  "lat" : 51.2296115697085,
+                  "lng" : 6.803749469708498
+               }
+            }
+         },
+         "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/lodging-71.png",
+         "icon_background_color" : "#909CE1",
+         "icon_mask_base_uri" : "https://maps.gstatic.com/mapfiles/place_api/icons/v2/hotel_pinlet",
+         "name" : "Hotel Heidelberger Hof",
+         "opening_hours" : 
+         {
+            "open_now" : true
+         },
+         "photos" : 
+         [
+            {
+               "height" : 3782,
+               "html_attributions" : 
+               [
+                  "\u003ca href=\"https://maps.google.com/maps/contrib/107317280303739985447\"\u003eMoritz Jhn\u003c/a\u003e"
+               ],
+               "photo_reference" : "ATplDJYRkkztXrQiowO2JQHzwr7ecCnfH4LGIeTtR9mqAQKCqJRuJQfLcfmccGC4thQtsDMy-YbAFq07qDGodTZyqlA1fsf4DSDFSPtARmrPqClScd7815vzEvg2tNwCt4st1Oxc2GzSOv_grOReawFjqE4DdMeViM1nYBsz05KlSZRD7ucA",
+               "width" : 8470
+            }
+         ],
+         "place_id" : "ChIJb02cLNXLuEcRIdERJLe6TpY",
+         "plus_code" : 
+         {
+            "compound_code" : "6RJ4+83 Düsseldorf, Germany",
+            "global_code" : "9F386RJ4+83"
+         },
+         "rating" : 3.9,
+         "reference" : "ChIJb02cLNXLuEcRIdERJLe6TpY",
+         "scope" : "GOOGLE",
+         "types" : 
+         [
+            "restaurant",
+            "food",
+            "lodging",
+            "point_of_interest",
+            "establishment"
+         ],
+         "user_ratings_total" : 121,
+         "vicinity" : "Grafenberger Allee 103, Düsseldorf"
+      },
+      {
+         "business_status" : "OPERATIONAL",
+         "geometry" : 
+         {
+            "location" : 
+            {
+               "lat" : 51.22626460000001,
+               "lng" : 6.780195600000002
+            },
+            "viewport" : 
+            {
+               "northeast" : 
+               {
+                  "lat" : 51.2276780302915,
+                  "lng" : 6.781112680291502
+               },
+               "southwest" : 
+               {
+                  "lat" : 51.2249800697085,
+                  "lng" : 6.778414719708497
+               }
+            }
+         },
+         "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/lodging-71.png",
+         "icon_background_color" : "#909CE1",
+         "icon_mask_base_uri" : "https://maps.gstatic.com/mapfiles/place_api/icons/v2/hotel_pinlet",
+         "name" : "Hotel Favor",
+         "photos" : 
+         [
+            {
+               "height" : 907,
+               "html_attributions" : 
+               [
+                  "\u003ca href=\"https://maps.google.com/maps/contrib/100932769922048025012\"\u003eHotel Favor - Düsseldorf\u003c/a\u003e"
+               ],
+               "photo_reference" : "ATplDJZVZLWQL8RFncmSbnxPziCucbX_jOHdgnNPKOIAXxjDh3ktwCWspM2Mn7_JoJ1u5pbktbeEj9oMOFFbwduFN5AWmIRXvM_kDKw3Jbhkrgp077XLt6Xs9qA91EmboLCcNMVLXpRyH-fa8j_1YB4RmtGXUGonA6WM0990SbmW-baZfXSn",
+               "width" : 1247
+            }
+         ],
+         "place_id" : "ChIJWwTI4iLKuEcRwZv8DKERdjU",
+         "plus_code" : 
+         {
+            "compound_code" : "6QGJ+G3 Düsseldorf, Germany",
+            "global_code" : "9F386QGJ+G3"
+         },
+         "rating" : 4.5,
+         "reference" : "ChIJWwTI4iLKuEcRwZv8DKERdjU",
+         "scope" : "GOOGLE",
+         "types" : 
+         [
+            "restaurant",
+            "food",
+            "lodging",
+            "point_of_interest",
+            "establishment"
+         ],
+         "user_ratings_total" : 187,
+         "vicinity" : "Schadowplatz 7, Düsseldorf"
+      },
+      {
+         "business_status" : "OPERATIONAL",
+         "geometry" : 
+         {
+            "location" : 
+            {
+               "lat" : 51.25370709999999,
+               "lng" : 6.755573999999999
+            },
+            "viewport" : 
+            {
+               "northeast" : 
+               {
+                  "lat" : 51.2550162802915,
+                  "lng" : 6.756986480291501
+               },
+               "southwest" : 
+               {
+                  "lat" : 51.2523183197085,
+                  "lng" : 6.754288519708497
+               }
+            }
+         },
+         "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/lodging-71.png",
+         "icon_background_color" : "#909CE1",
+         "icon_mask_base_uri" : "https://maps.gstatic.com/mapfiles/place_api/icons/v2/hotel_pinlet",
+         "name" : "Hotel Ashley's Garden",
+         "opening_hours" : 
+         {
+            "open_now" : true
+         },
+         "photos" : 
+         [
+            {
+               "height" : 1883,
+               "html_attributions" : 
+               [
+                  "\u003ca href=\"https://maps.google.com/maps/contrib/117613627829709947559\"\u003eHotel Ashley&#39;s Garden\u003c/a\u003e"
+               ],
+               "photo_reference" : "ATplDJbjLa-n636GmoG84MAAsxoLiKVOGe5M4FkzV0Zs_zpap6vgwGPVJe4FzG_XnR6YPnpPSKld1_zxdBitEa2gm7I_Wi0YAX0rZXuedCjNHYBRH__fPFa_LdjtbQ4MszoKvI0SdC71ZEuf-_lVsWvhm2kdaKWpJWYazHk_qHbo2fcxzPGK",
+               "width" : 3346
+            }
+         ],
+         "place_id" : "ChIJS8uiOB62uEcR3Yvem16fAOU",
+         "plus_code" : 
+         {
+            "compound_code" : "7Q34+F6 Düsseldorf, Germany",
+            "global_code" : "9F387Q34+F6"
+         },
+         "rating" : 4.3,
+         "reference" : "ChIJS8uiOB62uEcR3Yvem16fAOU",
+         "scope" : "GOOGLE",
+         "types" : 
+         [
+            "restaurant",
+            "food",
+            "lodging",
+            "point_of_interest",
+            "establishment"
+         ],
+         "user_ratings_total" : 267,
+         "vicinity" : "Karl-Kleppe-Straße 20, Düsseldorf"
+      },
+      {
+         "business_status" : "OPERATIONAL",
+         "geometry" : 
+         {
+            "location" : 
+            {
+               "lat" : 51.2187054,
+               "lng" : 6.7875732
+            },
+            "viewport" : 
+            {
+               "northeast" : 
+               {
+                  "lat" : 51.2200507802915,
+                  "lng" : 6.788994380291502
+               },
+               "southwest" : 
+               {
+                  "lat" : 51.2173528197085,
+                  "lng" : 6.786296419708498
+               }
+            }
+         },
+         "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/lodging-71.png",
+         "icon_background_color" : "#909CE1",
+         "icon_mask_base_uri" : "https://maps.gstatic.com/mapfiles/place_api/icons/v2/hotel_pinlet",
+         "name" : "Central Hotel Düsseldorf",
+         "opening_hours" : 
+         {
+            "open_now" : true
+         },
+         "photos" : 
+         [
+            {
+               "height" : 4032,
+               "html_attributions" : 
+               [
+                  "\u003ca href=\"https://maps.google.com/maps/contrib/114157198032025853808\"\u003ematt davine\u003c/a\u003e"
+               ],
+               "photo_reference" : "ATplDJbXiy7MFxFO89PeGPZfVLXeB2cyOb2_qWLgLhsikbDW18eWhMtPyWLJ_-KgONobOmvbX8J4kD1vcfUl_qMcM-UvnIfzSLYgOkdaQXVdZ0-Zo-WE3LME8cJtmx_mi8D6nXyBofOo2xgCwoV9mise-5mFzIRb69iEfzFdt5BOWPvnp-zO",
+               "width" : 3024
+            }
+         ],
+         "place_id" : "ChIJCWZAHTrKuEcR_gFVP3B7MMg",
+         "plus_code" : 
+         {
+            "compound_code" : "6Q9Q+F2 Düsseldorf, Germany",
+            "global_code" : "9F386Q9Q+F2"
+         },
+         "rating" : 3.3,
+         "reference" : "ChIJCWZAHTrKuEcR_gFVP3B7MMg",
+         "scope" : "GOOGLE",
+         "types" : 
+         [
+            "bar",
+            "restaurant",
+            "food",
+            "lodging",
+            "point_of_interest",
+            "establishment"
+         ],
+         "user_ratings_total" : 276,
+         "vicinity" : "Scheurenstraße 3, Düsseldorf"
+      },
+      {
+         "business_status" : "OPERATIONAL",
+         "geometry" : 
+         {
+            "location" : 
+            {
+               "lat" : 51.2276702,
+               "lng" : 6.774599299999999
+            },
+            "viewport" : 
+            {
+               "northeast" : 
+               {
+                  "lat" : 51.22899903029149,
+                  "lng" : 6.775961480291502
+               },
+               "southwest" : 
+               {
+                  "lat" : 51.2263010697085,
+                  "lng" : 6.773263519708498
+               }
+            }
+         },
+         "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/restaurant-71.png",
+         "icon_background_color" : "#FF9E67",
+         "icon_mask_base_uri" : "https://maps.gstatic.com/mapfiles/place_api/icons/v2/restaurant_pinlet",
+         "name" : "Brasserie Stadthaus",
+         "opening_hours" : 
+         {
+            "open_now" : false
+         },
+         "photos" : 
+         [
+            {
+               "height" : 2362,
+               "html_attributions" : 
+               [
+                  "\u003ca href=\"https://maps.google.com/maps/contrib/106895160551138220650\"\u003eBrasserie Stadthaus\u003c/a\u003e"
+               ],
+               "photo_reference" : "ATplDJbVVg6CJaWTOboPZPG1bmXnPgRrrLC_p1PUnEOARA97wzE-dBUuz0DoN4L3--Ig0EGO3JkuPomWzOO7BBgXzovzpbKz3hKxcg3ZDdN0wdI4-kUUBBIpmsv74iptfoDmsI4mziTluXbONVwhtUnvGfqYN3UbQBxEarq-WHNyh9KeJHMf",
+               "width" : 3543
+            }
+         ],
+         "place_id" : "ChIJxdYZ_hjKuEcRl55gtJvw-zA",
+         "plus_code" : 
+         {
+            "compound_code" : "6QHF+3R Düsseldorf, Germany",
+            "global_code" : "9F386QHF+3R"
+         },
+         "price_level" : 3,
+         "rating" : 4.6,
+         "reference" : "ChIJxdYZ_hjKuEcRl55gtJvw-zA",
+         "scope" : "GOOGLE",
+         "types" : 
+         [
+            "restaurant",
+            "food",
+            "point_of_interest",
+            "establishment"
+         ],
+         "user_ratings_total" : 450,
+         "vicinity" : "Mühlenstraße 31, Düsseldorf"
+      },
+      {
+         "business_status" : "OPERATIONAL",
+         "geometry" : 
+         {
+            "location" : 
+            {
+               "lat" : 51.22374019999999,
+               "lng" : 6.772152799999999
+            },
+            "viewport" : 
+            {
+               "northeast" : 
+               {
+                  "lat" : 51.2251348802915,
+                  "lng" : 6.773444080291501
+               },
+               "southwest" : 
+               {
+                  "lat" : 51.2224369197085,
+                  "lng" : 6.770746119708496
+               }
+            }
+         },
+         "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/bar-71.png",
+         "icon_background_color" : "#FF9E67",
+         "icon_mask_base_uri" : "https://maps.gstatic.com/mapfiles/place_api/icons/v2/bar_pinlet",
+         "name" : "Brauerei Zum Schiffchen, Düsseldorf",
+         "opening_hours" : 
+         {
+            "open_now" : false
+         },
+         "photos" : 
+         [
+            {
+               "height" : 494,
+               "html_attributions" : 
+               [
+                  "\u003ca href=\"https://maps.google.com/maps/contrib/101918797230236142884\"\u003eGaststätte Brauerei Zum Schiffchen\u003c/a\u003e"
+               ],
+               "photo_reference" : "ATplDJb1dYLVukOMf03C9IHM6HHkYOo1pkv9ACqITFkZS_3SdBW1xMulxQAAEfgSvY1xDolnbKHgFsz97-iJ8jt2bC_8ZDCtADeP2qSCA0DIko_QFnt94FZ9PvABWrDfO0FCD0F_YQy0eScpmCteE7oP6_A3aozDoowf-MFCPDiwK1v_13Bk",
+               "width" : 800
+            }
+         ],
+         "place_id" : "ChIJlXkEbBfKuEcRP0xPSS6aKJk",
+         "plus_code" : 
+         {
+            "compound_code" : "6QFC+FV Düsseldorf, Germany",
+            "global_code" : "9F386QFC+FV"
+         },
+         "price_level" : 2,
+         "rating" : 4.1,
+         "reference" : "ChIJlXkEbBfKuEcRP0xPSS6aKJk",
+         "scope" : "GOOGLE",
+         "types" : 
+         [
+            "bar",
+            "restaurant",
+            "food",
+            "point_of_interest",
+            "establishment"
+         ],
+         "user_ratings_total" : 2813,
+         "vicinity" : "Hafenstraße 5, Düsseldorf"
+      },
+      {
+         "business_status" : "OPERATIONAL",
+         "geometry" : 
+         {
+            "location" : 
+            {
+               "lat" : 51.22333,
+               "lng" : 6.788246000000001
+            },
+            "viewport" : 
+            {
+               "northeast" : 
+               {
+                  "lat" : 51.2247152302915,
+                  "lng" : 6.789569030291501
+               },
+               "southwest" : 
+               {
+                  "lat" : 51.2220172697085,
+                  "lng" : 6.786871069708497
+               }
+            }
+         },
+         "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/restaurant-71.png",
+         "icon_background_color" : "#FF9E67",
+         "icon_mask_base_uri" : "https://maps.gstatic.com/mapfiles/place_api/icons/v2/restaurant_pinlet",
+         "name" : "Okinii Düsseldorf City",
+         "opening_hours" : 
+         {
+            "open_now" : false
+         },
+         "photos" : 
+         [
+            {
+               "height" : 4912,
+               "html_attributions" : 
+               [
+                  "\u003ca href=\"https://maps.google.com/maps/contrib/102498161591756369426\"\u003eOkinii Düsseldorf City\u003c/a\u003e"
+               ],
+               "photo_reference" : "ATplDJY1I3ef1varc5-lUKamIasLGzf47JYkjc6OgYyell8O3n3wK3DEdd7diVSp5YPWVcxx3It1w8Te7h1_j8uqUNhPNcRPRed2UwLemRk5yjwzJclAFUbDwTsSJeC4Y9JJ-z2sMQ1-B9txAjckeFX4qJS-RVYqUSaH8C_bWAL0Il9wQdfy",
+               "width" : 7360
+            }
+         ],
+         "place_id" : "ChIJ8TsFtzrKuEcRR59cO6OW2i0",
+         "plus_code" : 
+         {
+            "compound_code" : "6QFQ+87 Düsseldorf, Germany",
+            "global_code" : "9F386QFQ+87"
+         },
+         "price_level" : 2,
+         "rating" : 4,
+         "reference" : "ChIJ8TsFtzrKuEcRR59cO6OW2i0",
+         "scope" : "GOOGLE",
+         "types" : 
+         [
+            "restaurant",
+            "food",
+            "point_of_interest",
+            "establishment"
+         ],
+         "user_ratings_total" : 5772,
+         "vicinity" : "Immermannstraße 35, Düsseldorf"
+      },
+      {
+         "business_status" : "OPERATIONAL",
+         "geometry" : 
+         {
+            "location" : 
+            {
+               "lat" : 51.2249992,
+               "lng" : 6.772250899999999
+            },
+            "viewport" : 
+            {
+               "northeast" : 
+               {
+                  "lat" : 51.2264086802915,
+                  "lng" : 6.773672580291501
+               },
+               "southwest" : 
+               {
+                  "lat" : 51.22371071970851,
+                  "lng" : 6.770974619708497
+               }
+            }
+         },
+         "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/bar-71.png",
+         "icon_background_color" : "#FF9E67",
+         "icon_mask_base_uri" : "https://maps.gstatic.com/mapfiles/place_api/icons/v2/bar_pinlet",
+         "name" : "Uerige",
+         "opening_hours" : 
+         {
+            "open_now" : false
+         },
+         "photos" : 
+         [
+            {
+               "height" : 547,
+               "html_attributions" : 
+               [
+                  "\u003ca href=\"https://maps.google.com/maps/contrib/106948845542292137330\"\u003eUerige Obergärige Hausbrauerei\u003c/a\u003e"
+               ],
+               "photo_reference" : "ATplDJYK1_ums5C7-TvT03p67DpGsXnB9fG-PQpV4fzN_j1gcL6yGTN0aj0WbZ-fLUs048TpeDEPTsn1u7VWOCk6pE9sR3O3bnbGhD08Abfcj_O6RZbKGpVZRJ7XQ2bLUsbtb1yn6NKQ4Mkuk1oW8qGFJZZ5Parv_gLcRx2F99p_rchtEQql",
+               "width" : 640
+            }
+         ],
+         "place_id" : "ChIJG_gz2RnKuEcRTa2e3cfwryE",
+         "plus_code" : 
+         {
+            "compound_code" : "6QFC+XW Düsseldorf, Germany",
+            "global_code" : "9F386QFC+XW"
+         },
+         "price_level" : 2,
+         "rating" : 4.4,
+         "reference" : "ChIJG_gz2RnKuEcRTa2e3cfwryE",
+         "scope" : "GOOGLE",
+         "types" : 
+         [
+            "bar",
+            "restaurant",
+            "food",
+            "point_of_interest",
+            "establishment"
+         ],
+         "user_ratings_total" : 11030,
+         "vicinity" : "Berger Straße 1, Düsseldorf"
+      },
+      {
+         "business_status" : "OPERATIONAL",
+         "geometry" : 
+         {
+            "location" : 
+            {
+               "lat" : 51.2295321,
+               "lng" : 6.7752499
+            },
+            "viewport" : 
+            {
+               "northeast" : 
+               {
+                  "lat" : 51.2308640302915,
+                  "lng" : 6.776626630291502
+               },
+               "southwest" : 
+               {
+                  "lat" : 51.2281660697085,
+                  "lng" : 6.773928669708497
+               }
+            }
+         },
+         "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/generic_business-71.png",
+         "icon_background_color" : "#7B9EB0",
+         "icon_mask_base_uri" : "https://maps.gstatic.com/mapfiles/place_api/icons/v2/generic_pinlet",
+         "name" : "Brewery im Füchschen",
+         "opening_hours" : 
+         {
+            "open_now" : false
+         },
+         "photos" : 
+         [
+            {
+               "height" : 4000,
+               "html_attributions" : 
+               [
+                  "\u003ca href=\"https://maps.google.com/maps/contrib/111104152379493044408\"\u003eSven Gores\u003c/a\u003e"
+               ],
+               "photo_reference" : "ATplDJbBUHvhECwGzOZgBapRrPYTFeGgOmiRQ-UY44CDcNohfPhpVt38p8p5pmpY9O_vmZrVsjut-zkbnS6ACnGrdDj5BmDLtLou3MS40XBLIjAGz2fe_2eAxvWEXDDeI0v1XN3VOGE-76PSy6PI1H08d2rxCqajreaubrKftQ2iOzyZhsOI",
+               "width" : 1800
+            }
+         ],
+         "place_id" : "ChIJ03hdzBjKuEcR4cCjnsS6_R4",
+         "plus_code" : 
+         {
+            "compound_code" : "6QHG+R3 Düsseldorf, Germany",
+            "global_code" : "9F386QHG+R3"
+         },
+         "rating" : 4.3,
+         "reference" : "ChIJ03hdzBjKuEcR4cCjnsS6_R4",
+         "scope" : "GOOGLE",
+         "types" : 
+         [
+            "bar",
+            "restaurant",
+            "food",
+            "point_of_interest",
+            "establishment"
+         ],
+         "user_ratings_total" : 2272,
+         "vicinity" : "Ratinger Straße 28, Düsseldorf"
+      },
+      {
+         "business_status" : "OPERATIONAL",
+         "geometry" : 
+         {
+            "location" : 
+            {
+               "lat" : 51.25464880000001,
+               "lng" : 6.743087099999999
+            },
+            "viewport" : 
+            {
+               "northeast" : 
+               {
+                  "lat" : 51.25604773029151,
+                  "lng" : 6.744590080291502
+               },
+               "southwest" : 
+               {
+                  "lat" : 51.25334976970851,
+                  "lng" : 6.741892119708497
+               }
+            }
+         },
+         "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/lodging-71.png",
+         "icon_background_color" : "#909CE1",
+         "icon_mask_base_uri" : "https://maps.gstatic.com/mapfiles/place_api/icons/v2/hotel_pinlet",
+         "name" : "Hotel Schnellenburg",
+         "opening_hours" : 
+         {
+            "open_now" : true
+         },
+         "photos" : 
+         [
+            {
+               "height" : 1361,
+               "html_attributions" : 
+               [
+                  "\u003ca href=\"https://maps.google.com/maps/contrib/109986471484962291175\"\u003eHotel Schnellenburg\u003c/a\u003e"
+               ],
+               "photo_reference" : "ATplDJY4S6BZFu_iyy_Nxjt2IjbkdZrHKldct0Ju8t0UafEVFQ7sm-NIaxZ1AA6TYQYMKq-yodxIpwwhGpl3KIoLkgEr9SZ1EhFlyxhtA2hvixJB9pFdul7jgyF9vpaXwX3VM6h9kJdNjx0JpnpAu7_PjTRLcPUtuwMzL5fAmORyywygj6sh",
+               "width" : 2000
+            }
+         ],
+         "place_id" : "ChIJQUCRcRe2uEcRZlPTU6ZQrCk",
+         "plus_code" : 
+         {
+            "compound_code" : "7P3V+V6 Düsseldorf, Germany",
+            "global_code" : "9F387P3V+V6"
+         },
+         "rating" : 4.3,
+         "reference" : "ChIJQUCRcRe2uEcRZlPTU6ZQrCk",
+         "scope" : "GOOGLE",
+         "types" : 
+         [
+            "restaurant",
+            "food",
+            "lodging",
+            "point_of_interest",
+            "establishment"
+         ],
+         "user_ratings_total" : 695,
+         "vicinity" : "Rotterdamer Straße 120, Düsseldorf"
+      },
+      {
+         "business_status" : "OPERATIONAL",
+         "geometry" : 
+         {
+            "location" : 
+            {
+               "lat" : 51.226086,
+               "lng" : 6.774435
+            },
+            "viewport" : 
+            {
+               "northeast" : 
+               {
+                  "lat" : 51.2276145802915,
+                  "lng" : 6.77796325
+               },
+               "southwest" : 
+               {
+                  "lat" : 51.2249166197085,
+                  "lng" : 6.773232249999999
+               }
+            }
+         },
+         "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/generic_business-71.png",
+         "icon_background_color" : "#7B9EB0",
+         "icon_mask_base_uri" : "https://maps.gstatic.com/mapfiles/place_api/icons/v2/generic_pinlet",
+         "name" : "Zum Schlüssel",
+         "opening_hours" : 
+         {
+            "open_now" : false
+         },
+         "photos" : 
+         [
+            {
+               "height" : 1080,
+               "html_attributions" : 
+               [
+                  "\u003ca href=\"https://maps.google.com/maps/contrib/105410256282262817833\"\u003eHausbrauerei &quot;Zum Schlüssel&quot;\u003c/a\u003e"
+               ],
+               "photo_reference" : "ATplDJa2qTjUvgsmlfVVHcj6C_M3u0cSFfoC6I6Yk_MDmB-iCjwTxCDBg0k_nCjT9sMJFYWxOuMmWdXSmMzmzPa2dZIB1nKUIT1X1OT9KdiFFTeKoQy2ASS0JFVIVYeVHPkYIwVsR3cCNmmjdaPI32xjek8M8iBb1qncYTQ1FAtSpoeTUX83",
+               "width" : 1920
+            }
+         ],
+         "place_id" : "ChIJk0mnSBjKuEcR4d0J_E0kAb4",
+         "plus_code" : 
+         {
+            "compound_code" : "6QGF+CQ Düsseldorf, Germany",
+            "global_code" : "9F386QGF+CQ"
+         },
+         "price_level" : 1,
+         "rating" : 4.3,
+         "reference" : "ChIJk0mnSBjKuEcR4d0J_E0kAb4",
+         "scope" : "GOOGLE",
+         "types" : 
+         [
+            "restaurant",
+            "food",
+            "point_of_interest",
+            "establishment"
+         ],
+         "user_ratings_total" : 2281,
+         "vicinity" : "Bolkerstraße 41-47, Düsseldorf"
+      },
+      {
+         "business_status" : "OPERATIONAL",
+         "geometry" : 
+         {
+            "location" : 
+            {
+               "lat" : 51.2215533,
+               "lng" : 6.785279999999999
+            },
+            "viewport" : 
+            {
+               "northeast" : 
+               {
+                  "lat" : 51.2228725802915,
+                  "lng" : 6.786777230291501
+               },
+               "southwest" : 
+               {
+                  "lat" : 51.2201746197085,
+                  "lng" : 6.784079269708497
+               }
+            }
+         },
+         "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/generic_business-71.png",
+         "icon_background_color" : "#7B9EB0",
+         "icon_mask_base_uri" : "https://maps.gstatic.com/mapfiles/place_api/icons/v2/generic_pinlet",
+         "name" : "Brewery Schumacher",
+         "opening_hours" : 
+         {
+            "open_now" : false
+         },
+         "photos" : 
+         [
+            {
+               "height" : 4000,
+               "html_attributions" : 
+               [
+                  "\u003ca href=\"https://maps.google.com/maps/contrib/110143239954190466025\"\u003eAlisa Linnig\u003c/a\u003e"
+               ],
+               "photo_reference" : "ATplDJa1v5ABFLaXX6cgmU8JeqCMB-Lx93qcGvoYRKBct1aETU5UL3v-fn3bxRWMKFwq9zQzAsGnQP6bfOxq92Ou5p_8tj8lfr9xDh18PDkR15fcFuqEs1lt2-FCI_-sFZFJ6TNKDoTq8O_3Wb40-nS0DdX0H8JR3tdrdZhp6ujD_eGM2xu0",
+               "width" : 3000
+            }
+         ],
+         "place_id" : "ChIJ--a_BjvKuEcRpO61kydfgRQ",
+         "plus_code" : 
+         {
+            "compound_code" : "6QCP+J4 Düsseldorf, Germany",
+            "global_code" : "9F386QCP+J4"
+         },
+         "rating" : 4.3,
+         "reference" : "ChIJ--a_BjvKuEcRpO61kydfgRQ",
+         "scope" : "GOOGLE",
+         "types" : 
+         [
+            "bar",
+            "restaurant",
+            "food",
+            "point_of_interest",
+            "establishment"
+         ],
+         "user_ratings_total" : 2050,
+         "vicinity" : "Oststraße 123, Düsseldorf"
+      },
+      {
+         "business_status" : "OPERATIONAL",
+         "geometry" : 
+         {
+            "location" : 
+            {
+               "lat" : 51.22479629999999,
+               "lng" : 6.788757799999998
+            },
+            "viewport" : 
+            {
+               "northeast" : 
+               {
+                  "lat" : 51.22609733029149,
+                  "lng" : 6.790095830291501
+               },
+               "southwest" : 
+               {
+                  "lat" : 51.22339936970849,
+                  "lng" : 6.787397869708497
+               }
+            }
+         },
+         "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/restaurant-71.png",
+         "icon_background_color" : "#FF9E67",
+         "icon_mask_base_uri" : "https://maps.gstatic.com/mapfiles/place_api/icons/v2/restaurant_pinlet",
+         "name" : "Yabase",
+         "opening_hours" : 
+         {
+            "open_now" : false
+         },
+         "photos" : 
+         [
+            {
+               "height" : 2250,
+               "html_attributions" : 
+               [
+                  "\u003ca href=\"https://maps.google.com/maps/contrib/108799958981508656776\"\u003eJörg S.\u003c/a\u003e"
+               ],
+               "photo_reference" : "ATplDJYAbyjkPdMwtjNULE9LfbBdSr5-NP_6ttVFF3g2tIeJcmgAzmbn8kt-kGmpbxzG33VDemQqJzUH-uqfiKkJrm_PVfXdJ_g6WW6J4rLicg7y30poAur_AV2WjYSBbCYYP9jVMJwvCG57ksKUH_21xtTjstz9qw-daNPU0VVMK_IZBOHp",
+               "width" : 4000
+            }
+         ],
+         "place_id" : "ChIJb4b-QyXKuEcRdT9qJqtgobQ",
+         "plus_code" : 
+         {
+            "compound_code" : "6QFQ+WG Düsseldorf, Germany",
+            "global_code" : "9F386QFQ+WG"
+         },
+         "price_level" : 3,
+         "rating" : 4.6,
+         "reference" : "ChIJb4b-QyXKuEcRdT9qJqtgobQ",
+         "scope" : "GOOGLE",
+         "types" : 
+         [
+            "restaurant",
+            "food",
+            "point_of_interest",
+            "establishment"
+         ],
+         "user_ratings_total" : 1584,
+         "vicinity" : "Klosterstraße 70, Düsseldorf"
+      },
+      {
+         "business_status" : "OPERATIONAL",
+         "geometry" : 
+         {
+            "location" : 
+            {
+               "lat" : 51.2139056,
+               "lng" : 6.750972200000001
+            },
+            "viewport" : 
+            {
+               "northeast" : 
+               {
+                  "lat" : 51.2152288302915,
+                  "lng" : 6.752329580291502
+               },
+               "southwest" : 
+               {
+                  "lat" : 51.2125308697085,
+                  "lng" : 6.749631619708498
+               }
+            }
+         },
+         "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/restaurant-71.png",
+         "icon_background_color" : "#FF9E67",
+         "icon_mask_base_uri" : "https://maps.gstatic.com/mapfiles/place_api/icons/v2/restaurant_pinlet",
+         "name" : "Bocconcino | Restaurant Düsseldorf Medienhafen",
+         "opening_hours" : 
+         {
+            "open_now" : false
+         },
+         "photos" : 
+         [
+            {
+               "height" : 3888,
+               "html_attributions" : 
+               [
+                  "\u003ca href=\"https://maps.google.com/maps/contrib/118431597196351379334\"\u003eBocconcino Italiener mediterran | Restaurant Düsseldorf Medienhafen\u003c/a\u003e"
+               ],
+               "photo_reference" : "ATplDJa4EuyXr8-EsBAKYRygCc2QWviZPkhf606ept_cecAbJmh1Xqp4-dbltNWmESBCq2mEP24aVxGiYsYgkux66Xz7azSjN0DiJquM9huouNBv0wpgIzZOgEAvwtaMp8N3EPa-dASmq4Gm_6SDhToVCPxmBVy3zoXNrVQsP0tfdcgKSvfa",
+               "width" : 5184
+            }
+         ],
+         "place_id" : "ChIJZWjD4XTKuEcR_ZuLh-_VIk4",
+         "plus_code" : 
+         {
+            "compound_code" : "6Q72+H9 Düsseldorf, Germany",
+            "global_code" : "9F386Q72+H9"
+         },
+         "price_level" : 3,
+         "rating" : 3.8,
+         "reference" : "ChIJZWjD4XTKuEcR_ZuLh-_VIk4",
+         "scope" : "GOOGLE",
+         "types" : 
+         [
+            "bar",
+            "restaurant",
+            "food",
+            "point_of_interest",
+            "establishment"
+         ],
+         "user_ratings_total" : 1240,
+         "vicinity" : "Kaistraße 4-6, Düsseldorf"
+      },
+      {
+         "business_status" : "OPERATIONAL",
+         "geometry" : 
+         {
+            "location" : 
+            {
+               "lat" : 51.2261455,
+               "lng" : 6.773345900000001
+            },
+            "viewport" : 
+            {
+               "northeast" : 
+               {
+                  "lat" : 51.2278657302915,
+                  "lng" : 6.774836980291503
+               },
+               "southwest" : 
+               {
+                  "lat" : 51.2251677697085,
+                  "lng" : 6.772139019708498
+               }
+            }
+         },
+         "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/restaurant-71.png",
+         "icon_background_color" : "#FF9E67",
+         "icon_mask_base_uri" : "https://maps.gstatic.com/mapfiles/place_api/icons/v2/restaurant_pinlet",
+         "name" : "Louisiana Düsseldorf Altstadt",
+         "opening_hours" : 
+         {
+            "open_now" : false
+         },
+         "photos" : 
+         [
+            {
+               "height" : 640,
+               "html_attributions" : 
+               [
+                  "\u003ca href=\"https://maps.google.com/maps/contrib/112506148850875624514\"\u003eLouisiana Düsseldorf Altstadt\u003c/a\u003e"
+               ],
+               "photo_reference" : "ATplDJZ0Mbm-R1gzK_43-V_Ge9t3Dk0jDeLSoVXkkQbG3a44zjBw3xojtFLV1IwF9Tr_WwjimWHJIdtTBkm6mhPQLrJPy34dDzJ4dhUZaKPiy1FmRhTNQY4ru7cswheDa7w6konNraV6w3m1xMh6E4nbk-VThfDf3UrMFP1VPaehCS5Cph9X",
+               "width" : 1139
+            }
+         ],
+         "place_id" : "ChIJieUktBnKuEcRj0_ISl2HHsc",
+         "plus_code" : 
+         {
+            "compound_code" : "6QGF+F8 Düsseldorf, Germany",
+            "global_code" : "9F386QGF+F8"
+         },
+         "price_level" : 2,
+         "rating" : 4,
+         "reference" : "ChIJieUktBnKuEcRj0_ISl2HHsc",
+         "scope" : "GOOGLE",
+         "types" : 
+         [
+            "night_club",
+            "bar",
+            "restaurant",
+            "food",
+            "point_of_interest",
+            "establishment"
+         ],
+         "user_ratings_total" : 3157,
+         "vicinity" : "Bolkerstraße 18, Düsseldorf"
+      }
+   ],
+   "status" : "OK"
+}

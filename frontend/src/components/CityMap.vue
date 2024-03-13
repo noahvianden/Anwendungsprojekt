@@ -13,9 +13,9 @@
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import DuesseldorfDistricts from '@/assets/DuesseldorfDistricts.geojson';
-import axios from 'axios';
+import DuesseldorfPlaces from '@/assets/DuesseldorfPlaces.json';
 
-export default {  
+export default {
   name: 'MapComponent',
   data() {
     return {
@@ -47,80 +47,91 @@ export default {
     },
 
     async updateMap() {
-      try {
-        const coordinates = await this.geocodeCity(this.cityName);
-        if (!coordinates) {
-          console.error('Koordinaten für die angegebene Stadt konnten nicht gefunden werden.');
-          return;
-        }
+  try {
+    const coordinates = await this.geocodeCity(this.cityName);
+    if (!coordinates) {
+      console.error('Koordinaten für die angegebene Stadt konnten nicht gefunden werden.');
+      return;
+    }
 
-        if (!this.map) {
-          this.map = L.map('map', {
-            zoomControl: false,
-            attributionControl: false,
-            dragging: false,
-            touchZoom: false,
-            scrollWheelZoom: false,
-            doubleClickZoom: false,
-            boxZoom: false,
+    if (!this.map) {
+      this.map = L.map('map', {
+        zoomControl: false,
+        attributionControl: false,
+        dragging: false,
+        touchZoom: false,
+        scrollWheelZoom: false,
+        doubleClickZoom: false,
+        boxZoom: false,
+      });
+    }
+
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager_labels_under/{z}/{x}/{y}{r}.png', {
+      attribution: '&copy; <a href="https://carto.com/attributions">CARTO</a>'
+    }).addTo(this.map);
+
+    if (this.cityBoundsLayer) {
+      this.map.removeLayer(this.cityBoundsLayer);
+    }
+
+    const cityBoundsGeoJSON = await this.getCityBoundsGeoJSON(this.cityName);
+    if (!cityBoundsGeoJSON) {
+      console.warn('Stadtgrenzen konnten nicht abgerufen werden. Die Karte wird dennoch aktualisiert.');
+    } else {
+      this.cityBoundsLayer = L.geoJSON(cityBoundsGeoJSON).addTo(this.map);
+      this.cityBoundsLayer.setStyle({
+        fillColor: 'transparent',
+        color: 'black',
+        weight: 4
+      });
+    }
+
+    if (this.neighborhoodLayer) {
+      this.map.removeLayer(this.neighborhoodLayer);
+    }
+
+    try {
+      this.neighborhoodLayer = L.geoJSON(DuesseldorfDistricts, {
+        onEachFeature: (feature, layer) => {
+          layer.bindTooltip(feature.properties.Name, {
+              permanent: false,
+              className: 'my-label',
+              direction: 'auto'
+          });
+          let isZoomed = false;
+          layer.on('click', () => {
+            try {
+              if (!isZoomed) {
+                this.map.fitBounds(layer.getBounds());
+                isZoomed = true;
+              } else {
+                this.map.fitBounds(this.cityBoundsLayer.getBounds());
+                isZoomed = false;
+              }
+            } catch (error) {
+              console.error('Fehler beim Klicken auf den Layer:', error);
+            }
           });
         }
+      }).addTo(this.map);
+    } catch (error) {
+      console.error('Fehler beim Hinzufügen des Stadtteillayers:', error);
+    }
 
-        L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager_labels_under/{z}/{x}/{y}{r}.png', {
-          attribution: '&copy; <a href="https://carto.com/attributions">CARTO</a>'
-        }).addTo(this.map);
+    this.neighborhoodLayer.setStyle({
+      fillColor: 'transparent',
+      color: 'gray',
+      weight: 2
+    });
 
-        if (this.cityBoundsLayer) {
-          this.map.removeLayer(this.cityBoundsLayer);
-        }
+    this.map.fitBounds(this.cityBoundsLayer.getBounds());
+    
+  } catch (error) {
+    console.error('Fehler beim Aktualisieren der Karte:', error);
+  }
+},
 
-        const cityBoundsGeoJSON = await this.getCityBoundsGeoJSON(this.cityName);
-        if (!cityBoundsGeoJSON) {
-          console.warn('Stadtgrenzen konnten nicht abgerufen werden. Die Karte wird dennoch aktualisiert.');
-        } else {
-          this.cityBoundsLayer = L.geoJSON(cityBoundsGeoJSON).addTo(this.map);
-          this.cityBoundsLayer.setStyle({
-            fillColor: 'transparent',
-            color: 'black',
-            weight: 4
-          });
-        }
 
-        if (this.neighborhoodLayer) {
-          this.map.removeLayer(this.neighborhoodLayer);
-        }
-
-        this.neighborhoodLayer = L.geoJSON(DuesseldorfDistricts, {
-          onEachFeature: (feature, layer) => {
-            layer.bindTooltip(feature.properties.Name, {
-                permanent: false,
-                className: 'my-label',
-                direction: 'auto'
-            });
-            let isZoomed = false;
-            layer.on('click', () => {
-                if (!isZoomed) {
-                    this.map.fitBounds(layer.getBounds());
-                    isZoomed = true;
-                } else {
-                    this.map.fitBounds(this.cityBoundsLayer.getBounds());
-                    isZoomed = false;
-                }
-            });
-          }
-        }).addTo(this.map);
-
-        this.neighborhoodLayer.setStyle({
-          fillColor: 'transparent',
-          color: 'gray',
-          weight: 2
-        });
-
-        this.map.fitBounds(this.cityBoundsLayer.getBounds());
-      } catch (error) {
-        console.error('Fehler beim Aktualisieren der Karte:', error);
-      }
-    },
 
     async geocodeCity(cityName) {
       try {
@@ -151,34 +162,36 @@ export default {
         return null;
       }
     },
-    
+
     async fetchRestaurantData() {
       try {
-        const responsePlaces = await axios.get('https://maps.googleapis.com/maps/api/place/nearbysearch/json', {
-          params: {
-            location: '51.2277,6.7735',
-            radius: 4000,
-            type: 'restaurant',
-            key: 'AIzaSyA8L6nbvtOasMavozQMIdjxvvIbc4j2kjU'
-          }
-        });
-        this.restaurants = responsePlaces.data.results.map(result => ({
-          name: result.name,
-          lat: result.geometry.location.lat,
-          lon: result.geometry.location.lng
-        }));
+        // Überprüfen, ob lokale Daten vorhanden sind
+        this.restaurants = DuesseldorfPlaces.results; // Ändern Sie diese Zeile
+        if (this.restaurants) {
+          console.log(this.restaurants)
+          this.addRestaurantMarkers();
+        } else {
+          console.warn('Keine lokalen Restaurantdaten gefunden. Laden von externen Quellen...');
+          // Wenn keine lokalen Daten vorhanden sind, fügen Sie den Code zum Abrufen von externen Daten hier ein
+        }
       } catch (error) {
         console.error('Fehler beim Abrufen der Restaurantdaten:', error);
       }
     },
 
-
     addRestaurantMarkers() {
-      this.restaurants.forEach(restaurant => {
-        L.marker([restaurant.lat, restaurant.lon])
-          .bindPopup(restaurant.name)
-          .addTo(this.map);
-      });
+      if (Array.isArray(this.restaurants)) {
+        console.log("DAS ASGAS OLGVASNF")
+        this.restaurants.forEach(restaurant => {
+          const lat = restaurant.geometry.location.lat;
+          const lon = restaurant.geometry.location.lng;
+          L.marker([lat, lon])
+            .bindPopup(restaurant.name)
+            .addTo(this.map);
+        });
+      } else {
+        console.error('Die Restaurantdaten sind kein Array.');
+      }
     },
   }
 };

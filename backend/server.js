@@ -11,6 +11,8 @@ app.use(express.json());
 // Route für die Weiterleitung von Anfragen an die Google Places API
 app.get('/places', async (req, res) => {
   try {
+
+    
     // Extrahieren Sie die erforderlichen Parameter aus der Anfrage, z. B. die Position und den Radius
     const { latitude, longitude, radius } = req.query;
     
@@ -18,7 +20,8 @@ app.get('/places', async (req, res) => {
     const response = await axios.get('https://maps.googleapis.com/maps/api/place/nearbysearch/json', {
       params: {
         location: `${latitude},${longitude}`,
-        radius: 3000,
+        radius: 200,
+        type: 'restaurant',
         key: GOOGLE_PLACES_API_KEY
       }
     });

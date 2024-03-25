@@ -110,9 +110,27 @@ export default {
                 className: 'my-label',
                 direction: 'auto'
             });
+            let isZoomed = false;
             layer.on('click', () => {
-              const clickedDistrictCoordinates = layer.getBounds().getCenter(); // Koordinaten des geklickten Stadtteils
-              this.fetchRestaurantData(clickedDistrictCoordinates.lat, clickedDistrictCoordinates.lng);
+              try {
+                this.map.eachLayer(layer => {
+                    // Überprüfen, ob das Layer ein Marker ist und ob es sich um einen Restaurantmarker handelt
+                    if (layer instanceof L.Marker && layer.options.icon.options.iconUrl === markerIcon) {
+                      this.map.removeLayer(layer); // Entferne den Marker von der Karte
+                    }
+                });  
+                if (!isZoomed) {
+                  this.map.fitBounds(layer.getBounds());
+                  const clickedDistrictCoordinates = layer.getBounds().getCenter(); // Koordinaten des geklickten Stadtteils
+                  this.fetchRestaurantData(clickedDistrictCoordinates.lat, clickedDistrictCoordinates.lng);
+                  isZoomed = true;
+                } else {
+                  this.map.fitBounds(this.cityBoundsLayer.getBounds());   
+                  isZoomed = false;
+                }
+              } catch (error) {
+                console.error('Fehler beim Klicken auf den Layer:', error);
+              }
             });
           }
         }).addTo(this.map);
@@ -161,45 +179,43 @@ export default {
     },
 
     async fetchRestaurantData(latitude, longitude) {
-  try {
-    const response = await axios.get('http://localhost:3000/places', {
-      params: {
-        latitude,
-        longitude
-      }
-    });
-
-    this.restaurants = response.data.results; // Speichere die Restaurantdaten im Datenobjekt
-    console.log('Successfully fetched restaurant data:', this.restaurants);
-    this.addRestaurantMarkers();
-  } catch (error) {
-    console.error('Fehler beim Abrufen der Restaurantdaten:', error);
-  }
-},
-
-addRestaurantMarkers() {
-  if (Array.isArray(this.restaurants)) {
-    this.restaurants.forEach(restaurant => {
-      const lat = restaurant.geometry.location.lat;
-      const lon = restaurant.geometry.location.lng;
-      // Füge den Marker nur hinzu, wenn ein Bezirk gezoomt ist
-      if (this.map.getZoom() > 12) { // Annahme: Zoomlevel zum Anzeigen der Marker ist 12
-        const customIcon = L.icon({
-          iconUrl: markerIcon,
-          iconSize: [19, 25.6],
-          iconAnchor: [12, 41],
-          popupAnchor: [0, -41]
+      try {
+        const response = await axios.get('http://localhost:3000/places', {
+          params: {
+            latitude,
+            longitude
+          }
         });
 
-        L.marker([lat, lon], { icon: customIcon })
-          .bindPopup(restaurant.name)
-          .addTo(this.map);
+        this.restaurants = response.data.results; // Speichere die Restaurantdaten im Datenobjekt
+        this.addRestaurantMarkers();
+      } catch (error) {
+        console.error('Fehler beim Abrufen der Restaurantdaten:', error);
       }
-    });
-  } else {
-    console.error('Die Restaurantdaten sind kein Array.');
-  }
-},
+    },
+
+    addRestaurantMarkers() {
+      if (Array.isArray(this.restaurants)) {
+        this.restaurants.forEach(restaurant => {
+          const lat = restaurant.geometry.location.lat;
+          const lon = restaurant.geometry.location.lng;
+          // Füge den Marker nur hinzu, wenn ein Bezirk gezoomt ist
+          // Annahme: Zoomlevel zum Anzeigen der Marker ist 12
+          const customIcon = L.icon({
+            iconUrl: markerIcon,
+            iconSize: [19, 25.6],
+            iconAnchor: [12, 41],
+            popupAnchor: [0, -41]
+          });
+
+          L.marker([lat, lon], { icon: customIcon })
+            .bindPopup(restaurant.name)
+            .addTo(this.map);
+        });
+      } else {
+        console.error('Die Restaurantdaten sind kein Array.');
+      }
+    },
 
   }
 };

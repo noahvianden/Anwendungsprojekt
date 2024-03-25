@@ -10,6 +10,18 @@
 </template>
 
 <script>
+L.Util.falseFn = function() {}; // Leere Funktion, um Fehlermeldungen zu ignorieren
+
+L.Util.error = function(message) {
+  // Eigene Fehlerbehandlung implementieren, z.B. Konsolenmeldung oder Logging
+  console.warn('[Leaflet Fehler]: ' + message);
+};
+
+L.Util.warn = function(message) {
+  // Eigene Warnungsbehandlung implementieren, z.B. Konsolenmeldung oder Logging
+  console.info('[Leaflet Warnung]: ' + message);
+};
+
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import DuesseldorfDistricts from '@/assets/DuesseldorfDistricts.geojson';
@@ -57,6 +69,7 @@ export default {
     if (!this.map) {
       this.map = L.map('map', {
         zoomControl: false,
+        zoomAnimation: false,
         attributionControl: false,
         dragging: false,
         touchZoom: false,
@@ -187,7 +200,7 @@ export default {
           const lon = restaurant.geometry.location.lng;
           L.marker([lat, lon])
             .bindPopup(restaurant.name)
-            .addTo(this.map);
+            .addTo(this.map)
         });
       } else {
         console.error('Die Restaurantdaten sind kein Array.');

@@ -198,14 +198,53 @@ export default {
         this.restaurants.forEach(restaurant => {
           const lat = restaurant.geometry.location.lat;
           const lon = restaurant.geometry.location.lng;
-          L.marker([lat, lon])
-            .bindPopup(restaurant.name)
-            .addTo(this.map)
+          var infoContent = "<b>" + restaurant.name + "</b><br>" +
+                        "Adresse: " + restaurant.vicinity + "<br>" +
+                        "Öffnungszeiten: " + restaurant.opening_hours + "<br>" +
+                        "Navigation mit Rechtsklick starten";
+          var popupOnClick = L.popup().setContent(infoContent);
+          var popupOnMouseover = L.popup().setContent(restaurant.name);
+          var iconR = L.icon({
+              iconUrl: require('@/assets/restaurant.png'),
+              iconSize: [15, 15]
+          });
+          var markerR = L.marker([lat, lon], { icon: iconR })
+          .bindPopup(infoContent)
+          .addTo(this.map);
+
+          // Ereignis 'mouseover' zum Marker hinzufügen, um Popup beim Hovern anzuzeigen
+          markerR.on('mouseover', function() {
+              markerR.bindPopup(popupOnMouseover).openPopup();
+          });
+
+          // Ereignis 'mouseout' zum Marker hinzufügen, um Popup beim Verlassen zu schließen
+          markerR.on('mouseout', function() {
+              markerR.closePopup();
+          });
+
+          // Ereignis 'click' zum Marker hinzufügen, um Popup beim Klicken anzuzeigen
+          markerR.on('click', function() {
+              markerR.bindPopup(popupOnClick).openPopup();});
+          
+          markerR.on('contextmenu', () => {
+              var markerLatLng = markerR.getLatLng();
+              var destinationAddress = markerLatLng.lat + "," + markerLatLng.lng;
+              this.startNavigationTo(destinationAddress);
+          });
+
         });
       } else {
         console.error('Die Restaurantdaten sind kein Array.');
       }
     },
+
+    startNavigationTo(address) {
+    // Ersetze 'address' durch die Adresse oder Koordinaten des Ziels
+    var url = 'https://www.google.com/maps/dir//' + encodeURIComponent(address);
+    window.open(url, '_blank');
+},
+
+
   }
 };
 </script>

@@ -20,7 +20,7 @@ app.get('/places', async (req, res) => {
     const response = await axios.get('https://maps.googleapis.com/maps/api/place/nearbysearch/json', {
       params: {
         location: `${latitude},${longitude}`,
-        radius: 200,
+        radius: 2000,
         type: 'restaurant',
         key: GOOGLE_PLACES_API_KEY
       }

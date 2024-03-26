@@ -1,4 +1,5 @@
 <template>
+  
   <div class="map-container">
     <form @submit.prevent="updateCoordinates">
       <label for="cityName">City Name:</label>
@@ -68,20 +69,25 @@ export default {
 
         if (!this.map) {
           this.map = L.map('map', {
-            zoomControl: false,
+            zoomControl: true,
             zoomAnimation: false,
             attributionControl: false,
-            dragging: false,
-            touchZoom: false,
+            dragging: true,
+            touchZoom: true,
             scrollWheelZoom: false,
             doubleClickZoom: false,
             boxZoom: false,
           });
         }
 
-        L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager_labels_under/{z}/{x}/{y}{r}.png', {
+        const boundary = await this.getCityBoundsGeoJSON();
+        console.log(boundary)
+
+        L.TileLayer.BoundaryCanvas('https://{s}.basemaps.cartocdn.com/rastertiles/voyager_labels_under/{z}/{x}/{y}{r}.png', {
+          boundary: boundary,
           attribution: '&copy; <a href="https://carto.com/attributions">CARTO</a>'
         }).addTo(this.map);
+
 
         if (this.cityBoundsLayer) {
           this.map.removeLayer(this.cityBoundsLayer);
@@ -120,6 +126,7 @@ export default {
                     }
                 });  
                 if (!isZoomed) {
+                  console.log(layer.getBounds(), { padding: [-500, -500] });
                   this.map.fitBounds(layer.getBounds());
                   const clickedDistrictCoordinates = layer.getBounds().getCenter(); // Koordinaten des geklickten Stadtteils
                   this.fetchRestaurantData(clickedDistrictCoordinates.lat, clickedDistrictCoordinates.lng);

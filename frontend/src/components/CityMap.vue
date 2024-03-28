@@ -27,9 +27,7 @@ import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import axios from 'axios';
 import DuesseldorfDistricts from '@/assets/DuesseldorfDistricts.geojson';
-// import DuesseldorfPlaces from '@/assets/DuesseldorfPlaces.json';
-import markerIcon from '@/assets/marker-icon.png';
-
+import RestaurantMarkerIcon from '@/assets/restaurant.png';
 export default {
   name: 'MapComponent',
   data() {
@@ -114,13 +112,13 @@ export default {
             });
             let isZoomed = false;
             layer.on('click', () => {
-              try {
-                this.map.eachLayer(layer => {
+              this.map.eachLayer(layer => {
                     // Überprüfen, ob das Layer ein Marker ist und ob es sich um einen Restaurantmarker handelt
-                    if (layer instanceof L.Marker && layer.options.icon.options.iconUrl === markerIcon) {
+                    if (layer instanceof L.Marker) {
                       this.map.removeLayer(layer); // Entferne den Marker von der Karte
                     }
-                });  
+              });  
+              try { 
                 if (!isZoomed) {
                   console.log(layer.getBounds(), { padding: [-500, -500] });
                   this.map.fitBounds(layer.getBounds());
@@ -209,7 +207,7 @@ export default {
           var popupOnClick = L.popup().setContent(infoContent);
           var popupOnMouseover = L.popup().setContent(restaurant.name);
           var iconR = L.icon({
-              iconUrl: require('@/assets/restaurant.png'),
+              iconUrl: RestaurantMarkerIcon,
               iconSize: [15, 15],
               iconAnchor: [12, 41],
               popupAnchor: [0, -41]

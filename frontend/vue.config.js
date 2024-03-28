@@ -1,6 +1,6 @@
-const { defineConfig } = require('@vue/cli-service');
+const { DefinePlugin } = require('webpack');
 
-module.exports = defineConfig({
+module.exports = {
   devServer: {
     port: 8080,
     proxy: {
@@ -17,5 +17,13 @@ module.exports = defineConfig({
       .use('json-loader')
       .loader('json-loader')
       .end();
+  },
+  configureWebpack: {
+    plugins: [
+      // Hier wird das Feature-Flag global injiziert
+      new DefinePlugin({
+        '__VUE_PROD_HYDRATION_MISMATCH_DETAILS__': false
+      })
+    ]
   }
-});
+};

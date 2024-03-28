@@ -1,33 +1,25 @@
 <template>
-  
   <div class="map-container">
-    <form @submit.prevent="updateCoordinates">
-      <label for="cityName">City Name:</label>
-      <input type="text" id="cityName" v-model="cityName">
-      <button type="submit">Update</button>
-    </form>
+    <div id="city-search">
+      <form @submit.prevent="updateCoordinates">
+        <label for="cityName">City Name:</label>
+        <input type="text" id="cityName" v-model="cityName">
+        <button type="submit">Update</button>
+      </form>
+    </div>
     <div id="map"></div>
   </div>
 </template>
 
 <script>
-L.Util.falseFn = function() {}; // Leere Funktion, um Fehlermeldungen zu ignorieren
-
-L.Util.error = function(message) {
-  // Eigene Fehlerbehandlung implementieren, z.B. Konsolenmeldung oder Logging
-  console.warn('[Leaflet Fehler]: ' + message);
-};
-
-L.Util.warn = function(message) {
-  // Eigene Warnungsbehandlung implementieren, z.B. Konsolenmeldung oder Logging
-  console.info('[Leaflet Warnung]: ' + message);
-};
 
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import axios from 'axios';
 import DuesseldorfDistricts from '@/assets/DuesseldorfDistricts.geojson';
 import RestaurantMarkerIcon from '@/assets/restaurant.png';
+import 'leaflet-boundary-canvas';
+
 export default {
   name: 'MapComponent',
   data() {
@@ -40,15 +32,10 @@ export default {
     };
   },
   async mounted() {
-    // Vor der Initialisierung sicherstellen, dass das map-Div im DOM vorhanden ist
-    if (!document.getElementById('map')) {
-      console.error('Das "map"-Div wurde im DOM nicht gefunden.');
-      return;
-    }
-
     await this.initMap();
   },
   methods: {
+
     async initMap() {
       await this.updateMap();
     },
@@ -78,26 +65,20 @@ export default {
           });
         }
 
-        L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager_labels_under/{z}/{x}/{y}{r}.png', {
-          attribution: '&copy; <a href="https://carto.com/attributions">CARTO</a>'
-        }).addTo(this.map);
-
-
-        if (this.cityBoundsLayer) {
-          this.map.removeLayer(this.cityBoundsLayer);
-        }
-
-        const cityBoundsGeoJSON = await this.getCityBoundsGeoJSON(this.cityName);
-        if (!cityBoundsGeoJSON) {
-          console.warn('Stadtgrenzen konnten nicht abgerufen werden. Die Karte wird dennoch aktualisiert.');
-        } else {
-          this.cityBoundsLayer = L.geoJSON(cityBoundsGeoJSON).addTo(this.map);
-          this.cityBoundsLayer.setStyle({
+        const cityBoundsGeoJSON = await this.getCityBoundsGeoJSON(this.cityName)
+        this.cityBoundsLayer = L.geoJSON(cityBoundsGeoJSON)
+        this.cityBoundsLayer.setStyle({
             fillColor: 'transparent',
             color: 'black',
             weight: 4
           });
-        }
+
+        var osm = new L.TileLayer.BoundaryCanvas('https://tile.thunderforest.com/atlas/{z}/{x}/{y}.png?apikey=023456f2e3224a91892b24fe419e2603', {
+          boundary: cityBoundsGeoJSON
+        });
+
+        this.map.addLayer(this.cityBoundsLayer);
+        this.map.addLayer(osm);
 
         if (this.neighborhoodLayer) {
           this.map.removeLayer(this.neighborhoodLayer);
@@ -120,7 +101,6 @@ export default {
               });  
               try { 
                 if (!isZoomed) {
-                  console.log(layer.getBounds(), { padding: [-500, -500] });
                   this.map.fitBounds(layer.getBounds());
                   const clickedDistrictCoordinates = layer.getBounds().getCenter(); // Koordinaten des geklickten Stadtteils
                   this.fetchRestaurantData(clickedDistrictCoordinates.lat, clickedDistrictCoordinates.lng);
@@ -142,7 +122,7 @@ export default {
           weight: 2
         });
 
-        this.map.fitBounds(this.cityBoundsLayer.getBounds());
+        this.map.fitBounds(this.cityBoundsLayer.getBounds())
         
       } catch (error) {
         console.error('Fehler beim Aktualisieren der Karte:', error);
@@ -254,6 +234,12 @@ export default {
 </script>
 
 <style>
+#city-search {
+  display: flex;
+  flex-direction: row;
+  align-items: top;
+}
+
 .map-container {
   display: flex;
   flex-direction: row;
@@ -264,8 +250,9 @@ export default {
 
 #map {
   margin-left: 2%;
-  width: 100%;
+  width: 50%;
   height: 100%;
+  background-color: transparent;
 }
 
 .my-label {

@@ -80,11 +80,7 @@ export default {
           });
         }
 
-        const boundary = await this.getCityBoundsGeoJSON();
-        console.log(boundary)
-
-        L.TileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager_labels_under/{z}/{x}/{y}{r}.png', {
-          boundary: boundary,
+        L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager_labels_under/{z}/{x}/{y}{r}.png', {
           attribution: '&copy; <a href="https://carto.com/attributions">CARTO</a>'
         }).addTo(this.map);
 

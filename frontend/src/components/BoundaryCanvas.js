@@ -206,7 +206,7 @@ var ExtendMethods = {
             tileY = ts * tilePoint.y,
             zCoeff = Math.pow(2, zoom),
             ctx = canvas.getContext('2d'),
-            imageObj = new Image(),
+            imageObj = new Image()
             
         var setPattern = function () {
             var c, r, p,

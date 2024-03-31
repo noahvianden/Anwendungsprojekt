@@ -1,16 +1,6 @@
 <template>
-  <div class="map-container">
-    <!-- Formular zum Aktualisieren der Stadt -->
-    <div id="city-search">
-      <form @submit.prevent="updateCoordinates">
-        <label for="cityName">Stadtname:</label>
-        <input type="text" id="cityName" v-model="cityName">
-        <button type="submit">Aktualisieren</button>
-      </form>
-    </div>
     <!-- Div für die Karte -->
     <div id="map"></div>
-  </div>
 </template>
 
 <script>
@@ -18,11 +8,14 @@ import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import axios from 'axios';
 import DuesseldorfDistricts from '@/assets/DuesseldorfDistricts.geojson';
+import BerlinDistricts from '@/assets/BerlinDistricts.geojson';
 import RestaurantMarkerIcon from '@/assets/restaurant.png';
 import 'leaflet-boundary-canvas';
 
 export default {
   name: 'MapComponent',
+  components: {
+  },
   data() {
     return {
       map: null,
@@ -41,14 +34,30 @@ export default {
       await this.updateMap();
     },
 
-    // Methode zum Aktualisieren der Kartenkoordinaten
-    async updateCoordinates() {
+    async updateCoordinates(cityName) {
+      // Update the cityName property
+      this.cityName = cityName;
+      // Call the updateMap method to update the map
       await this.updateMap();
     },
 
     // Methode zum Aktualisieren der Karte
     async updateMap() {
       try {
+
+        if (this.map) {
+            this.map.remove();
+            this.map = null;
+        }
+        if (this.cityBoundsLayer) {
+            this.cityBoundsLayer.remove();
+            this.cityBoundsLayer = null;
+        }
+        if (this.neighborhoodLayer) {
+            this.neighborhoodLayer.remove();
+            this.neighborhoodLayer = null;
+        }
+
         // Koordinaten der Stadt abrufen
         const coordinates = await this.geocodeCity(this.cityName);
         if (!coordinates) {
@@ -92,15 +101,31 @@ export default {
           this.map.removeLayer(this.neighborhoodLayer);
         }
 
+        let neighborhoodGeoJSON;
+        if (this.cityName === 'Düsseldorf') {
+          neighborhoodGeoJSON = DuesseldorfDistricts;
+        } else if (this.cityName === 'Berlin') {
+          neighborhoodGeoJSON = BerlinDistricts;
+        }
+
         // Stadtteilgrenzen zur Karte hinzufügen
-        this.neighborhoodLayer = L.geoJSON(DuesseldorfDistricts, {
+        this.neighborhoodLayer = L.geoJSON(neighborhoodGeoJSON, {
           onEachFeature: (feature, layer) => {
-            // Tooltip mit dem Namen des Stadtteils anzeigen
-            layer.bindTooltip(feature.properties.Name, {
+            if (this.cityName === 'Düsseldorf') {
+              layer.bindTooltip(feature.properties.Name, {
                 permanent: false,
                 className: 'my-label',
                 direction: 'auto'
-            });
+              });
+            } else if (this.cityName === 'Berlin') {
+              layer.bindTooltip(feature.properties.name, {
+                permanent: false,
+                className: 'my-label',
+                direction: 'auto'
+              });
+            }
+            
+
             let isZoomed = false;
             // Ereignis 'click' zum Zoomen auf den Stadtteil und Anzeigen der Restaurants hinzufügen
             layer.on('click', () => {
@@ -256,24 +281,11 @@ export default {
 </script>
 
 <style>
-#city-search {
-  display: flex;
-  flex-direction: row;
-  align-items: top;
-}
-
-.map-container {
-  display: flex;
-  flex-direction: row;
-  height: 90vh;
-  width: 95%;
-  margin-left: 1%;
-}
-
 #map {
-  margin-left: 2%;
-  width: 50%;
-  height: 100%;
+  margin-left: 5px;
+  margin-right: 5px;
+  width: 100%;
+  height: 95vh;
   background-color: transparent;
 }
 

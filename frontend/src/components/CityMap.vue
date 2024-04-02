@@ -225,9 +225,13 @@ export default {
           const lat = restaurant.geometry.location.lat;
           const lon = restaurant.geometry.location.lng;
           // Popup-Inhalt für das Restaurant
+          if(restaurant.opening_hours.open_now == true){
+            var offen = "Ja"}
+          else{
+            offen = "Nein"}
           var infoContent = "<b>" + restaurant.name + "</b><br>" +
                         "Adresse: " + restaurant.vicinity + "<br>" +
-                        "Öffnungszeiten: " + restaurant.opening_hours + "<br>" +
+                        "Öffnungszeiten: " + offen + "<br>" +
                         "Navigation mit Rechtsklick starten";
           var popupOnClick = L.popup().setContent(infoContent);
           var popupOnMouseover = L.popup().setContent(restaurant.name);

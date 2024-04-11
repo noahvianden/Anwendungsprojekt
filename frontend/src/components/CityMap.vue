@@ -210,7 +210,7 @@ export default {
           }
         });
 
-        this.restaurants = response.data.results; // Speichere die Restaurantdaten im Datenobjekt
+        this.restaurants = response.data.restaurants; // Speichere die Restaurantdaten im Datenobjekt
         this.addRestaurantMarkers();
       } catch (error) {
         console.error('Fehler beim Abrufen der Restaurantdaten:', error);
@@ -219,12 +219,11 @@ export default {
 
     // Methode zum Hinzufügen von Restaurantmarkern auf der Karte
     addRestaurantMarkers() {
-      console.log(typeof(this.restaurants));
       if (Array.isArray(this.restaurants)) {
         this.restaurants.forEach(restaurant => {
           // Koordinaten des Restaurants
-          const lat = restaurant.geometry.location.lat;
-          const lon = restaurant.geometry.location.lng;
+          const lat = restaurant.latitude;
+          const lon = restaurant.longitude;
           // Popup-Inhalt für das Restaurant
           if(restaurant.open == true){
             var offen = "Ja"}

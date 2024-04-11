@@ -219,13 +219,14 @@ export default {
 
     // Methode zum Hinzufügen von Restaurantmarkern auf der Karte
     addRestaurantMarkers() {
+      console.log(typeof(this.restaurants));
       if (Array.isArray(this.restaurants)) {
         this.restaurants.forEach(restaurant => {
           // Koordinaten des Restaurants
           const lat = restaurant.geometry.location.lat;
           const lon = restaurant.geometry.location.lng;
           // Popup-Inhalt für das Restaurant
-          if(restaurant.opening_hours.open_now == true){
+          if(restaurant.open == true){
             var offen = "Ja"}
           else{
             offen = "Nein"}

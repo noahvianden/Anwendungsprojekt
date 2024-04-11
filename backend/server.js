@@ -8,7 +8,7 @@ app.use(cors()); // Aktivieren Sie CORS
 const GOOGLE_PLACES_API_KEY = 'AIzaSyA8L6nbvtOasMavozQMIdjxvvIbc4j2kjU';
 const latitude = 51.2277;
 const longitude = 6.7735;
-const radius = 20000;
+const radius = 15000;
 
 // Verbindung zur SQLite-Datenbank herstellen
 const db = new sqlite3.Database('data.db');
@@ -21,107 +21,112 @@ db.serialize(() => {
   fetchPlacesData();
 });
 
-async function fetchPlacesData(){
-  try{
-  // Holen Sie Daten aus der SQLite-Datenbank
-  db.all("SELECT * FROM places", async (err, rows) => {
-    if (err) {
-      console.error('Fehler beim Abrufen von Orten aus der Datenbank:', err);
-    } else {
-      if (rows.length > 0) {
-        try {
-          // Senden Sie eine Anfrage an die Google Places API
-          const response = await axios.get('https://maps.googleapis.com/maps/api/place/nearbysearch/json', {
-            params: {
-              location: `${latitude},${longitude}`,
-              radius: radius,
-              type: 'restaurant',
-              key: GOOGLE_PLACES_API_KEY
-            }
-          });
-
-          // Daten von der Google Places API erhalten
-          const places = response.data.results;
-
-          // Aktualisieren Sie die vorhandenen Orte in der Datenbank, falls erforderlich
-          rows.forEach(async row => {
-            const matchingPlace = places.find(place => place.name === row.name);
-            if (matchingPlace) {
-              if (matchingPlace.geometry.location.lat !== row.latitude ||
-                  matchingPlace.geometry.location.lng !== row.longitude ||
-                  matchingPlace.types.join(', ') !== row.type) {
-                // Die Werte unterscheiden sich, also aktualisieren Sie den Datensatz
-                await db.run("UPDATE places SET latitude = ?, longitude = ?, type = ?, vicinity = ?, open = ? WHERE name = ?",
-                  [matchingPlace.geometry.location.lat, 
-                    matchingPlace.geometry.location.lng, 
-                    matchingPlace.types.join(', '), 
-                    matchingPlace.vicinity, 
-                    matchingPlace.opening_hours && matchingPlace.opening_hours.open_now ? 1 : 0, // Setzt den Wert auf 1, wenn open_now true ist, andernfalls auf 0
-                    row.name]);
-              }
-            }
-          });
-          
-          // Daten, die noch nicht in der DB sind, einfügen
-          const notInDatabasePlaces = places.filter(place => !rows.some(row => row.name === place.name));
-          if (notInDatabasePlaces.length > 0) {
-              notInDatabasePlaces.forEach(async place => {
-                  await db.run("INSERT INTO places (name, latitude, longitude, type, vicinity, open) VALUES (?, ?, ?, ?, ?, ?)",
-                      [place.name, 
-                        place.geometry.location.lat, 
-                        place.geometry.location.lng, 
-                        place.types.join(', '), 
-                        place.vicinity, 
-                        place.opening_hours && matchingPlace.opening_hours.open_now ? 1 : 0]);
-              });
-          }
-        } catch (error) {
-          console.error('Fehler beim Abrufen von Orten von der Google Places API:', error);
+async function fetchPlacesData() {
+  try {
+    // Holen Sie Daten aus der SQLite-Datenbank
+    const rows = await new Promise((resolve, reject) => {
+      db.all("SELECT * FROM places", (err, rows) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(rows);
         }
-      } else {
-        // Wenn keine Daten in der Datenbank vorhanden sind, senden Sie eine Anfrage an die Google Places API
-        // und fügen Sie die erhaltenen Orte direkt in die Datenbank ein
-        axios.get('https://maps.googleapis.com/maps/api/place/nearbysearch/json', {
-          params: {
-            location: `${latitude},${longitude}`,
-            radius: radius,
-            type: 'restaurant',
-            key: GOOGLE_PLACES_API_KEY
-          }
-        })
-        .then(response => {
-          // Daten von der Google Places API erhalten
-          const places = response.data.results;
+      });
+    });
 
-          // Daten in die SQLite-Datenbank einfügen
-          places.forEach(place => {
-            db.run("INSERT INTO places (name, latitude, longitude, type, vicinity, open) VALUES (?, ?, ?, ?, ?, ?)",
-              [place.name, 
-                place.geometry.location.lat, 
-                place.geometry.location.lng, 
-                place.types.join(', '), 
-                place.vicinity, 
-                place.opening_hours && place.opening_hours.open_now ? 1 : 0]);
-          });
+    // Daten von der Google Places API abrufen
+    // Verwenden Sie die Funktion fetchAllPlaces() um alle Orte abzurufen
+    const places = await fetchAllPlaces();
 
-        })
-        .catch(error => {
-          console.error('Fehler beim Abrufen von Orten von der Google Places API:', error);
-        });
+    // Aktualisieren Sie vorhandene Orte in der Datenbank
+    for (const row of rows) {
+      const matchingPlace = places.find(place => place.name === row.name);
+      if (matchingPlace) {
+        if (
+          matchingPlace.geometry.location.lat !== row.latitude ||
+          matchingPlace.geometry.location.lng !== row.longitude ||
+          matchingPlace.types.join(', ') !== row.type
+        ) {
+          // Die Werte unterscheiden sich, also aktualisieren Sie den Datensatz
+          await db.run("UPDATE places SET latitude = ?, longitude = ?, type = ?, vicinity = ?, open = ? WHERE name = ?",
+            [
+              matchingPlace.geometry.location.lat,
+              matchingPlace.geometry.location.lng,
+              matchingPlace.types.join(', '),
+              matchingPlace.vicinity,
+              matchingPlace.opening_hours && matchingPlace.opening_hours.open_now ? 1 : 0, // Setzen Sie den Wert auf 1, wenn open_now true ist, andernfalls auf 0
+              row.name
+            ]);
+        }
       }
     }
-  });
+
+    // Fügen Sie Daten hinzu, die noch nicht in der DB sind
+    const notInDatabasePlaces = places.filter(place => !rows.some(row => row.name === place.name));
+    for (const place of notInDatabasePlaces) {
+      await db.run("INSERT INTO places (name, latitude, longitude, type, vicinity, open) VALUES (?, ?, ?, ?, ?, ?)",
+        [
+          place.name,
+          place.geometry.location.lat,
+          place.geometry.location.lng,
+          place.types.join(', '),
+          place.vicinity,
+          place.opening_hours && place.opening_hours.open_now ? 1 : 0
+        ]);
+    }
   } catch (error) {
     console.error('Fehler beim Verarbeiten der Anfrage:', error);
   }
 };
 
-// Route zum Einladen der Google Places API-Daten in die data.db
+async function fetchAllPlaces() {
+  const allPlaces = [];
+  let nextPageToken = null;
+  var i = 0
+  do {
+    const response = await axios.get('https://maps.googleapis.com/maps/api/place/nearbysearch/json', {
+      params: {
+        location: `${latitude},${longitude}`,
+        radius: radius,
+        type: 'restaurant',
+        key: GOOGLE_PLACES_API_KEY,
+        pagetoken: nextPageToken
+      }
+    });
+
+    allPlaces.push(...response.data.results);
+
+    nextPageToken = response.data.next_page_token;
+    console.log("Seite " + i)
+    // Warten Sie eine Weile, da die nächste Seite möglicherweise noch nicht verfügbar ist
+    await new Promise(resolve => setTimeout(resolve, 2000)); // Warten Sie 2 Sekunden zwischen den Anfragen, um die API-Beschränkungen einzuhalten
+    i = i +1;
+  } while (nextPageToken);
+  console.log("Alle Places")
+  return allPlaces;
+}
+
+
 app.get('/places', async (req, res) => {
-  try {    
-    console.log("places")
+  const { latitude, longitude } = req.query;
+
+  try {
+    const restaurants = await new Promise((resolve, reject) => {
+      // Führen Sie eine SELECT-Abfrage mit den übergebenen Koordinaten und einem Radius von 2 km aus
+      db.all("SELECT * FROM places WHERE type LIKE '%restaurant%' AND (6371 * acos(cos(radians(?)) * cos(radians(latitude)) * cos(radians(longitude) - radians(?)) + sin(radians(?)) * sin(radians(latitude)))) <= 2", [latitude, longitude, latitude], (err, rows) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(rows);
+        }
+      });
+    });
+
+    console.log("Gefundene Restaurants:", restaurants);
+
+    res.json({ restaurants });
   } catch (error) {
-    console.error('Fehler beim Verarbeiten der Anfrage:', error);
+    console.error('Fehler beim Abrufen der Restaurants aus der Datenbank:', error);
     res.status(500).json({ error: 'Interner Serverfehler' });
   }
 });
@@ -144,7 +149,7 @@ app.get('/list_places', (req, res) => {
   }
 });
 
-const PORT = 3003;
+const PORT = 3000;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });

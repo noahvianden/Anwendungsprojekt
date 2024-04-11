@@ -23,7 +23,6 @@ Liste aller User mit der Stadt
 	Level - "Dazugezogen"
 	Level - "City Guide"
 	Level - "City Planner"
-	
 	Unterkategorie für einzelne Bezirke 
 
 Monetarisierung 

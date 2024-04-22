@@ -1,55 +1,32 @@
 <template>
   <div class="container">
-    <div class="component-wrapper">
-      <CitySearch @update-coordinates="updateCoordinates" />
-    </div>
-    <div class="component-wrapper city-map-wrapper">
-      <CityMap ref="cityMap" />
-    </div>
+    <left-sidebar @update-coordinates="handleUpdateCoordinates" />
+    <main-content ref="mainContent" />
+    <right-sidebar />
   </div>
 </template>
 
 <script>
-import CityMap from './components/CityMap.vue';
-import CitySearch from './components/CitySearch.vue';
+import LeftSidebar from './components/LeftSidebar.vue';
+import MainContent from './components/MainContent.vue';
+import RightSidebar from './components/RightSidebar.vue';
 
 export default {
-  name: 'App',
   components: {
-    CityMap,
-    CitySearch
+    LeftSidebar,
+    MainContent,
+    RightSidebar,
   },
   methods: {
-    updateCoordinates(cityName) {
-      // Call the updateCoordinates method of CityMap component
-      this.$refs.cityMap.updateCoordinates(cityName);
-    }
-  }
-}
+    handleUpdateCoordinates(data) {
+      this.$refs.mainContent.forwardUpdateCoordinates(data);
+    },
+  },
+};
 </script>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 10px;
-}
-
+<style scoped>
 .container {
   display: flex;
-  justify-content: space-between;
-}
-
-.component-wrapper {
-  border: 1px solid #ccc;
-  padding: 20px;
-  border-radius: 5px;
-}
-
-.city-map-wrapper {
-  flex: 1;
 }
 </style>

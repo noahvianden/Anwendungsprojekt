@@ -10,6 +10,7 @@ import axios from 'axios';
 import DuesseldorfDistricts from '@/assets/DuesseldorfDistricts.geojson';
 import BerlinDistricts from '@/assets/BerlinDistricts.geojson';
 import RestaurantMarkerIcon from '@/assets/restaurant.png';
+import cloudPattern from '@/assets/cloudPattern1.png';
 import 'leaflet-boundary-canvas';
 
 export default {
@@ -23,6 +24,7 @@ export default {
       cityBoundsLayer: null,
       neighborhoodLayer: null,
       restaurants: [],
+      neighborhoodClickedTiles: {},
     };
   },
   async mounted() {
@@ -129,36 +131,58 @@ export default {
             let isZoomed = false;
             // Ereignis 'click' zum Zoomen auf den Stadtteil und Anzeigen der Restaurants hinzufügen
             layer.on('click', () => {
-              this.map.eachLayer(layer => {
-                    // Überprüfen, ob das Layer ein Marker ist und ob es sich um einen Restaurantmarker handelt
-                    if (layer instanceof L.Marker) {
-                      this.map.removeLayer(layer); // Entferne den Marker von der Karte
-                    }
-              });  
-              try { 
-                if (!isZoomed) {
-                  // Auf den Stadtteil zoomen und Restaurants in diesem Stadtteil abrufen
-                  this.map.fitBounds(layer.getBounds());
-                  const clickedDistrictCoordinates = layer.getBounds().getCenter(); // Koordinaten des geklickten Stadtteils
-                  this.fetchRestaurantData(clickedDistrictCoordinates.lat, clickedDistrictCoordinates.lng);
-                  isZoomed = true;
-                } else {
-                  // Zurück zur Gesamtansicht der Stadt gehen
-                  this.map.fitBounds(this.cityBoundsLayer.getBounds());   
-                  isZoomed = false;
-                }
-              } catch (error) {
-                console.error('Fehler beim Klicken auf den Layer:', error);
-              }
-            });
+    this.map.eachLayer(markerLayer => {
+        if (markerLayer instanceof L.Marker) {
+            this.map.removeLayer(markerLayer); // Remove markers from the map
+        }
+    });
+
+    try {
+        if (layer.options.fillOpacity === 0) {
+            // If fill opacity is 0, zoom to the district
+            if (!isZoomed) {
+                this.map.fitBounds(layer.getBounds());
+                const clickedDistrictCoordinates = layer.getBounds().getCenter();
+                this.fetchRestaurantData(clickedDistrictCoordinates.lat, clickedDistrictCoordinates.lng);
+                isZoomed = true;
+            } else {
+                // Zoom out to the city bounds
+                this.map.fitBounds(this.cityBoundsLayer.getBounds());
+                isZoomed = false;
+            }
+        } else {
+            // If fill opacity is not 0, set it to 0
+            layer.setStyle({ fillOpacity: 0 });
+        }
+    } catch (error) {
+        console.error('Fehler beim Klicken auf den Layer:', error);
+    }
+});
           }
         }).addTo(this.map);
 
+        // Define the SVG pattern with the imported asset.
+        const svgPattern = `
+        <svg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+          <pattern id="fogPattern" patternUnits="userSpaceOnUse" width="100" height="100">
+            <image href="${cloudPattern}" x="0" y="0" width="100" height="100" />
+          </pattern>
+        </svg>
+        `;
+
+        // Step 2: Create an SVG element and append it to the map's DOM.
+        var svgElement = document.createElement('div');
+        svgElement.innerHTML = svgPattern;
+        document.querySelector('.leaflet-map-pane').appendChild(svgElement);
+
+        // Step 3: Apply the pattern to your layer.
         this.neighborhoodLayer.setStyle({
-          fillColor: 'transparent',
-          color: 'gray',
-          weight: 2
-        });
+          fillColor: 'url(#fogPattern)', // Verwende das SVG-Pattern als Füllung.
+          fillOpacity: 1, // Stelle sicher, dass die Füllung volle Deckkraft hat.
+          color: 'gray',  // Linienfarbe.
+          weight: 1,     // Liniengewicht.
+          opacity: 0.4,    // Linie sollte volle Deckkraft haben.
+                });
 
         // Karte auf die Stadtgrenzen zoomen
         this.map.fitBounds(this.cityBoundsLayer.getBounds())

@@ -1,6 +1,6 @@
 <template>
   <div class="main">
-    <city-map ref="cityMap"/>
+    <city-map ref="cityMap" @start-navigation="startNavigation"/>
   </div>
 </template>
 
@@ -15,6 +15,9 @@ export default {
     forwardUpdateCoordinates(cityName) {
       this.$refs.cityMap.updateCoordinates(cityName);
     },
+    startNavigation(address){
+      this.$emit('start-navigation', address);
+    }
   },
 };
 </script>

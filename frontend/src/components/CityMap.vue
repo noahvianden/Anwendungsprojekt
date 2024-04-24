@@ -10,7 +10,7 @@ import axios from 'axios';
 import DuesseldorfDistricts from '@/assets/DuesseldorfDistricts.geojson';
 import BerlinDistricts from '@/assets/BerlinDistricts.geojson';
 import RestaurantMarkerIcon from '@/assets/restaurant.png';
-import cloudPattern from '@/assets/cloudPattern1.png';
+import cloudPattern from '@/assets/cloudPattern1_b&w.png';
 import 'leaflet-boundary-canvas';
 
 export default {
@@ -282,9 +282,9 @@ export default {
           
           // Ereignis 'contextmenu' zum Starten der Navigation beim Rechtsklick auf den Marker
           markerR.on('contextmenu', () => {
-              var markerLatLng = markerR.getLatLng();
-              var destinationAddress = markerLatLng.lat + "," + markerLatLng.lng;
-              this.startNavigationTo(destinationAddress);
+              //var markerLatLng = markerR.getLatLng();
+              //var destinationAddress = markerLatLng.lat + "," + markerLatLng.lng;
+              this.startNavigationTo(restaurant.name);
           });
 
         });
@@ -295,9 +295,8 @@ export default {
 
     // Methode zum Starten der Navigation zu einer bestimmten Adresse
     startNavigationTo(address) {
-    // Ersetze 'address' durch die Adresse oder Koordinaten des Ziels
-    var url = 'https://www.google.com/maps/dir//' + encodeURIComponent(address);
-    window.open(url, '_blank');
+      console.log("gestartet in CityMap")
+      this.$emit('start-navigation', address);
 },
 
   }

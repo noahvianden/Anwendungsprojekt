@@ -54,7 +54,7 @@ async function fetchPlacesData() {
               matchingPlace.geometry.location.lat,
               matchingPlace.geometry.location.lng,
               matchingPlace.types.join(', '),
-              matchingPlace.vicinity,
+              matchingPlace.vicinity || matchingPlace.formatted_address,
               matchingPlace.opening_hours && matchingPlace.opening_hours.open_now ? 1 : 0, // Setzen Sie den Wert auf 1, wenn open_now true ist, andernfalls auf 0
               row.name
             ]);
@@ -71,7 +71,7 @@ async function fetchPlacesData() {
           place.geometry.location.lat,
           place.geometry.location.lng,
           place.types.join(', '),
-          place.vicinity,
+          place.vicinity || place.formatted_address,
           place.opening_hours && place.opening_hours.open_now ? 1 : 0
         ]);
     }
@@ -116,7 +116,7 @@ async function fetchAllPlaces() {
       //i++;
     } while (nextPageToken);
   }
-
+  console.log(allPlaces);
   //console.log("Alle Places");
   return allPlaces;
 }

@@ -42,7 +42,6 @@ export default {
   display: flex;
   flex-direction: column;
   border: 1px solid black;
-  background-color: beige;
 }
 
 .top-box,
@@ -50,6 +49,5 @@ export default {
   flex: 1;
   border: 1px solid black;
   margin: 10px;
-  background-color: white;
 }
 </style>

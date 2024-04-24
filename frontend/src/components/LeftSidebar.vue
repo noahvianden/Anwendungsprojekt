@@ -66,7 +66,6 @@ export default {
   flex: 1;
   border: 1px solid black;
   padding: 10px;
-  background-color: beige;
 }
 
 .city-search {
@@ -98,7 +97,6 @@ export default {
   border: 1px solid black;
   padding: 10px;
   margin-right: 30px;
-  background-color: white;
 }
 
 .rang {
@@ -120,7 +118,6 @@ export default {
   border: 1px solid black;
   padding: 10px;
   margin-bottom: 10px;
-  background-color: white;
 }
 
 .karten {
@@ -129,7 +126,6 @@ export default {
   border: 1px solid black;
   padding: 10px;
   margin-bottom: 10px;
-  background-color: white;
 }
 
 .events {
@@ -140,6 +136,5 @@ export default {
 .smaller-sections > div {
   border: 1px solid black; 
   padding: 10px;
-  background-color: white;
 }
 </style>

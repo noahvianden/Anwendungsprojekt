@@ -231,7 +231,7 @@ export default {
             offen = "Nein"}
           var infoContent = "<b>" + restaurant.name + "</b><br>" +
                         "Adresse: " + restaurant.vicinity + "<br>" +
-                        "Öffnungszeiten: " + offen + "<br>" +
+                        "geöffnet: " + offen + "<br>" +
                         "Navigation mit Rechtsklick starten";
           var popupOnClick = L.popup().setContent(infoContent);
           var popupOnMouseover = L.popup().setContent(restaurant.name);

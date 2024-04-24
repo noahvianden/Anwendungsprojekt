@@ -6,9 +6,9 @@ const cors = require('cors'); // Importieren Sie das CORS-Paket
 
 app.use(cors()); // Aktivieren Sie CORS
 const GOOGLE_PLACES_API_KEY = 'AIzaSyA8L6nbvtOasMavozQMIdjxvvIbc4j2kjU';
-const latitude = 51.2277;
-const longitude = 6.7735;
-const radius = 15000;
+//const latitude = 51.2277;
+//const longitude = 6.7735;
+//const radius = 15000;
 
 // Verbindung zur SQLite-Datenbank herstellen
 const db = new sqlite3.Database('data.db');

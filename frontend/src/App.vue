@@ -1,8 +1,8 @@
 <template>
   <div class="container">
     <left-sidebar @update-coordinates="handleUpdateCoordinates" />
-    <main-content ref="mainContent" />
-    <right-sidebar />
+    <main-content ref="mainContent" @start-navigation="startNavigation" />
+    <right-sidebar ref="rightSidebar" />
   </div>
 </template>
 
@@ -21,6 +21,10 @@ export default {
     handleUpdateCoordinates(data) {
       this.$refs.mainContent.forwardUpdateCoordinates(data);
     },
+    startNavigation(data) {
+      console.log("Received and forwarded by App");
+      this.$refs.rightSidebar.showNavigation(data);
+    },
   },
 };
 </script>
@@ -28,5 +32,8 @@ export default {
 <style scoped>
 .container {
   display: flex;
+  background-image: url('@/assets/backgroundImage2.png');
+  background-size: cover; /* ensures the image covers the entire container */
+  background-position: center; /* centers the image */
 }
 </style>

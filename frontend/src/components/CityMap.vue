@@ -234,7 +234,7 @@ export default {
           }
         });
 
-        this.restaurants = response.data.results; // Speichere die Restaurantdaten im Datenobjekt
+        this.restaurants = response.data.restaurants; // Speichere die Restaurantdaten im Datenobjekt
         this.addRestaurantMarkers();
       } catch (error) {
         console.error('Fehler beim Abrufen der Restaurantdaten:', error);
@@ -246,12 +246,16 @@ export default {
       if (Array.isArray(this.restaurants)) {
         this.restaurants.forEach(restaurant => {
           // Koordinaten des Restaurants
-          const lat = restaurant.geometry.location.lat;
-          const lon = restaurant.geometry.location.lng;
+          const lat = restaurant.latitude;
+          const lon = restaurant.longitude;
           // Popup-Inhalt für das Restaurant
+          if(restaurant.open == true){
+            var offen = "Ja"}
+          else{
+            offen = "Nein"}
           var infoContent = "<b>" + restaurant.name + "</b><br>" +
                         "Adresse: " + restaurant.vicinity + "<br>" +
-                        "Öffnungszeiten: " + restaurant.opening_hours + "<br>" +
+                        "geöffnet: " + offen + "<br>" +
                         "Navigation mit Rechtsklick starten";
           var popupOnClick = L.popup().setContent(infoContent);
           var popupOnMouseover = L.popup().setContent(restaurant.name);

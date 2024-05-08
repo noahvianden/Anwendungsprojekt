@@ -42,7 +42,7 @@ export default {
   display: flex;
   flex-direction: column;
   border: 1px solid black;
-  background-color: beige;
+  background-color: #A5EE80;
 }
 
 .top-box,

@@ -66,7 +66,7 @@ export default {
   flex: 1;
   border: 1px solid black;
   padding: 10px;
-  background-color: beige;
+  background-color: #A5EE80;
 }
 
 .city-search {

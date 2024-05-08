@@ -27,7 +27,7 @@ export default {
   flex: 2;
   border: 1px solid black;
   padding: 10px;
-  background-image: url('@/assets/backgroundImage7.png');
+  background-image: url('@/assets/backgroundImage.png');
   background-size: cover; /* ensures the image covers the entire container */
   background-position: center; /* centers the image */
 }

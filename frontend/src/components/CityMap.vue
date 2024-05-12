@@ -10,6 +10,7 @@ import axios from 'axios';
 import DuesseldorfDistricts from '@/assets/DuesseldorfDistricts.geojson';
 import BerlinDistricts from '@/assets/BerlinDistricts.geojson';
 import RestaurantMarkerIcon from '@/assets/restaurant.png';
+import LocationMarkerIcon from '@/assets/freetime.png';
 import cloudPattern from '@/assets/cloudPattern1_b&w.png';
 import 'leaflet-boundary-canvas';
 
@@ -243,59 +244,58 @@ export default {
 
     // Methode zum Hinzufügen von Restaurantmarkern auf der Karte
     addRestaurantMarkers() {
-      if (Array.isArray(this.restaurants)) {
-        this.restaurants.forEach(restaurant => {
-          // Koordinaten des Restaurants
-          const lat = restaurant.latitude;
-          const lon = restaurant.longitude;
-          // Popup-Inhalt für das Restaurant
-          if(restaurant.open == true){
-            var offen = "Ja"}
-          else{
-            offen = "Nein"}
-          var infoContent = "<b>" + restaurant.name + "</b><br>" +
-                        "Adresse: " + restaurant.vicinity + "<br>" +
-                        "geöffnet: " + offen + "<br>" +
-                        "Navigation mit Rechtsklick starten";
-          var popupOnClick = L.popup().setContent(infoContent);
-          var popupOnMouseover = L.popup().setContent(restaurant.name);
-          // Icon für den Restaurantmarker
-          var iconR = L.icon({
-              iconUrl: RestaurantMarkerIcon,
-              iconSize: [15, 15],
-              iconAnchor: [12, 41],
-              popupAnchor: [0, -41]
-          });
-          var markerR = L.marker([lat, lon], { icon: iconR })
-          .bindPopup(infoContent)
-          .addTo(this.map);
+  if (Array.isArray(this.restaurants)) {
+    this.restaurants.forEach(restaurant => {
+      // Koordinaten des Restaurants
+      const lat = restaurant.latitude;
+      const lon = restaurant.longitude;
+      // Popup-Inhalt für das Restaurant
+      var offen = restaurant.open ? "Ja" : "Nein"; // Simplified if-else statement
+      var infoContent = "<b>" + restaurant.name + "</b><br>" +
+                    "Adresse: " + restaurant.vicinity + "<br>" +
+                    "geöffnet: " + offen + "<br>" +
+                    "Navigation mit Rechtsklick starten";
+      var popupOnClick = L.popup().setContent(infoContent);
+      var popupOnMouseover = L.popup().setContent(restaurant.name);
+      // Icon für den Restaurantmarker
+      var iconUrl = restaurant.type.includes('restaurant') ? RestaurantMarkerIcon : LocationMarkerIcon;
+      var iconR = L.icon({
+          iconUrl: iconUrl,
+          iconSize: [15, 15],
+          iconAnchor: [12, 41],
+          popupAnchor: [0, -41]
+      });
+      
+      var markerR = L.marker([lat, lon], { icon: iconR })
+      .bindPopup(infoContent)
+      .addTo(this.map);
 
-          // Ereignis 'mouseover' zum Anzeigen des Popups beim Hovern über den Marker
-          markerR.on('mouseover', function() {
-              markerR.bindPopup(popupOnMouseover).openPopup();
-          });
+      // Ereignis 'mouseover' zum Anzeigen des Popups beim Hovern über den Marker
+      markerR.on('mouseover', function() {
+          markerR.bindPopup(popupOnMouseover).openPopup();
+      });
 
-          // Ereignis 'mouseout' zum Schließen des Popups beim Verlassen des Markers
-          markerR.on('mouseout', function() {
-              markerR.closePopup();
-          });
+      // Ereignis 'mouseout' zum Schließen des Popups beim Verlassen des Markers
+      markerR.on('mouseout', function() {
+          markerR.closePopup();
+      });
 
-          // Ereignis 'click' zum Anzeigen des Popups beim Klicken auf den Marker
-          markerR.on('click', function() {
-              markerR.bindPopup(popupOnClick).openPopup();});
-          
-          // Ereignis 'contextmenu' zum Starten der Navigation beim Rechtsklick auf den Marker
-          markerR.on('contextmenu', () => {
-              //var markerLatLng = markerR.getLatLng();
-              //var destinationAddress = markerLatLng.lat + "," + markerLatLng.lng;
-              this.startNavigationTo(restaurant.name);
-          });
+      // Ereignis 'click' zum Anzeigen des Popups beim Klicken auf den Marker
+      markerR.on('click', function() {
+          markerR.bindPopup(popupOnClick).openPopup();
+      });
+      
+      // Ereignis 'contextmenu' zum Starten der Navigation beim Rechtsklick auf den Marker
+      markerR.on('contextmenu', () => {
+          this.startNavigationTo(restaurant.name);
+      });
 
-        });
-      } else {
-        console.error('Die Restaurantdaten sind kein Array.');
-      }
-    },
+    });
+  } else {
+    console.error('Die Restaurantdaten sind kein Array.');
+  }
+},
+
 
     // Methode zum Starten der Navigation zu einer bestimmten Adresse
     startNavigationTo(address) {

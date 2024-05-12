@@ -3,6 +3,7 @@ const axios = require('axios');
 const sqlite3 = require('sqlite3').verbose();
 const app = express();
 const cors = require('cors'); // Importieren Sie das CORS-Paket
+const { notDeepEqual } = require('assert');
 
 app.use(cors()); // Aktivieren Sie CORS
 const GOOGLE_PLACES_API_KEY = 'AIzaSyA8L6nbvtOasMavozQMIdjxvvIbc4j2kjU';
@@ -39,52 +40,55 @@ async function fetchPlacesData() {
     // Daten von der Google Places API abrufen
     // Verwenden Sie die Funktion fetchAllPlaces() um alle Orte abzurufen
     const places = await fetchAllPlaces();
-
-    // Aktualisieren Sie vorhandene Orte in der Datenbank
-    for (const row of rows) {
-      const matchingPlace = places.find(place => place.id === row.id);
-      if (matchingPlace) {
+    var update = 0;
+    var insert = 0;
+  // Aktualisieren Sie vorhandene Orte in der Datenbank
+  for (const place of places) {
+    const existingPlace = rows.find(row => row.id === place.place_id);
+    if (existingPlace) {
         if (
-          matchingPlace.geometry.location.lat !== row.latitude ||
-          matchingPlace.geometry.location.lng !== row.longitude ||
-          matchingPlace.types.join(', ') !== row.type ||
-          matchingPlace.opening_hours.open_now !== row.open
+            existingPlace.latitude !== place.geometry.location.lat ||
+            existingPlace.longitude !== place.geometry.location.lng ||
+            existingPlace.type !== place.types.join(', ') ||
+            (existingPlace.open !== (place.opening_hours && place.opening_hours.open_now ? 1 : 0))
         ) {
-          // Die Werte unterscheiden sich, also aktualisieren Sie den Datensatz
-          await db.run("UPDATE places SET name = ?, latitude = ?, longitude = ?, type = ?, vicinity = ?, open = ? WHERE id = ?",
-            [
-              matchingPlace.name,
-              matchingPlace.geometry.location.lat,
-              matchingPlace.geometry.location.lng,
-              matchingPlace.types.join(', '),
-              matchingPlace.vicinity || matchingPlace.formatted_address,
-              matchingPlace.opening_hours && matchingPlace.opening_hours.open_now ? 1 : 0, // Setzen Sie den Wert auf 1, wenn open_now true ist, andernfalls auf 0
-              row.id
-            ]);
+            // Die Werte unterscheiden sich, also aktualisieren Sie den Datensatz
+            await db.run("UPDATE places SET name = ?, latitude = ?, longitude = ?, type = ?, vicinity = ?, open = ? WHERE id = ?",
+                [
+                    place.name,
+                    place.geometry.location.lat,
+                    place.geometry.location.lng,
+                    place.types.join(', '),
+                    place.vicinity || place.formatted_address,
+                    place.opening_hours && place.opening_hours.open_now ? 1 : 0,
+                    existingPlace.id
+                ]);
+                update = update +1;
         }
-      }
+    } else {
+        // Der Ort ist nicht in der Datenbank, fügen Sie ihn hinzu
+        try {
+            await db.run("INSERT INTO places (id, name, latitude, longitude, district_id, type, vicinity, open) VALUES (?,?,?, ?, ?, ?, ?, ?)",
+                [
+                    place.place_id,
+                    place.name,
+                    place.geometry.location.lat,
+                    place.geometry.location.lng,
+                    place.district_id,
+                    place.types.join(', '),
+                    place.vicinity || place.formatted_address,
+                    place.opening_hours && place.opening_hours.open_now ? 1 : 0
+                ]);
+                insert = insert + 1;
+                console.log(place);
+        } catch (error) {
+            console.error("Fehler beim Einfügen neuer Orte:", error);
+        }
+        console.log(update);
+        console.log(insert);
     }
+  }
 
-    // Fügen Sie Daten hinzu, die noch nicht in der DB sind
-    const notInDatabasePlaces = places.filter(place => !rows.some(row => row.id === place.id));
-    for (const place of notInDatabasePlaces) {
-      try {
-      await db.run("INSERT INTO places (id, name, latitude, longitude, district_id, type, vicinity, open) VALUES (?,?,?, ?, ?, ?, ?, ?)",
-        [
-          place.place_id,
-          place.name,
-          place.geometry.location.lat,
-          place.geometry.location.lng,
-          place.district_id,
-          place.types.join(', '),
-          place.vicinity || place.formatted_address,
-          place.opening_hours && place.opening_hours.open_now ? 1 : 0
-        ]);
-      }
-      catch (error) {
-        console.error("Error inserting new place:", error);
-    }
-    }
   } catch (error) {
     console.error('Fehler beim Verarbeiten der Anfrage:', error);
   }
@@ -136,7 +140,7 @@ app.get('/places', async (req, res) => {
   try {
     const restaurants = await new Promise((resolve, reject) => {
       // Führen Sie eine SELECT-Abfrage mit den übergebenen Koordinaten und einem Radius von 2 km aus
-      db.all("SELECT * FROM places WHERE type LIKE '%restaurant%' AND (6371 * acos(cos(radians(?)) * cos(radians(latitude)) * cos(radians(longitude) - radians(?)) + sin(radians(?)) * sin(radians(latitude)))) <= 2", [latitude, longitude, latitude], (err, rows) => {
+      db.all("SELECT * FROM places WHERE (6371 * acos(cos(radians(?)) * cos(radians(latitude)) * cos(radians(longitude) - radians(?)) + sin(radians(?)) * sin(radians(latitude)))) <= 2", [latitude, longitude, latitude], (err, rows) => {
         if (err) {
           reject(err);
         } else {
@@ -144,10 +148,8 @@ app.get('/places', async (req, res) => {
         }
       });
     });
-
-    console.log("Gefundene Restaurants:", restaurants);
-
     res.json({ restaurants });
+
   } catch (error) {
     console.error('Fehler beim Abrufen der Restaurants aus der Datenbank:', error);
     res.status(500).json({ error: 'Interner Serverfehler' });

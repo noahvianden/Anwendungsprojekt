@@ -17,9 +17,10 @@ app.use(express.json());
 
 db.serialize(() => {
   //db.run("DROP TABLE places")
-  db.run("CREATE TABLE IF NOT EXISTS places (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, latitude REAL, longitude REAL, type TEXT, vicinity TEXT, open BOOL)");
+  db.run("CREATE TABLE IF NOT EXISTS places (id TEXT PRIMARY KEY, name TEXT, latitude REAL, longitude REAL, district_id INTEGER, type TEXT, vicinity TEXT, open BOOL)");
   db.run("CREATE TABLE IF NOT EXISTS districts (id INTEGER PRIMARY KEY AUTOINCREMENT, name VARCHAR(255),latitude REAL, longitude REAL)")
   fetchPlacesData();
+  console.log("Done");
 });
 
 async function fetchPlacesData() {
@@ -41,39 +42,48 @@ async function fetchPlacesData() {
 
     // Aktualisieren Sie vorhandene Orte in der Datenbank
     for (const row of rows) {
-      const matchingPlace = places.find(place => place.name === row.name); //Laufzeit überprüfen & Namen identisch -> PlaceiD aus Api
+      const matchingPlace = places.find(place => place.id === row.id);
       if (matchingPlace) {
         if (
           matchingPlace.geometry.location.lat !== row.latitude ||
           matchingPlace.geometry.location.lng !== row.longitude ||
-          matchingPlace.types.join(', ') !== row.type
+          matchingPlace.types.join(', ') !== row.type ||
+          matchingPlace.opening_hours.open_now !== row.open
         ) {
           // Die Werte unterscheiden sich, also aktualisieren Sie den Datensatz
-          await db.run("UPDATE places SET latitude = ?, longitude = ?, type = ?, vicinity = ?, open = ? WHERE name = ?",
+          await db.run("UPDATE places SET name = ?, latitude = ?, longitude = ?, type = ?, vicinity = ?, open = ? WHERE id = ?",
             [
+              matchingPlace.name,
               matchingPlace.geometry.location.lat,
               matchingPlace.geometry.location.lng,
               matchingPlace.types.join(', '),
               matchingPlace.vicinity || matchingPlace.formatted_address,
               matchingPlace.opening_hours && matchingPlace.opening_hours.open_now ? 1 : 0, // Setzen Sie den Wert auf 1, wenn open_now true ist, andernfalls auf 0
-              row.name
+              row.id
             ]);
         }
       }
     }
 
     // Fügen Sie Daten hinzu, die noch nicht in der DB sind
-    const notInDatabasePlaces = places.filter(place => !rows.some(row => row.name === place.name));
+    const notInDatabasePlaces = places.filter(place => !rows.some(row => row.id === place.id));
     for (const place of notInDatabasePlaces) {
-      await db.run("INSERT INTO places (name, latitude, longitude, type, vicinity, open) VALUES (?, ?, ?, ?, ?, ?)",
+      try {
+      await db.run("INSERT INTO places (id, name, latitude, longitude, district_id, type, vicinity, open) VALUES (?,?,?, ?, ?, ?, ?, ?)",
         [
+          place.place_id,
           place.name,
           place.geometry.location.lat,
           place.geometry.location.lng,
+          place.district_id,
           place.types.join(', '),
           place.vicinity || place.formatted_address,
           place.opening_hours && place.opening_hours.open_now ? 1 : 0
         ]);
+      }
+      catch (error) {
+        console.error("Error inserting new place:", error);
+    }
     }
   } catch (error) {
     console.error('Fehler beim Verarbeiten der Anfrage:', error);
@@ -82,9 +92,10 @@ async function fetchPlacesData() {
 
 async function fetchAllPlaces() {
   const allPlaces = [];
+  const placeTypes = ['restaurants, freizeit, kino']
   // Holen Sie Daten aus der SQLite-Datenbank
   const districts = await new Promise((resolve, reject) => {
-    db.all("SELECT name FROM districts", (err, rows) => {
+    db.all("SELECT id, name FROM districts", (err, rows) => {
       if (err) {
         reject(err);
       } else {
@@ -94,30 +105,28 @@ async function fetchAllPlaces() {
   });
   for (const district of districts) {
     let nextPageToken = null;
-    //let i = 0;
-    //console.log(district.name);
-    do {
-      const response = await axios.get('https://maps.googleapis.com/maps/api/place/textsearch/json', {
-        params: {
-          query: 'restaurants "' + district.name + '"',
-          key: GOOGLE_PLACES_API_KEY,
-          pagetoken: nextPageToken
+    for (const placeType of placeTypes){
+      do {
+        const response = await axios.get('https://maps.googleapis.com/maps/api/place/textsearch/json', {
+          params: {
+            query: placeType + '"' + district.name + '"',
+            key: GOOGLE_PLACES_API_KEY,
+            pagetoken: nextPageToken
 
-        }
-      });
+          }
+        });
 
-      allPlaces.push(...response.data.results);
+        const resultsWithDistrictId = response.data.results.map(result => ({
+          ...result,
+          district_id: district.id 
+        }));
 
-      nextPageToken = response.data.next_page_token;
-      //console.log("Seite " + i);
-      //console.log(nextPageToken);
-      // Warten Sie eine Weile, da die nächste Seite möglicherweise noch nicht verfügbar ist
-      //await new Promise(resolve => setTimeout(resolve, 1000)); // Warten Sie 2 Sekunden zwischen den Anfragen, um die API-Beschränkungen einzuhalten
-      //i++;
-    } while (nextPageToken);
+        allPlaces.push(...resultsWithDistrictId);
+
+        nextPageToken = response.data.next_page_token;
+      } while (nextPageToken);
+    }
   }
-  console.log(allPlaces);
-  //console.log("Alle Places");
   return allPlaces;
 }
 
@@ -136,7 +145,7 @@ app.get('/places', async (req, res) => {
       });
     });
 
-    //console.log("Gefundene Restaurants:", restaurants);
+    console.log("Gefundene Restaurants:", restaurants);
 
     res.json({ restaurants });
   } catch (error) {

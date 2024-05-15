@@ -13,11 +13,11 @@
     <!-- Horizontal layout for "Benutzername" and "Rang" -->
     <div class="horizontal-layout">
       <div class="benutzername">
-        Benutzername
+        Noah Vianden
       </div>
       
       <div class="rang">
-        Rang
+        Newbie
       </div>
     </div>
 

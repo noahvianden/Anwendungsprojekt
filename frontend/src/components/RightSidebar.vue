@@ -29,7 +29,7 @@ export default {
       &origin=Düsseldorf
       &destination=${placeName}
       &zoom=13
-      &mode=walking`;
+      &mode=transit`;
     },
   },
 };

@@ -7,7 +7,7 @@
 
     <!-- Profile image -->
     <div class="profile-image">
-      <img src="../assets/profilePicture.png" alt="Profile Picture" />
+      <img src="../assets/profilePicture2.png" alt="Profile Picture" />
     </div>
 
     <!-- Horizontal layout for "Benutzername" and "Rang" -->
@@ -59,20 +59,27 @@ export default {
 
 <style scoped>
 .left-sidebar {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-  border: 1px solid black;
-  padding: 10px;
-  background-color: #A5EE80;
+  grid-area: left;
+  margin: 20px;
+  padding: 20px;
+  background-color: var(--secondary-color);
+  border-radius: var(--border-radius);
+  box-shadow: 4px 8px 16px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease-in-out;
+  width: 18vw;
+}
+
+.left-sidebar:hover {
+  transform: translateX(+20px);
 }
 
 .city-search {
+  padding-top: 20px;
   padding-bottom: 30px;
 }
 
 .profile-image {
-  text-align: center;
+  text-align: left;
   margin-bottom: 10px;
 }
 
@@ -81,13 +88,18 @@ export default {
   height: 150px;
   border-radius: 50%;
   padding-bottom: 10px;
+  transition: transform 0.4s ease-in-out;
+}
+
+.profile-image img:hover {
+  transform: scale(3.1) translateX(+50px) translateY(+50px);
 }
 
 .horizontal-layout {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  padding-bottom: 30px;
+  padding-bottom: 20px;
 }
 
 .benutzername {
@@ -96,7 +108,7 @@ export default {
   border: 1px solid black;
   padding: 10px;
   margin-right: 30px;
-  background-color: white;
+  background-color: var(--primary-color);
 }
 
 .rang {
@@ -104,24 +116,32 @@ export default {
   flex: 2;  /* 2/5 of the total flex space */
   border: 1px solid black;
   padding: 10px;
-  background-color: white;
+  background-color: var(--primary-color);
 }
+
 .main-content {
   display: flex;
   flex-direction: column;
   flex: 1;
+  height: 50vh;
 }
 
 .premium-partner {
   /* Set to take up 2/3 of the main content area */
-  flex: 2;  /* 2/3 of the total flex space */
+  flex: 4;  /* 2/3 of the total flex space */
   border: 1px solid black;
   padding: 10px;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
   background-color: white;
-  background-image: url('@/assets/premiumPartners.png');
-  background-size: cover; /* ensures the image covers the entire container */
+  background-image: url('@/assets/premiumPartners2.png');
+  background-size: cover; /* ensures the image covers the entire
   background-position: center; /* centers the image */
+  flex-direction: column;
+  transition: transform 0.3s ease-in-out;
+}
+
+.premium-partner:hover {
+  transform: scale(1.1);
 }
 
 .karten {
@@ -129,11 +149,16 @@ export default {
   flex: 1;  /* 1/3 of the total flex space */
   border: 1px solid black;
   padding: 10px;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
   background-color: white;
   background-image: url('@/assets/savedMaps.png');
-  background-size:contain; /* ensures the image covers the entire container */
+  background-size: contain; /* ensures the image covers the entire container */
   background-position: center; /* centers the image */
+  transition: transform 0.3s ease-in-out;
+}
+
+.karten:hover {
+  transform: scale(1.1);
 }
 
 .events {
@@ -144,6 +169,12 @@ export default {
 .smaller-sections > div {
   border: 1px solid black; 
   padding: 10px;
-  background-color: white;
+  background-color: var(--primary-color);
+  transition: transform 0.3s ease-in-out;
 }
+
+.smaller-sections > div:hover {
+  transform: scale(1.1);
+}
+
 </style>

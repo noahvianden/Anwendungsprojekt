@@ -25,7 +25,7 @@ export default {
 <style scoped>
 .main {
   flex: 1;
-  margin: 20px;
+  margin: 30px;
   /*background-image: url('@/assets/backgroundImage3.png');
   background-size: cover; /* ensures the image covers the entire container */
   background-position: center; /* centers the image */

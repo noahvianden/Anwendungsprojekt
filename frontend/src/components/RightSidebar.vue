@@ -4,7 +4,7 @@
     </div>
     <div class="bottom-box">
       <iframe
-        width="600"
+        width="567"
         height="600"
         frameborder="0" style="border:0"
         referrerpolicy="no-referrer-when-downgrade"
@@ -28,7 +28,7 @@ export default {
       this.iframeSrc = `https://www.google.com/maps/embed/v1/directions?key=AIzaSyA8L6nbvtOasMavozQMIdjxvvIbc4j2kjU
       &origin=Düsseldorf
       &destination=${placeName}
-      &zoom=13
+      &zoom=14
       &mode=transit`;
     },
   },

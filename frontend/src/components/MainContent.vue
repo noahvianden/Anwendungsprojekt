@@ -21,7 +21,7 @@ export default {
   },
 };
 </script>
-
+  
 <style scoped>
 .main {
   flex: 2;

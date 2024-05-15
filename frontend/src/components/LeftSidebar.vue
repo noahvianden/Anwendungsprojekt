@@ -24,11 +24,9 @@
     <!-- Main content block for "Premium Partner" and "Karten" -->
     <div class="main-content">
       <div class="premium-partner">
-        Premium Partner
       </div>
       
       <div class="karten">
-        Karten
       </div>
     </div>
 
@@ -121,6 +119,9 @@ export default {
   padding: 10px;
   margin-bottom: 10px;
   background-color: white;
+  background-image: url('@/assets/premiumPartners.png');
+  background-size: cover; /* ensures the image covers the entire container */
+  background-position: center; /* centers the image */
 }
 
 .karten {
@@ -130,6 +131,9 @@ export default {
   padding: 10px;
   margin-bottom: 10px;
   background-color: white;
+  background-image: url('@/assets/savedMaps.png');
+  background-size:contain; /* ensures the image covers the entire container */
+  background-position: center; /* centers the image */
 }
 
 .events {

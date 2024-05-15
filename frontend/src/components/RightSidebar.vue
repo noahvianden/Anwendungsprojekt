@@ -1,7 +1,6 @@
 <template>
   <div class="right-sidebar">
     <div class="top-box">
-      Eigener Inhalt
     </div>
     <div class="bottom-box">
       <iframe
@@ -45,11 +44,23 @@ export default {
   background-color: #A5EE80;
 }
 
-.top-box,
+.top-box{
+  flex: 1;
+  border: 1px solid black;
+  margin: 10px;
+  background-color: white;
+  background-image: url('@/assets/tempRating.png');
+  background-size:contain; /* ensures the image covers the entire container */
+  background-position: center; /* centers the image */
+}
+
 .bottom-box {
   flex: 1;
   border: 1px solid black;
   margin: 10px;
   background-color: white;
+  background-image: url('@/assets/tempNavigation.png');
+  background-size: cover; /* ensures the image covers the entire container */
+  background-position: center; /* centers the image */
 }
 </style>

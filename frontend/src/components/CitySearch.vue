@@ -1,7 +1,6 @@
 <template>
   <div id="city-search">
     <form @submit.prevent="updateCoordinates">
-      <label for="cityName">Stadtname:</label>
       <input type="text" id="cityName" v-model="cityName">
       <button type="submit">Aktualisieren</button>
     </form>
@@ -31,14 +30,19 @@ export default {
   justify-content: flex-start; /* Aligns content to the right */
 }
 
-form {
-  display: flex;
-  flex-direction: row;
-  align-items: top;
+input{
+  margin-right: 10px; /* Adds some space between elements */
+  background-color: var(--primary-color);
+  height: 30px;
+  transition: transform 0.5s ease-in-out;
 }
 
-input,
-button {
-  margin-left: 10px; /* Adds some space between elements */
+input:hover {
+  transform: scale(2) translateX(+40px);
+}
+
+button{
+  height: 30px;
+  margin-left: 100px;
 }
 </style>

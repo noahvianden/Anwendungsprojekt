@@ -1,0 +1,70 @@
+@startuml
+entity Users {
+  *user_id : int
+  --
+  name : varchar
+  benutzername : varchar
+  geburtstag : date
+  typ : varchar
+}
+
+entity Places {
+  *place_id : int
+  --
+  name : varchar
+  latitude : float
+  longitude : float
+  typ : varchar
+  open_now : bool
+}
+
+entity Districts {
+  *district_id : int
+  --
+  name : varchar
+  latitude : float
+  longitude : float
+}
+
+entity Fog {
+  *user_id : int
+  *district_id : int
+  --
+  fog : bool
+}
+
+entity Level_User {
+  *user_id : int
+  *level_id : int
+  --
+  points : int
+}
+
+entity Level_System {
+  *level_id : int
+  --
+  level_name : varchar
+  points_to_reach : int
+}
+
+entity Premium_Partner {
+  *place_id : int
+  --
+  discount : float
+}
+
+entity Ratings {
+  *place_id : int
+  *user_id : int
+  --
+  text : varchar
+}
+
+Users ||--o{ Fog
+Districts ||--o{ Fog
+Users ||--o{ Level_User
+Level_System ||--o{ Level_User
+Places ||--o{ Premium_Partner
+Places ||--o{ Ratings
+Users ||--o{ Ratings
+@enduml

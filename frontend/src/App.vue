@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div id="app" class="app-container">
     <left-sidebar @update-coordinates="handleUpdateCoordinates" />
     <main-content ref="mainContent" @start-navigation="startNavigation" />
     <right-sidebar ref="rightSidebar" />
@@ -29,9 +29,29 @@ export default {
 };
 </script>
 
-<style scoped>
-.container {
+<style>
+.app-container {
   display: flex;
-  
+  flex-direction: column;
+}
+
+@media (min-width: 768px) {
+  .app-container {
+    flex-direction: row;
+  }
+}
+:root {
+  --primary-color: white;
+  --secondary-color: #75C9B7;
+  --background-color: #ABD699;
+  --text-color: #343A40;
+  --border-radius: 15px;
+}
+
+body {
+  margin: 0;
+  font-family: 'Arial', sans-serif;
+  background-color: var(--background-color);  
+  color: var(--text-color);
 }
 </style>

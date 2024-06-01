@@ -242,6 +242,7 @@ export default {
         });
 
         this.restaurants = response.data.restaurants; // Speichere die Restaurantdaten im Datenobjekt
+        console.log(this.restaurants);
         this.addRestaurantMarkers();
       } catch (error) {
         console.error('Fehler beim Abrufen der Restaurantdaten:', error);

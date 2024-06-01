@@ -139,12 +139,18 @@ export default {
     });
 
     try {
+      let districtName;
+        if (this.cityName === 'Düsseldorf') {
+            districtName = feature.properties.Name;
+        } else if (this.cityName === 'Berlin') {
+            districtName = feature.properties.name;
+        }
         if (layer.options.fillOpacity === 0) {
             // If fill opacity is 0, zoom to the district
             if (!isZoomed) {
                 this.map.fitBounds(layer.getBounds());
-                const clickedDistrictCoordinates = layer.getBounds().getCenter();
-                this.fetchRestaurantData(clickedDistrictCoordinates.lat, clickedDistrictCoordinates.lng);
+                //const clickedDistrictCoordinates = layer.getBounds().getCenter();
+                this.fetchRestaurantData(districtName);
                 isZoomed = true;
             } else {
                 // Zoom out to the city bounds
@@ -226,12 +232,12 @@ export default {
     },
 
     // Methode zum Abrufen von Restaurantdaten in der Nähe bestimmter Koordinaten
-    async fetchRestaurantData(latitude, longitude) {
+    //async fetchRestaurantData(latitude, longitude) {
+      async fetchRestaurantData(districtName) {
       try {
         const response = await axios.get('http://localhost:3000/places', {
           params: {
-            latitude,
-            longitude
+            districtName
           }
         });
 

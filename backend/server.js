@@ -80,12 +80,12 @@ async function fetchPlacesData() {
                     place.opening_hours && place.opening_hours.open_now ? 1 : 0
                 ]);
                 insert = insert + 1;
-                console.log(place);
+                //console.log(place);
         } catch (error) {
             console.error("Fehler beim Einfügen neuer Orte:", error);
         }
-        console.log(update);
-        console.log(insert);
+        //console.log(update);
+        //console.log(insert);
     }
   }
 
@@ -135,12 +135,12 @@ async function fetchAllPlaces() {
 }
 
 app.get('/places', async (req, res) => {
-  const { latitude, longitude } = req.query;
+  const { districtName } = req.query;
 
   try {
-    const restaurants = await new Promise((resolve, reject) => {
-      // Führen Sie eine SELECT-Abfrage mit den übergebenen Koordinaten und einem Radius von 2 km aus
-      db.all("SELECT * FROM places WHERE (6371 * acos(cos(radians(?)) * cos(radians(latitude)) * cos(radians(longitude) - radians(?)) + sin(radians(?)) * sin(radians(latitude)))) <= 2", [latitude, longitude, latitude], (err, rows) => {
+    const dId = await new Promise((resolve, reject) => {
+      // Führen Sie eine SELECT-Abfrage um die Districtid zu selektieren
+      db.get("SELECT id FROM districts WHERE name = ?", [districtName], (err, rows) => {
         if (err) {
           reject(err);
         } else {
@@ -148,6 +148,31 @@ app.get('/places', async (req, res) => {
         }
       });
     });
+
+    if (!dId) {
+      return res.status(404).json({ error: 'District nicht gefunden' });
+    }
+
+    console.log('District Name:', districtName);
+    console.log('District ID:', dId);
+
+    const restaurants = await new Promise((resolve, reject) => {
+      // Führen Sie eine SELECT-Abfrage um die Districtid zu selektieren
+      db.all("SELECT * FROM places WHERE district_id = ?", [dId.id], (err, rows) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(rows);
+        }
+      });
+    });
+
+    if (restaurants.length === 0) {
+      console.log('Keine Restaurants gefunden.');
+    } else {
+      console.log('Restaurants gefunden');
+    }
+
     res.json({ restaurants });
 
   } catch (error) {

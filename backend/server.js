@@ -43,6 +43,7 @@ async function fetchPlacesData() {
     var update = 0;
     var insert = 0;
   // Aktualisieren Sie vorhandene Orte in der Datenbank
+  /*
   for (const place of places) {
     const existingPlace = rows.find(row => row.id === place.place_id);
     if (existingPlace) {
@@ -88,6 +89,7 @@ async function fetchPlacesData() {
         //console.log(insert);
     }
   }
+  */
 
   } catch (error) {
     console.error('Fehler beim Verarbeiten der Anfrage:', error);

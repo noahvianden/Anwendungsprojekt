@@ -1,5 +1,4 @@
 <template>
-    <!-- Div für die Karte -->
     <div id="map"></div>
 </template>
 
@@ -13,6 +12,8 @@ import RestaurantMarkerIcon from '@/assets/restaurant.png';
 import LocationMarkerIcon from '@/assets/freetime.png';
 import cloudPattern from '@/assets/cloudPattern1_b&w.png';
 import 'leaflet-boundary-canvas';
+import 'leaflet.locatecontrol/dist/L.Control.Locate.css';
+import 'leaflet.locatecontrol';	
 
 export default {
   name: 'MapComponent',
@@ -128,7 +129,6 @@ export default {
               });
             }
             
-
             let isZoomed = false;
             // Ereignis 'click' zum Zoomen auf den Stadtteil und Anzeigen der Restaurants hinzufügen
             layer.on('click', () => {
@@ -193,6 +193,28 @@ export default {
 
         // Karte auf die Stadtgrenzen zoomen
         this.map.fitBounds(this.cityBoundsLayer.getBounds())
+
+         // Hinzufügen der Locate-Control
+         L.control.locate({
+          position: 'topleft',
+          strings: {
+            title: "Show me where I am!"
+          },
+          locateOptions: {
+            enableHighAccuracy: true,
+          }
+        }).addTo(this.map);
+  
+        this.map.on('locationfound', function(e) {
+          const radius = e.accuracy / 2;
+          L.marker(e.latlng).addTo(this.map)
+            .bindPopup("You are within " + radius + " meters from this point").openPopup();
+          L.circle(e.latlng, radius).addTo(this.map);
+        }.bind(this));
+  
+        this.map.on('locationerror', function(e) {
+          alert(e.message);
+        });
         
       } catch (error) {
         console.error('Fehler beim Aktualisieren der Karte:', error);
@@ -303,14 +325,13 @@ export default {
   }
 },
 
-
-    // Methode zum Starten der Navigation zu einer bestimmten Adresse
+// Methode zum Starten der Navigation zu einer bestimmten Adresse
     startNavigationTo(address) {
       console.log("gestartet in CityMap")
       this.$emit('start-navigation', address);
 },
 
-  }
+   }
 };
 </script>
 

@@ -24,6 +24,7 @@ data() {
     cityBoundsLayer: null,
     neighborhoodLayer: null,
     restaurants: [],
+    neighborhoodClickedTiles: {},
   };
 },
 async mounted() {

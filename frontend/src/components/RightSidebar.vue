@@ -1,6 +1,14 @@
 <template>
   <div class="right-sidebar">
     <div class="top-box">
+      <iframe
+      width="567"
+      height="600"
+      frameborder="0" style="border:0"
+      referrerpolicy="no-referrer-when-downgrade"
+      :src="iRatingSrc"
+      allowfullscreen>
+    </iframe>
     </div>
     <div class="bottom-box">
       <iframe
@@ -20,6 +28,7 @@ export default {
   data() {
     return {
       iframeSrc: '',
+      iRatingSrc: '',
       //iframeSrc: `https://www.google.com/maps/embed/v1/view?key=AIzaSyA8L6nbvtOasMavozQMIdjxvvIbc4j2kjU&center=51.244001,6.7946256&zoom=19&maptype=satellite`,
     };
   },
@@ -30,6 +39,20 @@ export default {
       &destination=${placeName}
       &zoom=14
       &mode=transit`;
+    },
+
+    async showRating(placeName) {
+      try {
+        const response = await axios.get('http://localhost:3000/rating', {
+          params: {
+            placeName
+          }
+        });
+
+        this.iRatingSrc = response.data.rating; // Speichere die Restaurantdaten im Datenobjekt
+      } catch (error) {
+        console.error('Fehler beim Abrufen der Ratingdaten:', error);
+      }
     },
   },
 };

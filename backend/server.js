@@ -183,23 +183,53 @@ app.get('/places', async (req, res) => {
   }
 });
 
-app.get('/list_places', (req, res) => {
+app.get('/ratings', async (req, res) => {
+  const { placeName } = req.query;
+
   try {
-    // Holen Sie Daten aus der SQLite-Datenbank
-    db.all("SELECT * FROM places", (err, rows) => {
-      if (err) {
-        console.error('Fehler beim Abrufen von Orten aus der Datenbank:', err);
-        res.status(500).json({ error: 'Interner Serverfehler' });
-      } else {
-        // Daten an den Client senden
-        res.json(rows);
-      }
+    const pId = await new Promise((resolve, reject) => {
+      // Führen Sie eine SELECT-Abfrage um die Districtid zu selektieren
+      db.get("SELECT id FROM places WHERE name = ?", [placeName], (err, rows) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(rows);
+        }
+      });
     });
+
+    if (!dId) {
+      return res.status(404).json({ error: 'Place nicht gefunden' });
+    }
+
+    console.log('Place Name:', placeName);
+    console.log('Place ID:', pId);
+
+    const ratings = await new Promise((resolve, reject) => {
+      // Führen Sie eine SELECT-Abfrage um die PlaceID zu selektieren
+      db.all("SELECT * FROM ratings WHERE place_id = ?", [pId.id], (err, rows) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(rows);
+        }
+      });
+    });
+
+    if (ratings.length === 0) {
+      console.log('Keine Ratings gefunden.');
+    } else {
+      console.log('Ratings gefunden');
+    }
+
+    res.json({ ratings });
+
   } catch (error) {
-    console.error('Fehler beim Verarbeiten der Anfrage:', error);
+    console.error('Fehler beim Abrufen der Ratings aus der Datenbank:', error);
     res.status(500).json({ error: 'Interner Serverfehler' });
   }
 });
+
 
 const PORT = 3000
 app.listen(PORT, () => {

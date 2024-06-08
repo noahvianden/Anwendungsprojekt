@@ -1,14 +1,11 @@
 <template>
   <div class="right-sidebar">
     <div class="top-box">
-      <iframe
-      width="567"
-      height="600"
-      frameborder="0" style="border:0"
-      referrerpolicy="no-referrer-when-downgrade"
-      :src="iRatingSrc"
-      allowfullscreen>
-    </iframe>
+      <div class="input-container">
+        <label for="ratingText" class="input-label">Rating Text:</label>
+        <input type="text" id="ratingText" v-model="ratingText" />
+        <button @click="confirmRatingText">OK</button>
+      </div>
     </div>
     <div class="bottom-box">
       <iframe
@@ -24,12 +21,13 @@
 </template>
 
 <script>
+import axios from 'axios';
 export default {
   data() {
     return {
       iframeSrc: '',
       iRatingSrc: '',
-      //iframeSrc: `https://www.google.com/maps/embed/v1/view?key=AIzaSyA8L6nbvtOasMavozQMIdjxvvIbc4j2kjU&center=51.244001,6.7946256&zoom=19&maptype=satellite`,
+      ratingText: '',
     };
   },
   methods: {
@@ -43,16 +41,26 @@ export default {
 
     async showRating(placeName) {
       try {
-        const response = await axios.get('http://localhost:3000/rating', {
+        const response = await axios.get('http://localhost:3000/showRating', {
           params: {
             placeName
           }
         });
-
-        this.iRatingSrc = response.data.rating; // Speichere die Restaurantdaten im Datenobjekt
+        console.log('Ratingdaten:', response.data.ratings);
+        this.ratingText = response.data.ratings;
+        
       } catch (error) {
         console.error('Fehler beim Abrufen der Ratingdaten:', error);
       }
+    },
+
+    updateRatingText(event) {
+      this.ratingText = event.target.value;
+    },
+
+    confirmRatingText() {
+      alert(`Confirmed rating text: ${this.ratingText}`);
+      // Here you can add additional logic to handle the confirmed rating text
     },
   },
 };
@@ -96,6 +104,21 @@ export default {
 
 .top-box:hover {
   transform: scale(1.1);
+}
+
+.input-container {
+  margin-bottom: 10px;
+}
+
+.input-label {
+  background-color: rgba(255, 255, 255, 0.9);
+  color: black;
+  padding: 5px;
+}
+
+.input-container label, .input-container input, .input-container button {
+  display: block;
+  margin: 5px 0;
 }
 
 .bottom-box {

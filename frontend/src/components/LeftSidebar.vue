@@ -17,7 +17,7 @@
       </div>
       
       <div class="rang">
-        Newbie
+        <label id="rangText">Newbie</label>
       </div>
     </div>
 
@@ -48,14 +48,32 @@ export default {
   components: {
     CitySearch,
   },
+  data() {
+    return {
+      rangText: "",
+    };
+  },
   methods: {
     forwardUpdateCoordinates(data) {
       // Forward the event to the parent component
       this.$emit('update-coordinates', data);
     },
+    addPoints(points) {
+      console.log(points);
+      if (points == 10) {
+        this.rangText = "Beginner";
+      } else if (points == 20) {
+        this.rangText = "Learner";
+      } else if (points == 50) {
+        this.rangText = "Explorer";
+      } else if (points == 100) {
+        this.rangText = "Adventurer";
+      }
+    },
   },
 };
 </script>
+
 
 <style scoped>
 .left-sidebar {

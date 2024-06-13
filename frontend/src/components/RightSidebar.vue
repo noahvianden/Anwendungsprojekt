@@ -2,20 +2,21 @@
   <div class="right-sidebar">
     <div class="top-box">
       <div class="input-container">
-        <label id="ratingText" class="input-label">{{ ratingText }}</label>
-        <input type="text" id="submitRating" />
-        <button @click="confirmRatingText">Senden</button>
+        <label id="ratingText" class="input-label" v-html="ratingText"></label>
+        <input type="text" v-model="newRating" id="submitRating" />
+        <button @click="updateRatingText">Senden</button>
       </div>
     </div>
     <div class="bottom-box">
       <iframe
         width="567"
         height="600"
-        frameborder="0" style="border:0"
+        frameborder="0"
+        style="border:0"
         referrerpolicy="no-referrer-when-downgrade"
         :src="iframeSrc"
         allowfullscreen>
-      </iframe>
+      ></iframe>
     </div>
   </div>
 </template>
@@ -28,6 +29,7 @@ export default {
     return {
       iframeSrc: '',
       ratingText: '',
+      newRating: '',
     };
   },
   methods: {
@@ -53,8 +55,9 @@ export default {
       }
     },
 
-    updateRatingText(event) {
-      this.ratingText = event.target.value;
+    updateRatingText() {
+      this.ratingText = `<br>${this.ratingText}<br>Deine Bewertung:<br>${this.newRating}<br><br>`;
+      this.newRating = ''; // Clear the input after updating
     },
 
     confirmRatingText() {
@@ -64,6 +67,7 @@ export default {
   },
 };
 </script>
+
 
 <style scoped>
 .right-sidebar {

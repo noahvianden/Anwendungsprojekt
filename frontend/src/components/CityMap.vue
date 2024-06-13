@@ -14,12 +14,11 @@ import markerIcon from '@/assets/marker-icon.png';
 import cloudPattern from '@/assets/cloudPattern1_b&w.png';
 import 'leaflet-boundary-canvas';
 import 'leaflet.locatecontrol/dist/L.Control.Locate.css';
-import 'leaflet.locatecontrol';	
+import 'leaflet.locatecontrol';
 
 export default {
   name: 'MapComponent',
-  components: {
-  },
+  components: {},
   data() {
     return {
       map: null,
@@ -28,6 +27,7 @@ export default {
       neighborhoodLayer: null,
       restaurants: [],
       neighborhoodClickedTiles: {},
+      punkte: 0
     };
   },
   async mounted() {
@@ -49,18 +49,17 @@ export default {
     // Methode zum Aktualisieren der Karte
     async updateMap() {
       try {
-
         if (this.map) {
-            this.map.remove();
-            this.map = null;
+          this.map.remove();
+          this.map = null;
         }
         if (this.cityBoundsLayer) {
-            this.cityBoundsLayer.remove();
-            this.cityBoundsLayer = null;
+          this.cityBoundsLayer.remove();
+          this.cityBoundsLayer = null;
         }
         if (this.neighborhoodLayer) {
-            this.neighborhoodLayer.remove();
-            this.neighborhoodLayer = null;
+          this.neighborhoodLayer.remove();
+          this.neighborhoodLayer = null;
         }
 
         // Koordinaten der Stadt abrufen
@@ -85,13 +84,13 @@ export default {
         }
 
         // Stadtgrenzen laden und zur Karte hinzufügen
-        const cityBoundsGeoJSON = await this.getCityBoundsGeoJSON(this.cityName)
-        this.cityBoundsLayer = L.geoJSON(cityBoundsGeoJSON)
+        const cityBoundsGeoJSON = await this.getCityBoundsGeoJSON(this.cityName);
+        this.cityBoundsLayer = L.geoJSON(cityBoundsGeoJSON);
         this.cityBoundsLayer.setStyle({
-            fillColor: 'transparent',
-            color: 'black',
-            weight: 4
-          });
+          fillColor: 'transparent',
+          color: 'black',
+          weight: 4
+        });
 
         // OpenStreetMap-Kartenschicht mit Stadtgrenzen laden
         var osm = new L.TileLayer.BoundaryCanvas('https://tile.thunderforest.com/atlas/{z}/{x}/{y}.png?apikey=023456f2e3224a91892b24fe419e2603', {
@@ -129,43 +128,44 @@ export default {
                 direction: 'auto'
               });
             }
-            
+
             let isZoomed = false;
             // Ereignis 'click' zum Zoomen auf den Stadtteil und Anzeigen der Restaurants hinzufügen
             layer.on('click', () => {
-    this.map.eachLayer(markerLayer => {
-        if (markerLayer instanceof L.Marker) {
-            this.map.removeLayer(markerLayer); // Remove markers from the map
-        }
-    });
+              this.map.eachLayer(markerLayer => {
+                if (markerLayer instanceof L.Marker) {
+                  this.map.removeLayer(markerLayer); // Remove markers from the map
+                }
+              });
 
-    try {
-      let districtName;
-        if (this.cityName === 'Düsseldorf') {
-            districtName = feature.properties.Name;
-        } else if (this.cityName === 'Berlin') {
-            districtName = feature.properties.name;
-        }
-        if (layer.options.fillOpacity === 0) {
-            // If fill opacity is 0, zoom to the district
-            if (!isZoomed) {
-                this.map.fitBounds(layer.getBounds());
-                //const clickedDistrictCoordinates = layer.getBounds().getCenter();
-                this.fetchRestaurantData(districtName);
-                isZoomed = true;
-            } else {
-                // Zoom out to the city bounds
-                this.map.fitBounds(this.cityBoundsLayer.getBounds());
-                isZoomed = false;
-            }
-        } else {
-            // If fill opacity is not 0, set it to 0
-            layer.setStyle({ fillOpacity: 0 });
-        }
-    } catch (error) {
-        console.error('Fehler beim Klicken auf den Layer:', error);
-    }
-});
+              try {
+                let districtName;
+                if (this.cityName === 'Düsseldorf') {
+                  districtName = feature.properties.Name;
+                } else if (this.cityName === 'Berlin') {
+                  districtName = feature.properties.name;
+                }
+                if (layer.options.fillOpacity === 0) {
+                  // If fill opacity is 0, zoom to the district
+                  if (!isZoomed) {
+                    this.map.fitBounds(layer.getBounds());
+                    //const clickedDistrictCoordinates = layer.getBounds().getCenter();
+                    this.fetchRestaurantData(districtName);
+                    isZoomed = true;
+                  } else {
+                    // Zoom out to the city bounds
+                    this.map.fitBounds(this.cityBoundsLayer.getBounds());
+                    isZoomed = false;
+                  }
+                } else {
+                  // If fill opacity is not 0, set it to 0
+                  layer.setStyle({ fillOpacity: 0 });
+                  this.addPoints();
+                }
+              } catch (error) {
+                console.error('Fehler beim Klicken auf den Layer:', error);
+              }
+            });
           }
         }).addTo(this.map);
 
@@ -190,27 +190,27 @@ export default {
           color: 'gray',  // Linienfarbe.
           weight: 1,     // Liniengewicht.
           opacity: 0.4,    // Linie sollte volle Deckkraft haben.
-                });
+        });
 
         // Karte auf die Stadtgrenzen zoomen
-        this.map.fitBounds(this.cityBoundsLayer.getBounds())
+        this.map.fitBounds(this.cityBoundsLayer.getBounds());
 
-         // Hinzufügen der Locate-Control
-         L.control.locate({
+        // Hinzufügen der Locate-Control
+        L.control.locate({
           position: 'topleft',
           locateOptions: {
             enableHighAccuracy: true,
           }
         }).addTo(this.map);
-  
+
         this.map.on('locationfound', function(e) {
           const radius = e.accuracy / 2;
           var iconUrl = markerIcon;
           var icon = L.icon({
-              iconUrl: iconUrl,
-              iconSize: [15, 15],
-              iconAnchor: [12, 41],
-              popupAnchor: [0, -41]
+            iconUrl: iconUrl,
+            iconSize: [15, 15],
+            iconAnchor: [12, 41],
+            popupAnchor: [0, -41]
           });
           L.marker(e.latlng, { icon: icon }).addTo(this.map)
             .bindPopup("You are within " + radius + " meters from this point").openPopup();
@@ -221,6 +221,9 @@ export default {
             if (layer.getBounds().contains(e.latlng)) {
               layer.setStyle({ fillOpacity: 0 }); // Remove the fog from the district
               this.map.fitBounds(layer.getBounds()); // Zoom to the district
+
+              // Add points to the user's score
+              this.addPoints();
             }
           }.bind(this));
         }.bind(this));
@@ -228,7 +231,7 @@ export default {
         this.map.on('locationerror', function(e) {
           alert(e.message);
         });
-        
+
       } catch (error) {
         console.error('Fehler beim Aktualisieren der Karte:', error);
       }
@@ -268,7 +271,7 @@ export default {
 
     // Methode zum Abrufen von Restaurantdaten in der Nähe bestimmter Koordinaten
     //async fetchRestaurantData(latitude, longitude) {
-      async fetchRestaurantData(districtName) {
+    async fetchRestaurantData(districtName) {
       try {
         const response = await axios.get('http://localhost:3000/places', {
           params: {
@@ -286,69 +289,76 @@ export default {
 
     // Methode zum Hinzufügen von Restaurantmarkern auf der Karte
     addRestaurantMarkers() {
-  if (Array.isArray(this.restaurants)) {
-    this.restaurants.forEach(restaurant => {
-      // Koordinaten des Restaurants
-      const lat = restaurant.latitude;
-      const lon = restaurant.longitude;
-      // Popup-Inhalt für das Restaurant
-      var offen = restaurant.open ? "Ja" : "Nein"; // Simplified if-else statement
-      var infoContent = "<b>" + restaurant.name + "</b><br>" +
-                    "Adresse: " + restaurant.vicinity + "<br>" +
-                    "geöffnet: " + offen + "<br>" +
-                    "Navigation mit Rechtsklick starten";
-      var popupOnClick = L.popup().setContent(infoContent);
-      var popupOnMouseover = L.popup().setContent(restaurant.name);
-      // Icon für den Restaurantmarker
-      var iconUrl = restaurant.type.includes('restaurant') ? RestaurantMarkerIcon : LocationMarkerIcon;
-      var iconR = L.icon({
-          iconUrl: iconUrl,
-          iconSize: [15, 15],
-          iconAnchor: [12, 41],
-          popupAnchor: [0, -41]
-      });
-      
-      var markerR = L.marker([lat, lon], { icon: iconR })
-      .bindPopup(infoContent)
-      .addTo(this.map);
+      if (Array.isArray(this.restaurants)) {
+        this.restaurants.forEach(restaurant => {
+          // Koordinaten des Restaurants
+          const lat = restaurant.latitude;
+          const lon = restaurant.longitude;
+          // Popup-Inhalt für das Restaurant
+          var offen = restaurant.open ? "Ja" : "Nein"; // Simplified if-else statement
+          var infoContent = "<b>" + restaurant.name + "</b><br>" +
+            "Adresse: " + restaurant.vicinity + "<br>" +
+            "geöffnet: " + offen + "<br>" +
+            "Navigation mit Rechtsklick starten";
+          var popupOnClick = L.popup().setContent(infoContent);
+          var popupOnMouseover = L.popup().setContent(restaurant.name);
+          // Icon für den Restaurantmarker
+          var iconUrl = restaurant.type.includes('restaurant') ? RestaurantMarkerIcon : LocationMarkerIcon;
+          var iconR = L.icon({
+            iconUrl: iconUrl,
+            iconSize: [15, 15],
+            iconAnchor: [12, 41],
+            popupAnchor: [0, -41]
+          });
 
-      // Ereignis 'mouseover' zum Anzeigen des Popups beim Hovern über den Marker
-      markerR.on('mouseover', function() {
-          markerR.bindPopup(popupOnMouseover).openPopup();
-      });
+          var markerR = L.marker([lat, lon], { icon: iconR })
+            .bindPopup(infoContent)
+            .addTo(this.map);
 
-      // Ereignis 'mouseout' zum Schließen des Popups beim Verlassen des Markers
-      markerR.on('mouseout', function() {
-          markerR.closePopup();
-      });
+          // Ereignis 'mouseover' zum Anzeigen des Popups beim Hovern über den Marker
+          markerR.on('mouseover', function () {
+            markerR.bindPopup(popupOnMouseover).openPopup();
+          });
 
-      // Ereignis 'click' zum Anzeigen des Popups beim Klicken auf den Marker
-      markerR.on('click', function() {
-          markerR.bindPopup(popupOnClick).openPopup();
-          
-      });
-      
-      // Ereignis 'contextmenu' zum Starten der Navigation beim Rechtsklick auf den Marker
-      markerR.on('contextmenu', () => {
-          this.startNavigationTo(restaurant.name);
-      });
+          // Ereignis 'mouseout' zum Schließen des Popups beim Verlassen des Markers
+          markerR.on('mouseout', function () {
+            markerR.closePopup();
+          });
 
-    });
-  } else {
-    console.error('Die Restaurantdaten sind kein Array.');
-  }
-},
+          // Ereignis 'click' zum Anzeigen des Popups beim Klicken auf den Marker
+          markerR.on('click', function () {
+            markerR.bindPopup(popupOnClick).openPopup();
 
-// Methode zum Starten der Navigation zu einer bestimmten Adresse
+          });
+
+          // Ereignis 'contextmenu' zum Starten der Navigation beim Rechtsklick auf den Marker
+          markerR.on('contextmenu', () => {
+            this.startNavigationTo(restaurant.name);
+          });
+
+        });
+      } else {
+        console.error('Die Restaurantdaten sind kein Array.');
+      }
+    },
+
+    // Methode zum Starten der Navigation zu einer bestimmten Adresse
     startNavigationTo(name) {
       console.log("gestartet in CityMap")
       this.$emit('start-navigation', name);
       this.$emit('show-rating', name);
-},
+    },
 
-   }
+    // Methode zum Hinzufügen von 2 Punkten zur Variable punkte
+    addPoints() {
+      this.punkte = this.punkte + 2;
+      this.$emit('add-points', this.punkte);
+    }
+
+  }
 };
 </script>
+
 
 <style>
 #map {

@@ -18,6 +18,9 @@ export default {
     startNavigation(name){
       this.$emit('start-navigation', name);
       this.$emit('show-rating', name);
+    },
+    addPoints(points){
+      this.$emit('add-points', points);
     }
   },
 };

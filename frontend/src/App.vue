@@ -26,6 +26,10 @@ export default {
       this.$refs.rightSidebar.showNavigation(data);
       this.$refs.rightSidebar.showRating(data);
     },
+    addPoints(data){
+      console.log("Points Received and forwarded by App");
+      this.$refs.leftSidebar.addPoints(data);
+    }
   },
 };
 </script>

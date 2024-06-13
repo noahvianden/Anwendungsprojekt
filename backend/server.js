@@ -183,7 +183,7 @@ app.get('/places', async (req, res) => {
   }
 });
 
-app.get('/ratings', async (req, res) => {
+app.get('/showRating', async (req, res) => {
   const { placeName } = req.query;
 
   try {
@@ -198,7 +198,10 @@ app.get('/ratings', async (req, res) => {
       });
     });
 
-    if (!dId) {
+console.log(pId);
+console.log(placeName);
+
+    if (!pId) {
       return res.status(404).json({ error: 'Place nicht gefunden' });
     }
 

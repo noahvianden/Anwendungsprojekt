@@ -197,9 +197,6 @@ export default {
          // Hinzufügen der Locate-Control
          L.control.locate({
           position: 'topleft',
-          strings: {
-            title: "Show me where I am!"
-          },
           locateOptions: {
             enableHighAccuracy: true,
           }
@@ -312,6 +309,7 @@ export default {
       // Ereignis 'click' zum Anzeigen des Popups beim Klicken auf den Marker
       markerR.on('click', function() {
           markerR.bindPopup(popupOnClick).openPopup();
+          
       });
       
       // Ereignis 'contextmenu' zum Starten der Navigation beim Rechtsklick auf den Marker
@@ -326,9 +324,10 @@ export default {
 },
 
 // Methode zum Starten der Navigation zu einer bestimmten Adresse
-    startNavigationTo(address) {
+    startNavigationTo(name) {
       console.log("gestartet in CityMap")
-      this.$emit('start-navigation', address);
+      this.$emit('start-navigation', name);
+      this.$emit('show-rating', name);
 },
 
    }

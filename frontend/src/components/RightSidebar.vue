@@ -2,9 +2,9 @@
   <div class="right-sidebar">
     <div class="top-box">
       <div class="input-container">
-        <label for="ratingText" class="input-label">Rating Text:</label>
-        <input type="text" id="ratingText" v-model="ratingText" />
-        <button @click="confirmRatingText">OK</button>
+        <label id="ratingText" class="input-label">{{ ratingText }}</label>
+        <input type="text" id="submitRating" />
+        <button @click="confirmRatingText">Senden</button>
       </div>
     </div>
     <div class="bottom-box">
@@ -22,11 +22,11 @@
 
 <script>
 import axios from 'axios';
+
 export default {
   data() {
     return {
       iframeSrc: '',
-      iRatingSrc: '',
       ratingText: '',
     };
   },
@@ -43,12 +43,11 @@ export default {
       try {
         const response = await axios.get('http://localhost:3000/showRating', {
           params: {
-            placeName
-          }
+            placeName,
+          },
         });
         console.log('Ratingdaten:', response.data.ratings);
-        this.ratingText = response.data.ratings;
-        
+        this.ratingText = response.data.ratings[0].text;
       } catch (error) {
         console.error('Fehler beim Abrufen der Ratingdaten:', error);
       }
@@ -89,7 +88,7 @@ export default {
   }
 }
 
-.top-box{
+.top-box {
   flex: 1;
   border: 1px solid black;
   margin: 10px;
@@ -116,7 +115,9 @@ export default {
   padding: 5px;
 }
 
-.input-container label, .input-container input, .input-container button {
+.input-container label,
+.input-container input,
+.input-container button {
   display: block;
   margin: 5px 0;
 }

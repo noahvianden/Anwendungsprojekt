@@ -24,6 +24,7 @@ export default {
     startNavigation(data) {
       console.log("Received and forwarded by App");
       this.$refs.rightSidebar.showNavigation(data);
+      this.$refs.rightSidebar.showRating(data);
     },
   },
 };

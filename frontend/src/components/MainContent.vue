@@ -15,8 +15,9 @@ export default {
     forwardUpdateCoordinates(cityName) {
       this.$refs.cityMap.updateCoordinates(cityName);
     },
-    startNavigation(address){
-      this.$emit('start-navigation', address);
+    startNavigation(name){
+      this.$emit('start-navigation', name);
+      this.$emit('show-rating', name);
     }
   },
 };

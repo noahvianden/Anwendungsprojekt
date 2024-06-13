@@ -10,6 +10,7 @@ import DuesseldorfDistricts from '@/assets/DuesseldorfDistricts.geojson';
 import BerlinDistricts from '@/assets/BerlinDistricts.geojson';
 import RestaurantMarkerIcon from '@/assets/restaurant.png';
 import LocationMarkerIcon from '@/assets/freetime.png';
+import markerIcon from '@/assets/marker-icon.png';
 import cloudPattern from '@/assets/cloudPattern1_b&w.png';
 import 'leaflet-boundary-canvas';
 import 'leaflet.locatecontrol/dist/L.Control.Locate.css';
@@ -204,11 +205,26 @@ export default {
   
         this.map.on('locationfound', function(e) {
           const radius = e.accuracy / 2;
-          L.marker(e.latlng).addTo(this.map)
+          var iconUrl = markerIcon;
+          var icon = L.icon({
+              iconUrl: iconUrl,
+              iconSize: [15, 15],
+              iconAnchor: [12, 41],
+              popupAnchor: [0, -41]
+          });
+          L.marker(e.latlng, { icon: icon }).addTo(this.map)
             .bindPopup("You are within " + radius + " meters from this point").openPopup();
           L.circle(e.latlng, radius).addTo(this.map);
+
+          // Check if the location is within any district's boundaries
+          this.neighborhoodLayer.eachLayer(function(layer) {
+            if (layer.getBounds().contains(e.latlng)) {
+              layer.setStyle({ fillOpacity: 0 }); // Remove the fog from the district
+              this.map.fitBounds(layer.getBounds()); // Zoom to the district
+            }
+          }.bind(this));
         }.bind(this));
-  
+
         this.map.on('locationerror', function(e) {
           alert(e.message);
         });

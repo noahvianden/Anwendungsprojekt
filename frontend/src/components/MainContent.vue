@@ -30,7 +30,7 @@ export default {
 .main {
   flex: 1;
   margin: 30px;
-  /*background-image: url('@/assets/backgroundImage3.png');
+  background-image: url('@/assets/Background3.png');
   background-size: cover; /* ensures the image covers the entire container */
   background-position: center; /* centers the image */
   background-color: rgb(226, 112, 112);

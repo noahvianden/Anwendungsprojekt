@@ -24,6 +24,7 @@
     <!-- Main content block for "Premium Partner" and "Karten" -->
     <div class="main-content">
       <div class="premium-partner">
+        <label id="premiumPartner" class="list-label" v-html="premiumText"></label>
       </div>
       
       <div class="karten">
@@ -43,6 +44,7 @@
 
 <script>
 import CitySearch from './CitySearch.vue';
+import axios from 'axios';
 
 export default {
   components: {
@@ -51,23 +53,28 @@ export default {
   data() {
     return {
       rangText: "",
+      premiumText: "",
     };
+  },
+  mounted() {
+    this.list_premium_partners();
   },
   methods: {
     forwardUpdateCoordinates(data) {
       // Forward the event to the parent component
       this.$emit('update-coordinates', data);
     },
-    addPoints(points) {
-      console.log(points);
-      if (points == 10) {
-        this.rangText = "Beginner";
-      } else if (points == 20) {
-        this.rangText = "Learner";
-      } else if (points == 50) {
-        this.rangText = "Explorer";
-      } else if (points == 100) {
-        this.rangText = "Adventurer";
+    async list_premium_partners() {
+      try {
+        console.log('Fetching Premium Partner');
+        const response = await axios.get('http://localhost:3000/list_premium_partners');
+        const partners = response.data.partnersWithName;
+        // Beispiel: Annahme, dass response.data.partners ein Array von Premium-Partnern ist
+        for (const partner of partners) {
+          this.premiumText = `<br>${this.premiumText}<br><br>${partner.name}<br><br>${partner.discount}<br>`;
+        }
+      } catch (error) {
+        console.error('Fehler beim Abrufen der PremiumPartner', error);
       }
     },
   },
@@ -193,6 +200,12 @@ export default {
 
 .smaller-sections > div:hover {
   transform: scale(1.1);
+}
+
+.list-label {
+  background-color: rgba(255, 255, 255, 0.9);
+  color: black;
+  padding: 5px;
 }
 
 </style>

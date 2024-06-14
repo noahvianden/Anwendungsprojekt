@@ -233,6 +233,49 @@ console.log(placeName);
   }
 });
 
+app.get('/list_premium_partners', async (req, res) => {
+  try {
+    const partners = await new Promise((resolve, reject) => {
+      db.all("SELECT * FROM premium_partner", (err, rows) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(rows);
+        }
+      });
+    });
+    // Array to store partners with names
+    const partnersWithName = [];
+
+    // Iterate through each partner
+    for (const partner of partners) {
+      // Fetch the name for each partner
+      const pName = await new Promise((resolve, reject) => {
+        db.get("SELECT name FROM places WHERE id = ?", [partner.place_id], (err, row) => {
+          if (err) {
+            reject(err);
+          } else {
+            resolve(row); // row contains the object with 'name'
+          }
+        });
+      });
+
+      // Add partner with name to partnersWithName array
+      partnersWithName.push({
+        ...partner,
+        name: pName ? pName.name : null // Assign name if found, otherwise null
+      });
+    }
+    console.log(partnersWithName);
+    res.json({ partnersWithName });
+
+  } catch (error) {
+    console.error('Fehler beim Abrufen der Premium Partner aus der Datenbank:', error);
+    res.status(500).json({ error: 'Interner Serverfehler' });
+  }
+});
+
+
 
 const PORT = 3000
 app.listen(PORT, () => {

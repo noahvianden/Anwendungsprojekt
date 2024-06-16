@@ -1,3 +1,4 @@
+<!-- LeftSidebar.vue -->
 <template>
   <div class="left-sidebar">
     <!-- City Search at the top -->
@@ -17,7 +18,7 @@
       </div>
       
       <div class="rang">
-        <label id="rangText">Newbie</label>
+        <label id="rangText">{{ rangText }}</label>
       </div>
     </div>
 
@@ -77,6 +78,17 @@ export default {
         console.error('Fehler beim Abrufen der PremiumPartner', error);
       }
     },
+    addPoints(points) {
+      if (points == 10) {
+        this.rangText = "Beginner";
+      } else if (points == 20) {
+        this.rangText = "Learner";
+      } else if (points == 50) {
+        this.rangText = "Explorer";
+      } else if (points == 100) {
+        this.rangText = "Adventurer";
+      }
+    }
   },
 };
 </script>

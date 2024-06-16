@@ -1,6 +1,6 @@
 <template>
   <div class="main">
-    <city-map ref="cityMap" @start-navigation="startNavigation"/>
+    <city-map ref="cityMap" @start-navigation="startNavigation" @add-points="addPoints"/>
   </div>
 </template>
 
@@ -21,6 +21,7 @@ export default {
     },
     addPoints(points){
       this.$emit('add-points', points);
+      console.log("Points Received and forwarded by MainContent");
     }
   },
 };

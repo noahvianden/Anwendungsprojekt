@@ -353,6 +353,7 @@ export default {
     addPoints() {
       this.punkte = this.punkte + 2;
       this.$emit('add-points', this.punkte);
+      console.log("Punkte: " + this.punkte);
     }
 
   }

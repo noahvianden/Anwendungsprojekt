@@ -1,7 +1,8 @@
+<!-- App.vue -->
 <template>
   <div id="app" class="app-container">
-    <left-sidebar @update-coordinates="handleUpdateCoordinates" />
-    <main-content ref="mainContent" @start-navigation="startNavigation" />
+    <left-sidebar ref="leftSidebar" @update-coordinates="handleUpdateCoordinates" />
+    <main-content ref="mainContent" @start-navigation="startNavigation" @add-points="addPoints"/>
     <right-sidebar ref="rightSidebar" />
   </div>
 </template>
@@ -28,12 +29,16 @@ export default {
     },
     addPoints(data){
       console.log("Points Received and forwarded by App");
-      this.$refs.leftSidebar.addPoints(data);
+      // Stellen Sie sicher, dass addPoints in der LeftSidebar-Komponente definiert ist
+      if (this.$refs.leftSidebar && typeof this.$refs.leftSidebar.addPoints === 'function') {
+        this.$refs.leftSidebar.addPoints(data);
+      } else {
+        console.error("addPoints method is not defined in LeftSidebar component");
+      }
     }
   },
 };
 </script>
-
 <style>
 .app-container {
   display: flex;

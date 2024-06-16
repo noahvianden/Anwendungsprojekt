@@ -79,7 +79,9 @@ export default {
       }
     },
     addPoints(points) {
-      if (points == 10) {
+      if (points < 10){
+        this.rangText = "Newbie";
+      } else if (points == 10) {
         this.rangText = "Beginner";
       } else if (points == 20) {
         this.rangText = "Learner";

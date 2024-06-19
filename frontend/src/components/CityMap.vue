@@ -207,7 +207,7 @@ export default {
           });
 
           L.marker(e.latlng, { icon: icon }).addTo(this.map)
-            .bindPopup("You are within " + radius + " meters from this point").openPopup();
+            .bindPopup("Dein Standort").openPopup();
           L.circle(e.latlng, radius).addTo(this.map);
 
           // Check if the location is within any district's boundaries

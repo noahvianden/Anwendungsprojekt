@@ -115,19 +115,19 @@ export default {
         // Stadtteilgrenzen zur Karte hinzufügen
         this.neighborhoodLayer = L.geoJSON(neighborhoodGeoJSON, {
           onEachFeature: (feature, layer) => {
+            let districtName;
             if (this.cityName === 'Düsseldorf') {
-              layer.bindTooltip(feature.properties.Name, {
-                permanent: false,
-                className: 'my-label',
-                direction: 'auto'
-              });
+              districtName = feature.properties.Name;
             } else if (this.cityName === 'Berlin') {
-              layer.bindTooltip(feature.properties.name, {
-                permanent: false,
-                className: 'my-label',
-                direction: 'auto'
-              });
+              districtName = feature.properties.name;
             }
+            layer.districtName = districtName; // Add the district name to the layer object
+
+            layer.bindTooltip(districtName, {
+              permanent: false,
+              className: 'my-label',
+              direction: 'auto'
+            });
 
             let isZoomed = false;
             // Ereignis 'click' zum Zoomen auf den Stadtteil und Anzeigen der Restaurants hinzufügen
@@ -139,17 +139,10 @@ export default {
               });
 
               try {
-                let districtName;
-                if (this.cityName === 'Düsseldorf') {
-                  districtName = feature.properties.Name;
-                } else if (this.cityName === 'Berlin') {
-                  districtName = feature.properties.name;
-                }
                 if (layer.options.fillOpacity === 0) {
                   // If fill opacity is 0, zoom to the district
                   if (!isZoomed) {
                     this.map.fitBounds(layer.getBounds());
-                    //const clickedDistrictCoordinates = layer.getBounds().getCenter();
                     this.fetchRestaurantData(districtName);
                     isZoomed = true;
                   } else {
@@ -212,6 +205,7 @@ export default {
             iconAnchor: [12, 41],
             popupAnchor: [0, -41]
           });
+
           L.marker(e.latlng, { icon: icon }).addTo(this.map)
             .bindPopup("You are within " + radius + " meters from this point").openPopup();
           L.circle(e.latlng, radius).addTo(this.map);
@@ -224,6 +218,7 @@ export default {
 
               // Add points to the user's score
               this.addPoints();
+              this.fetchRestaurantData(layer.districtName); // Use the stored district name
             }
           }.bind(this));
         }.bind(this));

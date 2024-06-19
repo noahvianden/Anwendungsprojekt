@@ -25,7 +25,7 @@
     <!-- Main content block for "Premium Partner" and "Karten" -->
     <div class="main-content">
       <div class="premium-partner">
-        <label id="premiumPartner" class="list-label" v-html="premiumText"></label>
+       
       </div>
       
       <div class="karten">
@@ -53,7 +53,7 @@ export default {
   },
   data() {
     return {
-      rangText: "",
+      rangText: "Newbie",
       premiumText: "",
     };
   },
@@ -172,8 +172,8 @@ export default {
   padding: 10px;
   margin-bottom: 20px;
   background-color: white;
-  background-image: url('@/assets/premiumPartners2.png');
-  background-size: cover; /* ensures the image covers the entire
+  background-image: url('@/assets/premium_deals.png');
+  background-size: contain; /* ensures the image covers the entire
   background-position: center; /* centers the image */
   flex-direction: column;
   transition: transform 0.3s ease-in-out;
@@ -191,7 +191,7 @@ export default {
   margin-bottom: 20px;
   background-color: white;
   background-image: url('@/assets/savedMaps.png');
-  background-size: contain; /* ensures the image covers the entire container */
+  background-size:contain; /* ensures the image covers the entire container */
   background-position: center; /* centers the image */
   transition: transform 0.3s ease-in-out;
 }

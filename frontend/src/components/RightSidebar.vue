@@ -98,7 +98,7 @@ export default {
   margin: 10px;
   margin-bottom: 20px;
   background-color: white;
-  background-image: url('@/assets/tempRating3.png');
+  background-image: url('@/assets/tempRating4.png');
   background-size: cover; /* ensures the image covers the entire container */
   background-position: center; /* centers the image */
   height: 40vh;

@@ -60,11 +60,11 @@ entity Ratings {
   text : varchar
 }
 
-Users ||--o{ Fog
-Districts ||--o{ Fog
-Users ||--o{ Level_User
-Level_System ||--o{ Level_User
-Places ||--o{ Premium_Partner
-Places ||--o{ Ratings
-Users ||--o{ Ratings
+Users ||--o{ Fog }
+Districts ||--o{ Fog }
+Users ||--o{ Level_User }
+Level_System ||--o{ Level_User }
+Places ||--o{ Premium_Partner }
+Places ||--o{ Ratings }
+Users ||--o{ Ratings }
 @enduml

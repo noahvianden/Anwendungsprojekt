@@ -29,7 +29,6 @@ export default {
     },
     addPoints(data){
       console.log("Points Received and forwarded by App");
-      // Stellen Sie sicher, dass addPoints in der LeftSidebar-Komponente definiert ist
       if (this.$refs.leftSidebar && typeof this.$refs.leftSidebar.addPoints === 'function') {
         this.$refs.leftSidebar.addPoints(data);
       } else {

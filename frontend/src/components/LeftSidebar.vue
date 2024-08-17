@@ -1,17 +1,14 @@
 <!-- LeftSidebar.vue -->
 <template>
   <div class="left-sidebar">
-    <!-- City Search at the top -->
     <div class="city-search">
       <CitySearch @update-coordinates="forwardUpdateCoordinates"/>
     </div>
 
-    <!-- Profile image -->
     <div class="profile-image">
       <img src="../assets/profilePicture2.png" alt="Profile Picture" />
     </div>
 
-    <!-- Horizontal layout for "Benutzername" and "Rang" -->
     <div class="horizontal-layout">
       <div class="benutzername">
         Noah Vianden
@@ -22,17 +19,14 @@
       </div>
     </div>
 
-    <!-- Main content block for "Premium Partner" and "Karten" -->
     <div class="main-content">
       <div class="premium-partner">
-       
       </div>
       
       <div class="karten">
       </div>
     </div>
 
-    <!-- Smaller sections with sub-items -->
     <div class="smaller-sections">
       <div class="events">Events</div>
       <div class="recommendations">Empfehlungen</div>
@@ -70,7 +64,6 @@ export default {
         console.log('Fetching Premium Partner');
         const response = await axios.get('http://localhost:3000/list_premium_partners');
         const partners = response.data.partnersWithName;
-        // Beispiel: Annahme, dass response.data.partners ein Array von Premium-Partnern ist
         for (const partner of partners) {
           this.premiumText = `<br>${this.premiumText}<br><br>${partner.name}<br><br>${partner.discount}<br>`;
         }
@@ -142,8 +135,7 @@ export default {
 }
 
 .benutzername {
-  /* Set to take up 3/5 of the width */
-  flex: 3;  /* 3/5 of the total flex space */
+  flex: 3;
   border: 1px solid black;
   padding: 10px;
   margin-right: 30px;
@@ -151,8 +143,7 @@ export default {
 }
 
 .rang {
-  /* Set to take up 2/5 of the width */
-  flex: 2;  /* 2/5 of the total flex space */
+  flex: 2;
   border: 1px solid black;
   padding: 10px;
   background-color: var(--primary-color);
@@ -166,15 +157,14 @@ export default {
 }
 
 .premium-partner {
-  /* Set to take up 2/3 of the main content area */
-  flex: 4;  /* 2/3 of the total flex space */
+  flex: 4;
   border: 1px solid black;
   padding: 10px;
   margin-bottom: 20px;
   background-color: white;
   background-image: url('@/assets/premium_deals.png');
-  background-size: contain; /* ensures the image covers the entire
-  background-position: center; /* centers the image */
+  background-size: contain;
+  background-position: center;
   flex-direction: column;
   transition: transform 0.3s ease-in-out;
 }
@@ -184,15 +174,14 @@ export default {
 }
 
 .karten {
-  /* Set to take up 1/3 of the main content area */
-  flex: 1;  /* 1/3 of the total flex space */
+  flex: 1;
   border: 1px solid black;
   padding: 10px;
   margin-bottom: 20px;
   background-color: white;
   background-image: url('@/assets/savedMaps.png');
-  background-size:contain; /* ensures the image covers the entire container */
-  background-position: center; /* centers the image */
+  background-size:contain;
+  background-position: center;
   transition: transform 0.3s ease-in-out;
 }
 
@@ -201,7 +190,6 @@ export default {
 }
 
 .events {
-  /* Styles for the Events section */
   padding: 10px;
 }
 

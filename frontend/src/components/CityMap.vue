@@ -306,7 +306,6 @@ export default {
 
     // Methode zum Starten der Navigation zu einer bestimmten Adresse
     startNavigationTo(name) {
-      console.log("gestartet in CityMap")
       this.$emit('start-navigation', name);
       this.$emit('show-rating', name);
     },
@@ -315,7 +314,6 @@ export default {
     addPoints() {
       this.punkte = this.punkte + 2;
       this.$emit('add-points', this.punkte);
-      console.log("Punkte: " + this.punkte);
     }
 
   }

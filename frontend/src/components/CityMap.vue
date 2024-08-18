@@ -57,13 +57,6 @@ export default {
           this.neighborhoodLayer = null;
         }
 
-        // Koordinaten der Stadt abrufen
-        const coordinates = await this.geocodeCity(this.cityName);
-        if (!coordinates) {
-          console.error('Koordinaten für die angegebene Stadt konnten nicht gefunden werden.');
-          return;
-        }
-
         // Karte initialisieren, wenn noch nicht vorhanden
         if (!this.map) {
           this.map = L.map('map', {
@@ -223,22 +216,6 @@ export default {
       }
     },
 
-    // Methode zum Geocoding der Stadt
-    async geocodeCity(cityName) {
-      try {
-        const response = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${cityName}`);
-        const data = await response.json();
-        if (data && data.length > 0) {
-          return [parseFloat(data[0].lat), parseFloat(data[0].lon)];
-        } else {
-          return null;
-        }
-      } catch (error) {
-        console.error('Fehler beim Geocoding der Stadt:', error);
-        return null;
-      }
-    },
-
     // Methode zum Abrufen der Stadtgrenzen als GeoJSON
     async getCityBoundsGeoJSON(cityName) {
       try {
@@ -264,7 +241,7 @@ export default {
           }
         });
 
-        this.restaurants = response.data.restaurants; // Speichere die Restaurantdaten im Datenobjekt
+        this.restaurants = response.data.restaurants;
         console.log(this.restaurants);
         this.addRestaurantMarkers();
       } catch (error) {

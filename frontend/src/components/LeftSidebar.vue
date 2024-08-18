@@ -56,7 +56,6 @@ export default {
   },
   methods: {
     forwardUpdateCoordinates(data) {
-      // Forward the event to the parent component
       this.$emit('update-coordinates', data);
     },
     async list_premium_partners() {
@@ -114,7 +113,6 @@ export default {
   text-align: left;
   margin-bottom: 10px;
 }
-
 .profile-image img {
   width: 150px;
   height: 150px;
@@ -122,18 +120,15 @@ export default {
   padding-bottom: 10px;
   transition: transform 0.4s ease-in-out;
 }
-
 .profile-image img:hover {
   transform: scale(3.1) translateX(+50px) translateY(+50px);
 }
-
 .horizontal-layout {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   padding-bottom: 20px;
 }
-
 .benutzername {
   flex: 3;
   border: 1px solid black;
@@ -141,21 +136,18 @@ export default {
   margin-right: 30px;
   background-color: var(--primary-color);
 }
-
 .rang {
   flex: 2;
   border: 1px solid black;
   padding: 10px;
   background-color: var(--primary-color);
 }
-
 .main-content {
   display: flex;
   flex-direction: column;
   flex: 1;
   height: 50vh;
 }
-
 .premium-partner {
   flex: 4;
   border: 1px solid black;
@@ -168,11 +160,9 @@ export default {
   flex-direction: column;
   transition: transform 0.3s ease-in-out;
 }
-
 .premium-partner:hover {
   transform: scale(1.1);
 }
-
 .karten {
   flex: 1;
   border: 1px solid black;
@@ -184,30 +174,24 @@ export default {
   background-position: center;
   transition: transform 0.3s ease-in-out;
 }
-
 .karten:hover {
   transform: scale(1.1);
 }
-
 .events {
   padding: 10px;
 }
-
 .smaller-sections > div {
   border: 1px solid black; 
   padding: 10px;
   background-color: var(--primary-color);
   transition: transform 0.3s ease-in-out;
 }
-
 .smaller-sections > div:hover {
   transform: scale(1.1);
 }
-
 .list-label {
   background-color: rgba(255, 255, 255, 0.9);
   color: black;
   padding: 5px;
 }
-
 </style>

@@ -21,7 +21,6 @@ export default {
     },
     addPoints(points){
       this.$emit('add-points', points);
-      console.log("Points Received and forwarded by MainContent");
     }
   },
 };
@@ -32,8 +31,8 @@ export default {
   flex: 1;
   margin: 30px;
   background-image: url('@/assets/Background3.png');
-  background-size: cover; /* ensures the image covers the entire container */
-  background-position: center; /* centers the image */
+  background-size: cover; 
+  background-position: center; 
   background-color: rgb(226, 112, 112);
   border-radius: var(--border-radius);
   box-shadow: 4px 8px 16px rgba(0, 0, 0, 0.1);

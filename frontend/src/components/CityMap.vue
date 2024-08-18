@@ -26,7 +26,6 @@ export default {
       cityBoundsLayer: null,
       neighborhoodLayer: null,
       restaurants: [],
-      neighborhoodClickedTiles: {},
       punkte: 0
     };
   },
@@ -34,15 +33,12 @@ export default {
     await this.initMap();
   },
   methods: {
-    // Initialisierung der Karte beim Laden der Komponente
     async initMap() {
       await this.updateMap();
     },
 
     async updateCoordinates(cityName) {
-      // Update the cityName property
       this.cityName = cityName;
-      // Call the updateMap method to update the map
       await this.updateMap();
     },
 
@@ -162,7 +158,7 @@ export default {
           }
         }).addTo(this.map);
 
-        // Define the SVG pattern with the imported asset.
+        // Defienieren des SVG pattern mit dem Import
         const svgPattern = `
         <svg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
           <pattern id="fogPattern" patternUnits="userSpaceOnUse" width="100" height="100">
@@ -171,18 +167,18 @@ export default {
         </svg>
         `;
 
-        // Step 2: Create an SVG element and append it to the map's DOM.
+        // Erstellen eines SVG element und Hinzufügen zum DOM der Map
         var svgElement = document.createElement('div');
         svgElement.innerHTML = svgPattern;
         document.querySelector('.leaflet-map-pane').appendChild(svgElement);
 
-        // Step 3: Apply the pattern to your layer.
+        // SVG-Pattern zum Layer hinzufügen
         this.neighborhoodLayer.setStyle({
-          fillColor: 'url(#fogPattern)', // Verwende das SVG-Pattern als Füllung.
-          fillOpacity: 1, // Stelle sicher, dass die Füllung volle Deckkraft hat.
-          color: 'gray',  // Linienfarbe.
-          weight: 1,     // Liniengewicht.
-          opacity: 0.4,    // Linie sollte volle Deckkraft haben.
+          fillColor: 'url(#fogPattern)', 
+          fillOpacity: 1, 
+          color: 'gray',  
+          weight: 1,   
+          opacity: 0.4, 
         });
 
         // Karte auf die Stadtgrenzen zoomen
@@ -210,15 +206,15 @@ export default {
             .bindPopup("Dein Standort").openPopup();
           L.circle(e.latlng, radius).addTo(this.map);
 
-          // Check if the location is within any district's boundaries
+          // Prüfe, ob die Location innerhalb des Districts ist
           this.neighborhoodLayer.eachLayer(function(layer) {
             if (layer.getBounds().contains(e.latlng)) {
-              layer.setStyle({ fillOpacity: 0 }); // Remove the fog from the district
-              this.map.fitBounds(layer.getBounds()); // Zoom to the district
+              layer.setStyle({ fillOpacity: 0 }); // Entferne den Nebel
+              this.map.fitBounds(layer.getBounds());
 
-              // Add points to the user's score
+              // Punkte des Users hinzufügen
               this.addPoints();
-              this.fetchRestaurantData(layer.districtName); // Use the stored district name
+              this.fetchRestaurantData(layer.districtName); //Restaurantdaten abrufen
             }
           }.bind(this));
         }.bind(this));
@@ -265,7 +261,6 @@ export default {
     },
 
     // Methode zum Abrufen von Restaurantdaten in der Nähe bestimmter Koordinaten
-    //async fetchRestaurantData(latitude, longitude) {
     async fetchRestaurantData(districtName) {
       try {
         const response = await axios.get('http://localhost:3000/places', {

@@ -15,7 +15,6 @@ export default {
     };
   },
   methods: {
-    // Emit the update-coordinates event with the city name
     updateCoordinates() {
       this.$emit('update-coordinates', this.cityName);
     }
@@ -27,11 +26,11 @@ export default {
 #city-search {
   display: flex;
   flex-direction: row;
-  justify-content: flex-start; /* Aligns content to the right */
+  justify-content: flex-start;
 }
 
 input{
-  margin-right: 10px; /* Adds some space between elements */
+  margin-right: 10px;
   background-color: var(--primary-color);
   height: 30px;
   transition: transform 0.5s ease-in-out;

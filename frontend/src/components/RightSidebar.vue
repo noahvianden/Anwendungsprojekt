@@ -57,12 +57,7 @@ export default {
 
     updateRatingText() {
       this.ratingText = `<br>${this.ratingText}<br>Deine Bewertung:<br>${this.newRating}<br><br>`;
-      this.newRating = ''; // Clear the input after updating
-    },
-
-    confirmRatingText() {
-      alert(`Confirmed rating text: ${this.ratingText}`);
-      // Here you can add additional logic to handle the confirmed rating text
+      this.newRating = '';
     },
   },
 };

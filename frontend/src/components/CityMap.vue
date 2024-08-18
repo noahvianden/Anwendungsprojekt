@@ -304,7 +304,7 @@ export default {
       }
     },
 
-    // Methode zum Starten der Navigation zu einer bestimmten Adresse
+    // Methode zum Starten der Navigation
     startNavigationTo(name) {
       this.$emit('start-navigation', name);
       this.$emit('show-rating', name);

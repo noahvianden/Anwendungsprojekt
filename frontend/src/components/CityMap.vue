@@ -42,7 +42,6 @@ export default {
       await this.updateMap();
     },
 
-    // Methode zum Aktualisieren der Karte
     async updateMap() {
       try {
         if (this.map) {
@@ -118,7 +117,6 @@ export default {
               districtName = feature.properties.name;
             }
             layer.districtName = districtName; // Add the district name to the layer object
-
             layer.bindTooltip(districtName, {
               permanent: false,
               className: 'my-label',
@@ -130,24 +128,21 @@ export default {
             layer.on('click', () => {
               this.map.eachLayer(markerLayer => {
                 if (markerLayer instanceof L.Marker) {
-                  this.map.removeLayer(markerLayer); // Remove markers from the map
+                  this.map.removeLayer(markerLayer);
                 }
               });
 
               try {
                 if (layer.options.fillOpacity === 0) {
-                  // If fill opacity is 0, zoom to the district
                   if (!isZoomed) {
                     this.map.fitBounds(layer.getBounds());
                     this.fetchRestaurantData(districtName);
                     isZoomed = true;
                   } else {
-                    // Zoom out to the city bounds
                     this.map.fitBounds(this.cityBoundsLayer.getBounds());
                     isZoomed = false;
                   }
                 } else {
-                  // If fill opacity is not 0, set it to 0
                   layer.setStyle({ fillOpacity: 0 });
                   this.addPoints();
                 }

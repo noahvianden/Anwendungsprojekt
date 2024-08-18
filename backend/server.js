@@ -31,8 +31,6 @@ async function fetchPlacesData() {
 
     // Daten von der Google Places API abrufen
     const places = await fetchAllPlaces();
-    var update = 0;
-    var insert = 0;
   // Aktualisierung vorhandener Orte in der Datenbank
   for (const place of places) {
     const existingPlace = rows.find(row => row.id === place.place_id);
@@ -54,7 +52,6 @@ async function fetchPlacesData() {
                     place.opening_hours && place.opening_hours.open_now ? 1 : 0,
                     existingPlace.id
                 ]);
-                update = update +1;
         }
     } else {
         // Der Ort ist nicht in der Datenbank, Hinzufügen
@@ -70,7 +67,6 @@ async function fetchPlacesData() {
                     place.vicinity || place.formatted_address,
                     place.opening_hours && place.opening_hours.open_now ? 1 : 0
                 ]);
-                insert = insert + 1;
         } catch (error) {
             console.error("Fehler beim Einfügen neuer Orte:", error);
         }

@@ -14,8 +14,6 @@ const db = new sqlite3.Database('data.db');
 app.use(express.json());
 
 db.serialize(() => {
-  db.run("CREATE TABLE IF NOT EXISTS places (id TEXT PRIMARY KEY, name TEXT, latitude REAL, longitude REAL, district_id INTEGER, type TEXT, vicinity TEXT, open BOOL)");
-  db.run("CREATE TABLE IF NOT EXISTS districts (id INTEGER PRIMARY KEY AUTOINCREMENT, name VARCHAR(255),latitude REAL, longitude REAL)")
   fetchPlacesData();
 });
 
